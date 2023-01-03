@@ -4,7 +4,7 @@ import "./style.css";
 console.log("but");
 
 const but = 3;
-if (but === 3) {
+if   (but === 3) {
   console.log("hello");
 }
 
