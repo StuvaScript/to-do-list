@@ -3,11 +3,6 @@ import "./style.css";
 
 console.log("but");
 
-const but = 3;
-if (but === 3) {
-  console.log("hello");
-}
-
 // Will need to change mode to production mode after the project is finished.
 // Read this page => https://webpack.js.org/guides/production/
 
