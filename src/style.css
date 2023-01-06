@@ -1,3 +1,55 @@
+@font-face {
+  font-family: 'Kalam';
+  src: url(./fonts/Kalam-Regular.ttf) format('truetype');
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'Kalam';
+  src: url(./fonts/Kalam-Light.ttf) format('truetype');
+  font-weight: lighter;
+}
+
+@font-face {
+  font-family: 'Kalam';
+  src: url(./fonts/Kalam-Bold.ttf) format('truetype');
+  font-weight: bold;
+}
+
 body {
-  background: rgb(48, 169, 183);
+  font-family: 'Kalam', sans-serif;
+  padding: max(2vw, 10px);
+
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  background: rgba(63, 223, 251, 0.2);
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+  width: 80vw;
+  height: auto;
+  padding: max(2vw, 10px);
+  border-radius: 50px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.projects-title {
+  align-self: start;
+  padding: 5px 20px;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.projects {
+  background: rgba(93, 107, 110, 0.2);
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+  /* border: 1px solid #000; */
+  width: 100%;
+  height: 50px;
+  border-radius: 25px;
+  margin: 5px;
 }

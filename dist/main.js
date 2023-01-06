@@ -8,9 +8,9 @@
  */
 /******/ (() => {
   // webpackBootstrap
-  /******/ "use strict";
+  /******/ 'use strict';
   /******/ var __webpack_modules__ = {
-    /***/ "./node_modules/css-loader/dist/cjs.js!./src/normalize.css":
+    /***/ './node_modules/css-loader/dist/cjs.js!./src/normalize.css':
       /*!*****************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./src/normalize.css ***!
   \*****************************************************************/
@@ -22,19 +22,19 @@
         /***/
       },
 
-    /***/ "./node_modules/css-loader/dist/cjs.js!./src/style.css":
+    /***/ './node_modules/css-loader/dist/cjs.js!./src/style.css':
       /*!*************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./src/style.css ***!
   \*************************************************************/
       /***/ (module, __webpack_exports__, __webpack_require__) => {
         eval(
-          '__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/noSourceMaps.js */ "./node_modules/css-loader/dist/runtime/noSourceMaps.js");\n/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");\n/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);\n// Imports\n\n\nvar ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));\n// Module\n___CSS_LOADER_EXPORT___.push([module.id, "body {\\n  background: rgb(48, 169, 183);\\n}\\n", ""]);\n// Exports\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);\n\n\n//# sourceURL=webpack://to-do-list/./src/style.css?./node_modules/css-loader/dist/cjs.js'
+          '__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/noSourceMaps.js */ "./node_modules/css-loader/dist/runtime/noSourceMaps.js");\n/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");\n/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/getUrl.js */ "./node_modules/css-loader/dist/runtime/getUrl.js");\n/* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__);\n// Imports\n\n\n\nvar ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */ __webpack_require__(/*! ./fonts/Kalam-Regular.ttf */ "./src/fonts/Kalam-Regular.ttf"), __webpack_require__.b);\nvar ___CSS_LOADER_URL_IMPORT_1___ = new URL(/* asset import */ __webpack_require__(/*! ./fonts/Kalam-Light.ttf */ "./src/fonts/Kalam-Light.ttf"), __webpack_require__.b);\nvar ___CSS_LOADER_URL_IMPORT_2___ = new URL(/* asset import */ __webpack_require__(/*! ./fonts/Kalam-Bold.ttf */ "./src/fonts/Kalam-Bold.ttf"), __webpack_require__.b);\nvar ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));\nvar ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_0___);\nvar ___CSS_LOADER_URL_REPLACEMENT_1___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_1___);\nvar ___CSS_LOADER_URL_REPLACEMENT_2___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_2___);\n// Module\n___CSS_LOADER_EXPORT___.push([module.id, "@font-face {\\n  font-family: \'Kalam\';\\n  src: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ") format(\'truetype\');\\n  font-weight: normal;\\n}\\n\\n@font-face {\\n  font-family: \'Kalam\';\\n  src: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ") format(\'truetype\');\\n  font-weight: lighter;\\n}\\n\\n@font-face {\\n  font-family: \'Kalam\';\\n  src: url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ") format(\'truetype\');\\n  font-weight: bold;\\n}\\n\\nbody {\\n  font-family: \'Kalam\', sans-serif;\\n  padding: max(2vw, 10px);\\n\\n  display: flex;\\n  justify-content: center;\\n}\\n\\n.container {\\n  background: rgba(63, 223, 251, 0.2);\\n  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);\\n  width: 80vw;\\n  height: auto;\\n  padding: max(2vw, 10px);\\n  border-radius: 50px;\\n\\n  display: flex;\\n  flex-direction: column;\\n  align-items: center;\\n}\\n\\n.projects-title {\\n  align-self: start;\\n  padding: 5px 20px;\\n  font-size: 1.5rem;\\n  font-weight: bold;\\n}\\n\\n.projects {\\n  background: rgba(93, 107, 110, 0.2);\\n  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);\\n  /* border: 1px solid #000; */\\n  width: 100%;\\n  height: 50px;\\n  border-radius: 25px;\\n  margin: 5px;\\n}\\n", ""]);\n// Exports\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);\n\n\n//# sourceURL=webpack://to-do-list/./src/style.css?./node_modules/css-loader/dist/cjs.js'
         );
 
         /***/
       },
 
-    /***/ "./node_modules/css-loader/dist/runtime/api.js":
+    /***/ './node_modules/css-loader/dist/runtime/api.js':
       /*!*****************************************************!*\
   !*** ./node_modules/css-loader/dist/runtime/api.js ***!
   \*****************************************************/
@@ -46,19 +46,31 @@
         /***/
       },
 
-    /***/ "./node_modules/css-loader/dist/runtime/noSourceMaps.js":
-      /*!**************************************************************!*\
-  !*** ./node_modules/css-loader/dist/runtime/noSourceMaps.js ***!
-  \**************************************************************/
+    /***/ './node_modules/css-loader/dist/runtime/getUrl.js':
+      /*!********************************************************!*\
+  !*** ./node_modules/css-loader/dist/runtime/getUrl.js ***!
+  \********************************************************/
       /***/ (module) => {
         eval(
-          "\n\nmodule.exports = function (i) {\n  return i[1];\n};\n\n//# sourceURL=webpack://to-do-list/./node_modules/css-loader/dist/runtime/noSourceMaps.js?"
+          '\n\nmodule.exports = function (url, options) {\n  if (!options) {\n    options = {};\n  }\n  if (!url) {\n    return url;\n  }\n  url = String(url.__esModule ? url.default : url);\n\n  // If url is already wrapped in quotes, remove them\n  if (/^[\'"].*[\'"]$/.test(url)) {\n    url = url.slice(1, -1);\n  }\n  if (options.hash) {\n    url += options.hash;\n  }\n\n  // Should url be wrapped?\n  // See https://drafts.csswg.org/css-values-3/#urls\n  if (/["\'() \\t\\n]|(%20)/.test(url) || options.needQuotes) {\n    return "\\"".concat(url.replace(/"/g, \'\\\\"\').replace(/\\n/g, "\\\\n"), "\\"");\n  }\n  return url;\n};\n\n//# sourceURL=webpack://to-do-list/./node_modules/css-loader/dist/runtime/getUrl.js?'
         );
 
         /***/
       },
 
-    /***/ "./src/normalize.css":
+    /***/ './node_modules/css-loader/dist/runtime/noSourceMaps.js':
+      /*!**************************************************************!*\
+  !*** ./node_modules/css-loader/dist/runtime/noSourceMaps.js ***!
+  \**************************************************************/
+      /***/ (module) => {
+        eval(
+          '\n\nmodule.exports = function (i) {\n  return i[1];\n};\n\n//# sourceURL=webpack://to-do-list/./node_modules/css-loader/dist/runtime/noSourceMaps.js?'
+        );
+
+        /***/
+      },
+
+    /***/ './src/normalize.css':
       /*!***************************!*\
   !*** ./src/normalize.css ***!
   \***************************/
@@ -74,7 +86,7 @@
         /***/
       },
 
-    /***/ "./src/style.css":
+    /***/ './src/style.css':
       /*!***********************!*\
   !*** ./src/style.css ***!
   \***********************/
@@ -90,7 +102,7 @@
         /***/
       },
 
-    /***/ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js":
+    /***/ './node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js':
       /*!****************************************************************************!*\
   !*** ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js ***!
   \****************************************************************************/
@@ -102,7 +114,7 @@
         /***/
       },
 
-    /***/ "./node_modules/style-loader/dist/runtime/insertBySelector.js":
+    /***/ './node_modules/style-loader/dist/runtime/insertBySelector.js':
       /*!********************************************************************!*\
   !*** ./node_modules/style-loader/dist/runtime/insertBySelector.js ***!
   \********************************************************************/
@@ -114,7 +126,7 @@
         /***/
       },
 
-    /***/ "./node_modules/style-loader/dist/runtime/insertStyleElement.js":
+    /***/ './node_modules/style-loader/dist/runtime/insertStyleElement.js':
       /*!**********************************************************************!*\
   !*** ./node_modules/style-loader/dist/runtime/insertStyleElement.js ***!
   \**********************************************************************/
@@ -126,7 +138,7 @@
         /***/
       },
 
-    /***/ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js":
+    /***/ './node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js':
       /*!**********************************************************************************!*\
   !*** ./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js ***!
   \**********************************************************************************/
@@ -138,7 +150,7 @@
         /***/
       },
 
-    /***/ "./node_modules/style-loader/dist/runtime/styleDomAPI.js":
+    /***/ './node_modules/style-loader/dist/runtime/styleDomAPI.js':
       /*!***************************************************************!*\
   !*** ./node_modules/style-loader/dist/runtime/styleDomAPI.js ***!
   \***************************************************************/
@@ -150,19 +162,19 @@
         /***/
       },
 
-    /***/ "./node_modules/style-loader/dist/runtime/styleTagTransform.js":
+    /***/ './node_modules/style-loader/dist/runtime/styleTagTransform.js':
       /*!*********************************************************************!*\
   !*** ./node_modules/style-loader/dist/runtime/styleTagTransform.js ***!
   \*********************************************************************/
       /***/ (module) => {
         eval(
-          "\n\n/* istanbul ignore next  */\nfunction styleTagTransform(css, styleElement) {\n  if (styleElement.styleSheet) {\n    styleElement.styleSheet.cssText = css;\n  } else {\n    while (styleElement.firstChild) {\n      styleElement.removeChild(styleElement.firstChild);\n    }\n\n    styleElement.appendChild(document.createTextNode(css));\n  }\n}\n\nmodule.exports = styleTagTransform;\n\n//# sourceURL=webpack://to-do-list/./node_modules/style-loader/dist/runtime/styleTagTransform.js?"
+          '\n\n/* istanbul ignore next  */\nfunction styleTagTransform(css, styleElement) {\n  if (styleElement.styleSheet) {\n    styleElement.styleSheet.cssText = css;\n  } else {\n    while (styleElement.firstChild) {\n      styleElement.removeChild(styleElement.firstChild);\n    }\n\n    styleElement.appendChild(document.createTextNode(css));\n  }\n}\n\nmodule.exports = styleTagTransform;\n\n//# sourceURL=webpack://to-do-list/./node_modules/style-loader/dist/runtime/styleTagTransform.js?'
         );
 
         /***/
       },
 
-    /***/ "./src/index.js":
+    /***/ './src/index.js':
       /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
@@ -172,7 +184,43 @@
         __webpack_require__
       ) => {
         eval(
-          '__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _normalize_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./normalize.css */ "./src/normalize.css");\n/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.css */ "./src/style.css");\n\n\n\nconsole.log("but");\n\n// Will need to change mode to production mode after the project is finished.\n// Read this page => https://webpack.js.org/guides/production/\n\n// Remember to change the source branch on Github in order for your\n// page to be displayed on Github\n\n\n//# sourceURL=webpack://to-do-list/./src/index.js?'
+          '__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _normalize_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./normalize.css */ "./src/normalize.css");\n/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.css */ "./src/style.css");\n\n\n\nconsole.log(\'bing bong\');\n\n// Will need to change mode to production mode after the project is finished.\n// Read this page => https://webpack.js.org/guides/production/\n\n// Remember to change the source branch on Github in order for your\n// page to be displayed on Github. Check the very bottom\n// of the Assignments part => https://www.theodinproject.com/lessons/node-path-javascript-restaurant-page\n\n\n//# sourceURL=webpack://to-do-list/./src/index.js?'
+        );
+
+        /***/
+      },
+
+    /***/ './src/fonts/Kalam-Bold.ttf':
+      /*!**********************************!*\
+  !*** ./src/fonts/Kalam-Bold.ttf ***!
+  \**********************************/
+      /***/ (module, __unused_webpack_exports, __webpack_require__) => {
+        eval(
+          'module.exports = __webpack_require__.p + "c4671477e81c3c51ffc0.ttf";\n\n//# sourceURL=webpack://to-do-list/./src/fonts/Kalam-Bold.ttf?'
+        );
+
+        /***/
+      },
+
+    /***/ './src/fonts/Kalam-Light.ttf':
+      /*!***********************************!*\
+  !*** ./src/fonts/Kalam-Light.ttf ***!
+  \***********************************/
+      /***/ (module, __unused_webpack_exports, __webpack_require__) => {
+        eval(
+          'module.exports = __webpack_require__.p + "26d8dba039c5c77b1ac3.ttf";\n\n//# sourceURL=webpack://to-do-list/./src/fonts/Kalam-Light.ttf?'
+        );
+
+        /***/
+      },
+
+    /***/ './src/fonts/Kalam-Regular.ttf':
+      /*!*************************************!*\
+  !*** ./src/fonts/Kalam-Regular.ttf ***!
+  \*************************************/
+      /***/ (module, __unused_webpack_exports, __webpack_require__) => {
+        eval(
+          'module.exports = __webpack_require__.p + "831aaad03890ba2d7417.ttf";\n\n//# sourceURL=webpack://to-do-list/./src/fonts/Kalam-Regular.ttf?'
         );
 
         /***/
@@ -212,6 +260,9 @@
     /******/
   }
   /******/
+  /******/ // expose the modules object (__webpack_modules__)
+  /******/ __webpack_require__.m = __webpack_modules__;
+  /******/
   /************************************************************************/
   /******/ /* webpack/runtime/compat get default export */
   /******/ (() => {
@@ -219,7 +270,7 @@
     /******/ __webpack_require__.n = (module) => {
       /******/ var getter =
         module && module.__esModule
-          ? /******/ () => module["default"]
+          ? /******/ () => module['default']
           : /******/ () => module;
       /******/ __webpack_require__.d(getter, { a: getter });
       /******/ return getter;
@@ -250,6 +301,22 @@
     /******/
   })();
   /******/
+  /******/ /* webpack/runtime/global */
+  /******/ (() => {
+    /******/ __webpack_require__.g = (function () {
+      /******/ if (typeof globalThis === 'object') return globalThis;
+      /******/ try {
+        /******/ return this || new Function('return this')();
+        /******/
+      } catch (e) {
+        /******/ if (typeof window === 'object') return window;
+        /******/
+      }
+      /******/
+    })();
+    /******/
+  })();
+  /******/
   /******/ /* webpack/runtime/hasOwnProperty shorthand */
   /******/ (() => {
     /******/ __webpack_require__.o = (obj, prop) =>
@@ -261,15 +328,72 @@
   /******/ (() => {
     /******/ // define __esModule on exports
     /******/ __webpack_require__.r = (exports) => {
-      /******/ if (typeof Symbol !== "undefined" && Symbol.toStringTag) {
+      /******/ if (typeof Symbol !== 'undefined' && Symbol.toStringTag) {
         /******/ Object.defineProperty(exports, Symbol.toStringTag, {
-          value: "Module",
+          value: 'Module',
         });
         /******/
       }
-      /******/ Object.defineProperty(exports, "__esModule", { value: true });
+      /******/ Object.defineProperty(exports, '__esModule', { value: true });
       /******/
     };
+    /******/
+  })();
+  /******/
+  /******/ /* webpack/runtime/publicPath */
+  /******/ (() => {
+    /******/ var scriptUrl;
+    /******/ if (__webpack_require__.g.importScripts)
+      scriptUrl = __webpack_require__.g.location + '';
+    /******/ var document = __webpack_require__.g.document;
+    /******/ if (!scriptUrl && document) {
+      /******/ if (document.currentScript)
+        /******/ scriptUrl = document.currentScript.src;
+      /******/ if (!scriptUrl) {
+        /******/ var scripts = document.getElementsByTagName('script');
+        /******/ if (scripts.length)
+          scriptUrl = scripts[scripts.length - 1].src;
+        /******/
+      }
+      /******/
+    }
+    /******/ // When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
+    /******/ // or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
+    /******/ if (!scriptUrl)
+      throw new Error('Automatic publicPath is not supported in this browser');
+    /******/ scriptUrl = scriptUrl
+      .replace(/#.*$/, '')
+      .replace(/\?.*$/, '')
+      .replace(/\/[^\/]+$/, '/');
+    /******/ __webpack_require__.p = scriptUrl;
+    /******/
+  })();
+  /******/
+  /******/ /* webpack/runtime/jsonp chunk loading */
+  /******/ (() => {
+    /******/ __webpack_require__.b = document.baseURI || self.location.href;
+    /******/
+    /******/ // object to store loaded and loading chunks
+    /******/ // undefined = chunk not loaded, null = chunk preloaded/prefetched
+    /******/ // [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
+    /******/ var installedChunks = {
+      /******/ main: 0,
+      /******/
+    };
+    /******/
+    /******/ // no chunk on demand loading
+    /******/
+    /******/ // no prefetching
+    /******/
+    /******/ // no preloaded
+    /******/
+    /******/ // no HMR
+    /******/
+    /******/ // no HMR manifest
+    /******/
+    /******/ // no on chunks loaded
+    /******/
+    /******/ // no jsonp function
     /******/
   })();
   /******/
@@ -284,7 +408,7 @@
   /******/ // startup
   /******/ // Load entry module and return exports
   /******/ // This entry module can't be inlined because the eval devtool is used.
-  /******/ var __webpack_exports__ = __webpack_require__("./src/index.js");
+  /******/ var __webpack_exports__ = __webpack_require__('./src/index.js');
   /******/
   /******/
 })();
