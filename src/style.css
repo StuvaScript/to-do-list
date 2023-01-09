@@ -19,6 +19,7 @@
 body {
   font-family: 'Kalam', sans-serif;
   padding: max(2vw, 10px);
+  letter-spacing: 1.5px;
 
   display: flex;
   justify-content: center;
@@ -44,12 +45,21 @@ body {
   font-weight: bold;
 }
 
-.projects {
+.projects,
+.tasks {
   background: rgba(93, 107, 110, 0.2);
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
   /* border: 1px solid #000; */
   width: 100%;
-  height: 50px;
+  height: auto;
   border-radius: 25px;
   margin: 5px;
+
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  font-size: 1.5rem;
+}
+
+.tasks {
 }
