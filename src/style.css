@@ -1,3 +1,10 @@
+:root {
+  --non-urgent: #cecaca;
+  --mild-urgent: blue;
+  --urgent: orange;
+  --very-urgent: red;
+}
+
 @font-face {
   font-family: 'Kalam';
   src: url(./fonts/Kalam-Regular.ttf) format('truetype');
@@ -40,13 +47,17 @@ body {
 
 .projects-title {
   align-self: start;
-  padding: 5px 20px;
-  font-size: 1.5rem;
+  padding: 0px 30px;
+  font-size: 2rem;
   font-weight: bold;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.projects,
-.tasks {
+.projects {
   background: rgba(93, 107, 110, 0.2);
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
   /* border: 1px solid #000; */
@@ -54,12 +65,62 @@ body {
   height: auto;
   border-radius: 25px;
   margin: 5px;
+  padding: 15px 30px;
+  font-size: 1.5rem;
 
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: 15px;
-  font-size: 1.5rem;
 }
 
-.tasks {
+.projects:hover {
+  background: linear-gradient(
+    rgba(93, 107, 110, 0.2),
+    rgba(93, 107, 110, 0.28)
+  );
+}
+
+input[type='checkbox'] {
+  -ms-transform: scale(1.25);
+  -moz-transform: scale(1.25);
+  -webkit-transform: scale(1.25);
+  -o-transform: scale(1.25);
+  transform: scale(1.25);
+  margin-right: 5px;
+
+  appearance: none;
+  background-color: #fafafa;
+  border: 2px solid var(--non-urgent);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05),
+    inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+  padding: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+}
+
+input[type='checkbox']:active,
+input[type='checkbox']:checked:active {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05),
+    inset 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+input[type='checkbox']:checked {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05),
+    inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05),
+    inset 15px 10px -12px rgba(255, 255, 255, 0.1);
+  color: rgb(77, 77, 77);
+}
+
+input[type='checkbox']:checked:after {
+  content: '\2714';
+  font-size: 25px;
+  position: absolute;
+  top: -2px;
+  left: 0px;
+  color: rgb(77, 77, 77);
+}
+
+img {
+  cursor: pointer;
 }
