@@ -120,7 +120,7 @@ input[type='radio']:checked::before {
 
 .project-container {
   /* Delete this invisibility code */
-  visibility: hidden;
+  /* visibility: hidden; */
 
   background: rgba(63, 223, 251, 0.2);
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
@@ -202,6 +202,16 @@ input[type='radio']:checked::before {
 .add-project-title {
   font-size: 2rem;
   font-weight: bold;
+}
+
+form input[type='text'] {
+  border-radius: 30px;
+  padding: 10px;
+  width: 100%;
+}
+
+form input[type='text']:focus {
+  outline: black;
 }
 
 .form-radio {
