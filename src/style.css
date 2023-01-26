@@ -174,7 +174,7 @@ input[type='radio']:checked::before {
 
 .add-project-container {
   /* Maybe delete this absolute position?  */
-  position: absolute;
+  /* position: absolute; */
 
   background: rgba(128, 125, 125, 0.2);
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
@@ -247,6 +247,7 @@ form input[type='text']:focus {
   border-radius: 40px;
   padding: 10px;
   width: 100px;
+  margin: 10px;
   background: rgba(63, 223, 251, 0.5);
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
 }
