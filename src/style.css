@@ -250,6 +250,7 @@ form input[type='text']:focus {
   margin: 10px;
   background: rgba(63, 223, 251, 0.5);
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
 
 .add-project-form button:hover {

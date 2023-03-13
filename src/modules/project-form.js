@@ -1,7 +1,11 @@
+const content = document.querySelector('.content').children;
+
 export default function projectForm() {
   const innerObject = {
     init() {
       this.createForm();
+      this.addProject();
+      this.cancelButton();
     },
     manipulateDOM(element, innerText, className, appendTo, ...attributes) {
       // You can add up to four class names, all inside one set of single quotes, separated by spaces.
@@ -202,15 +206,35 @@ export default function projectForm() {
         'button-div',
         '.add-project-form'
       );
-      this.button = this.manipulateDOM('button', 'Add', '', '.button-div');
+      this.button = this.manipulateDOM(
+        'button',
+        'Add',
+        'add-button',
+        '.button-div'
+      );
       this.button = this.manipulateDOM(
         'button',
         'Cancel',
-        '',
+        'cancel-button',
         '.button-div',
         'type',
         'button'
       );
+    },
+    addProject() {
+      const addButton = document.querySelector('.add-button');
+      addButton.addEventListener('click', (e) => {
+        console.log('ballzack');
+      });
+    },
+    cancelButton() {
+      const cancel = document.querySelector('.cancel-button');
+      cancel.addEventListener('click', (e) => {
+        console.log(cancel);
+        content[0].remove();
+        projectContainer();
+        projects();
+      });
     },
   };
 

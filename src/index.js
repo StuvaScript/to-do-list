@@ -1,31 +1,37 @@
-import projects from './modules/projects.js';
-import projectContainer from './modules/project-container.js';
-import projectForm from './modules/project-form.js';
-import './normalize.css';
-import './style.css';
+// import projects from './modules/projects.js';
+// import projectContainer from './modules/project-container.js';
+// import projectForm from './modules/project-form.js';
+// // import projectInfo from './modules/project-info.js';
+// // import eventHandler from './modules/event-handler.js';
+// import './normalize.css';
+// import './style.css';
 
-projectContainer();
-projects();
-projects();
-projects();
-projects();
+const { doc } = require('prettier');
 
-const plus = document.querySelector('.plus > img');
-plus.addEventListener('click', (e) => {
-  const content = document.querySelector('.content').children;
-  content[0].remove();
-  projectForm();
-});
+// const content = document.querySelector('.content').children;
 
-// You just created the main project container importing it and creating it in its own javascript module.
-// Next you need to make a module that creates the individual project html and import it.
-// Then you need to make the Create Project Form and import with javascript module. Wiping the other module out temporarily.
-// Then you need to make the logic of entering info populate a new project and slap it on the main page and bringing the main project container back into the scene.
+// projectContainer();
+// projects();
+// projects();
+// projects();
+// projects();
 
-// Still trying to figure out how to dynamically count the number of projects and add a data number attribute to them.
+// const plus = document.querySelector('.plus > img');
+// plus.addEventListener('click', (e) => {
+//   content[0].remove();
+//   projectForm();
+// });
 
-// MAYBE!! If statement. If there are no projects, append project to container. Otherwise append new project behind older project.
-// Or maybe even length - 1 position?
+// const cancel = document.querySelector('.cancel-button');
+// console.log(cancel);
+// cancel.addEventListener('click', (e) => {
+//   console.log(cancel);
+//   content[0].remove();
+//   projectContainer();
+//   projects();
+// });
+
+// Trying to get the html elements to properly erase and display when clicking buttons on screen.
 
 // Will need to change mode to production mode after the project is finished.
 // Read this page => https://webpack.js.org/guides/production/
@@ -33,3 +39,87 @@ plus.addEventListener('click', (e) => {
 // Remember to change the source branch on Github in order for your
 // page to be displayed on Github. Check the very bottom
 // of the Assignments part => https://www.theodinproject.com/lessons/node-path-javascript-restaurant-page
+
+// =======================================================================================================================================
+// =======================================================================================================================================
+
+// Everything above this line is my old code
+
+const content = document.querySelector('.content');
+
+function makeForm() {
+  let form = document.createElement('form');
+  form.setAttribute('action', '');
+  form.setAttribute('method', 'get');
+  content.appendChild(form);
+
+  let inputTitle = document.createElement('input');
+  form.appendChild(inputTitle);
+  inputTitle.setAttribute('type', 'text');
+  inputTitle.setAttribute('id', 'title');
+  inputTitle.setAttribute('name', 'title');
+  let titleLabel = document.createElement('label');
+  titleLabel.innerText = 'Project Title';
+  titleLabel.setAttribute('for', 'title');
+  form.appendChild(titleLabel);
+
+  let inputDescription = document.createElement('input');
+  form.appendChild(inputDescription);
+  inputDescription.setAttribute('type', 'text');
+  inputDescription.setAttribute('id', 'description');
+  inputDescription.setAttribute('name', 'description');
+  let descriptionLabel = document.createElement('label');
+  descriptionLabel.innerText = 'Project Description';
+  descriptionLabel.setAttribute('for', 'description');
+  form.appendChild(descriptionLabel);
+
+  let inputButton = document.createElement('button');
+  inputButton.innerText = 'Add Project';
+  inputButton.classList.add('form-button');
+  form.appendChild(inputButton);
+}
+
+makeForm();
+
+function displayProjects() {
+  removeParagraphs();
+  // Loops through the array and grabs each value and it's index position
+  projectArray.forEach((currentValue, index) => {
+    // Loops through each object in the array and displays the key/value pair
+    for (const [key, value] of Object.entries(currentValue)) {
+      console.log(`${key}: ${value}`);
+      let paragraph = document.createElement('p');
+      paragraph.innerText = `${key}: ${value}`;
+      content.appendChild(paragraph);
+    }
+    console.log(index);
+  });
+}
+
+function removeParagraphs() {
+  document.querySelectorAll('p').forEach((e) => e.remove());
+}
+
+let projectArray = [];
+
+function addProjectToArray(project) {
+  projectArray.unshift(project);
+}
+
+function createProject(title, description) {
+  this.title = title;
+  this.description = description;
+  return { title, description };
+}
+
+document.querySelector('.form-button').addEventListener('click', (e) => {
+  e.preventDefault();
+  let title = document.querySelector('#title').value;
+  let description = document.querySelector('#description').value;
+
+  let newProject = createProject(title, description);
+
+  addProjectToArray(newProject);
+
+  displayProjects();
+});
