@@ -47,6 +47,10 @@ const { doc } = require('prettier');
 
 const content = document.querySelector('.content');
 
+let projectArray = [];
+
+// --- FUNCTIONS ---
+
 function makeForm() {
   let form = document.createElement('form');
   form.setAttribute('action', '');
@@ -73,6 +77,16 @@ function makeForm() {
   descriptionLabel.setAttribute('for', 'description');
   form.appendChild(descriptionLabel);
 
+  let inputDate = document.createElement('input');
+  form.appendChild(inputDate);
+  inputDate.setAttribute('type', 'date');
+  inputDate.setAttribute('id', 'date');
+  inputDate.setAttribute('name', 'date');
+  let dateLabel = document.createElement('label');
+  dateLabel.innerText = 'Project Date';
+  dateLabel.setAttribute('for', 'date');
+  form.appendChild(dateLabel);
+
   let inputButton = document.createElement('button');
   inputButton.innerText = 'Add Project';
   inputButton.classList.add('form-button');
@@ -81,13 +95,16 @@ function makeForm() {
 
 makeForm();
 
+// Maybe split this big mother up!!
 function displayProjects() {
+  // Removing displayed info
   removeParagraphs();
   // Loops through the array and grabs each value and it's index position
   projectArray.forEach((currentValue, index) => {
-    // Loops through each object in the array and displays the key/value pair
+    // Loops through each object in the array and displays each key/value pair
     for (const [key, value] of Object.entries(currentValue)) {
       console.log(`${key}: ${value}`);
+      // Creating the displayed info
       let paragraph = document.createElement('p');
       paragraph.innerText = `${key}: ${value}`;
       content.appendChild(paragraph);
@@ -100,24 +117,24 @@ function removeParagraphs() {
   document.querySelectorAll('p').forEach((e) => e.remove());
 }
 
-let projectArray = [];
-
 function addProjectToArray(project) {
   projectArray.unshift(project);
 }
 
-function createProject(title, description) {
-  this.title = title;
-  this.description = description;
-  return { title, description };
+function createProject(title, description, date) {
+  return { title, description, date };
 }
+
+// --- PROJECT LOGIC ---
 
 document.querySelector('.form-button').addEventListener('click', (e) => {
   e.preventDefault();
   let title = document.querySelector('#title').value;
   let description = document.querySelector('#description').value;
+  let date = document.querySelector('#date').value;
 
-  let newProject = createProject(title, description);
+  let newProject = createProject(title, description, date);
+  console.log(newProject);
 
   addProjectToArray(newProject);
 
