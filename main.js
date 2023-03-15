@@ -244,7 +244,7 @@ function makeForm() {
   titleLabel.setAttribute('for', 'title');
   form.appendChild(titleLabel);
 
-  createBreak(titleLabel);
+  createBreak(form);
 
   const inputDescription = document.createElement('input');
   form.appendChild(inputDescription);
@@ -256,7 +256,7 @@ function makeForm() {
   descriptionLabel.setAttribute('for', 'description');
   form.appendChild(descriptionLabel);
 
-  createBreak(descriptionLabel);
+  createBreak(form);
 
   const inputDate = document.createElement('input');
   form.appendChild(inputDate);
@@ -268,7 +268,7 @@ function makeForm() {
   dateLabel.setAttribute('for', 'date');
   form.appendChild(dateLabel);
 
-  createBreak(dateLabel);
+  createBreak(form);
 
   const radioPriority1 = document.createElement('input');
   form.appendChild(radioPriority1);
@@ -315,7 +315,7 @@ function makeForm() {
   labelPriority4.setAttribute('for', 'P4');
   form.appendChild(labelPriority4);
 
-  createBreak(labelPriority4);
+  createBreak(form);
 
   const notes = document.createElement('textarea');
   form.appendChild(notes);
@@ -326,12 +326,32 @@ function makeForm() {
   notesLabel.setAttribute('for', 'notes');
   form.appendChild(notesLabel);
 
-  createBreak(notesLabel);
+  createBreak(form);
 
-  const inputButton = document.createElement('button');
-  inputButton.innerText = 'Add ToDo';
-  inputButton.classList.add('form-button');
-  form.appendChild(inputButton);
+  const todoButton = document.createElement('button');
+  todoButton.innerText = 'Add ToDo';
+  todoButton.classList.add('todo-button');
+  form.appendChild(todoButton);
+
+  createBreak(form);
+  createBreak(form);
+
+  const newProjectTitle = document.createElement('input');
+  form.appendChild(newProjectTitle);
+  newProjectTitle.setAttribute('type', 'text');
+  newProjectTitle.setAttribute('id', 'newproject');
+  newProjectTitle.setAttribute('name', 'newproject');
+  const newProjectLabel = document.createElement('label');
+  newProjectLabel.innerText = 'Create New Project';
+  newProjectLabel.setAttribute('for', 'newproject');
+  form.appendChild(newProjectLabel);
+
+  createBreak(form);
+
+  const projectButton = document.createElement('button');
+  projectButton.innerText = 'Add New Project';
+  projectButton.classList.add('project-button');
+  form.appendChild(projectButton);
 }
 
 makeForm();
@@ -356,7 +376,7 @@ function displayToDo() {
 function createParagraph(key, value) {
   const paragraph = document.createElement('p');
   paragraph.innerText = `${key}: ${value}`;
-  content.appendChild(paragraph);
+  document.querySelector('.default-project').appendChild(paragraph);
 }
 
 function removeParagraphs() {
@@ -377,12 +397,29 @@ function getCheckedRadio() {
       return (priority = radio.value);
     }
   });
-  // return priority;
+}
+
+function createDefaultProject() {
+  if (!document.querySelector('.default-project')) {
+    const defaultProject = document.createElement('div');
+    defaultProject.classList.add('default-project');
+    defaultProject.innerText = 'Default Project';
+    content.appendChild(defaultProject);
+  }
+}
+
+function createNewProject(newProject) {
+  if (newProject) {
+    const newProjectDiv = document.createElement('div');
+    newProjectDiv.classList.add('new-project');
+    newProjectDiv.innerText = newProject;
+    content.appendChild(newProjectDiv);
+  }
 }
 
 // --- TODO LOGIC ---
 
-document.querySelector('.form-button').addEventListener('click', (e) => {
+document.querySelector('.todo-button').addEventListener('click', (e) => {
   e.preventDefault();
   const title = document.querySelector('#title').value;
   const description = document.querySelector('#description').value;
@@ -394,8 +431,18 @@ document.querySelector('.form-button').addEventListener('click', (e) => {
   console.log(newToDo);
 
   addToDoToArray(newToDo);
+  createDefaultProject();
   removeParagraphs();
   displayToDo();
+});
+
+// --- PROJECT LOGIC ---
+
+document.querySelector('.project-button').addEventListener('click', (e) => {
+  e.preventDefault();
+  const newProject = document.querySelector('#newproject').value;
+
+  createNewProject(newProject);
 });
 
 })();
