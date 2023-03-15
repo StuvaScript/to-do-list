@@ -47,7 +47,7 @@ const { doc } = require('prettier');
 
 const content = document.querySelector('.content');
 
-let projectArray = [];
+const projectArray = [];
 
 // --- FUNCTIONS ---
 
@@ -165,7 +165,7 @@ function displayProjects() {
 }
 
 function createParagraph(key, value) {
-  let paragraph = document.createElement('p');
+  const paragraph = document.createElement('p');
   paragraph.innerText = `${key}: ${value}`;
   content.appendChild(paragraph);
 }
@@ -182,26 +182,25 @@ function createProject(title, description, date, priority) {
   return { title, description, date, priority };
 }
 
-function getCheckedRadios(priority) {
+function getCheckedRadio() {
   document.querySelectorAll('[name="priority"]').forEach((radio) => {
     if (radio.checked) {
       priority = radio.value;
-      console.log(priority);
     }
   });
+  return priority;
 }
 
 // --- PROJECT LOGIC ---
 
 document.querySelector('.form-button').addEventListener('click', (e) => {
   e.preventDefault();
-  let title = document.querySelector('#title').value;
-  let description = document.querySelector('#description').value;
-  let date = document.querySelector('#date').value;
+  const title = document.querySelector('#title').value;
+  const description = document.querySelector('#description').value;
+  const date = document.querySelector('#date').value;
+  getCheckedRadio();
 
-  let priority;
-  getCheckedRadios(priority);
-  let newProject = createProject(title, description, date, priority);
+  const newProject = createProject(title, description, date, priority);
   console.log(newProject);
 
   addProjectToArray(newProject);
