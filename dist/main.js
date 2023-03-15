@@ -328,6 +328,22 @@ function makeForm() {
 
   createBreak(form);
 
+  const assignProject = document.createElement('select');
+  form.appendChild(assignProject);
+  assignProject.setAttribute('id', 'assignProject');
+  assignProject.setAttribute('name', 'assignProject');
+  const assignProjectLabel = document.createElement('label');
+  assignProjectLabel.innerText = 'Assign To Project';
+  assignProjectLabel.setAttribute('for', 'assignProject');
+  form.appendChild(assignProjectLabel);
+
+  const defaultOption = document.createElement('option');
+  assignProject.appendChild(defaultOption);
+  defaultOption.setAttribute('value', 'default-project');
+  defaultOption.innerText = 'Default Project';
+
+  createBreak(form);
+
   const todoButton = document.createElement('button');
   todoButton.innerText = 'Add ToDo';
   todoButton.classList.add('todo-button');
@@ -361,6 +377,25 @@ function createBreak(element) {
   element.appendChild(br);
 }
 
+function updateOptions() {
+  clearOptions();
+
+  const findSelect = document.querySelector('#assignProject');
+
+  document.querySelectorAll('.project').forEach((project) => {
+    const option = document.createElement('option');
+    option.setAttribute('value', project.innerText);
+    option.innerText = project.innerText;
+    findSelect.appendChild(option);
+  });
+}
+
+function clearOptions() {
+  document.querySelectorAll('option').forEach((option) => {
+    option.remove();
+  });
+}
+
 function displayToDo() {
   // Loops through the array and grabs each value and it's index position
   todoArray.forEach((currentValue, index) => {
@@ -376,7 +411,7 @@ function displayToDo() {
 function createParagraph(key, value) {
   const paragraph = document.createElement('p');
   paragraph.innerText = `${key}: ${value}`;
-  document.querySelector('.default-project').appendChild(paragraph);
+  document.querySelector('#default-project').appendChild(paragraph);
 }
 
 function removeParagraphs() {
@@ -387,8 +422,8 @@ function addToDoToArray(todo) {
   todoArray.unshift(todo);
 }
 
-function createToDo(title, description, date, priority, notes) {
-  return { title, description, date, priority, notes };
+function createToDo(project, title, description, date, priority, notes) {
+  return { project, title, description, date, priority, notes };
 }
 
 function getCheckedRadio() {
@@ -400,9 +435,10 @@ function getCheckedRadio() {
 }
 
 function createDefaultProject() {
-  if (!document.querySelector('.default-project')) {
+  if (!document.querySelector('#default-project')) {
     const defaultProject = document.createElement('div');
-    defaultProject.classList.add('default-project');
+    defaultProject.setAttribute('id', 'default-project');
+    defaultProject.classList.add('project');
     defaultProject.innerText = 'Default Project';
     content.appendChild(defaultProject);
   }
@@ -411,24 +447,33 @@ function createDefaultProject() {
 function createNewProject(newProject) {
   if (newProject) {
     const newProjectDiv = document.createElement('div');
-    newProjectDiv.classList.add('new-project');
+    newProjectDiv.classList.add('project');
     newProjectDiv.innerText = newProject;
     content.appendChild(newProjectDiv);
   }
 }
 
-// --- TODO LOGIC ---
+// --- TODO BUTTON LOGIC ---
 
 document.querySelector('.todo-button').addEventListener('click', (e) => {
   e.preventDefault();
+  const project = document.querySelector('#assignProject').value;
   const title = document.querySelector('#title').value;
   const description = document.querySelector('#description').value;
   const date = document.querySelector('#date').value;
   getCheckedRadio();
   const notes = document.querySelector('#notes').value;
 
-  const newToDo = createToDo(title, description, date, priority, notes);
+  const newToDo = createToDo(
+    project,
+    title,
+    description,
+    date,
+    priority,
+    notes
+  );
   console.log(newToDo);
+  console.log(todoArray);
 
   addToDoToArray(newToDo);
   createDefaultProject();
@@ -436,14 +481,17 @@ document.querySelector('.todo-button').addEventListener('click', (e) => {
   displayToDo();
 });
 
-// --- PROJECT LOGIC ---
+// --- PROJECT BUTTON LOGIC ---
 
 document.querySelector('.project-button').addEventListener('click', (e) => {
   e.preventDefault();
   const newProject = document.querySelector('#newproject').value;
 
   createNewProject(newProject);
+  updateOptions();
 });
+
+// When I create new projects, it deletes the default project option. And it also adds more shit. Idk, I'm braindead. Figure this out tmrw.
 
 })();
 
