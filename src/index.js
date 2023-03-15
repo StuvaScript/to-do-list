@@ -47,7 +47,7 @@ const { doc } = require('prettier');
 
 const content = document.querySelector('.content');
 
-const projectArray = [];
+const todoArray = [];
 
 // --- FUNCTIONS ---
 
@@ -63,7 +63,7 @@ function makeForm() {
   inputTitle.setAttribute('id', 'title');
   inputTitle.setAttribute('name', 'title');
   const titleLabel = document.createElement('label');
-  titleLabel.innerText = 'Project Title';
+  titleLabel.innerText = 'ToDo Title';
   titleLabel.setAttribute('for', 'title');
   form.appendChild(titleLabel);
 
@@ -75,7 +75,7 @@ function makeForm() {
   inputDescription.setAttribute('id', 'description');
   inputDescription.setAttribute('name', 'description');
   const descriptionLabel = document.createElement('label');
-  descriptionLabel.innerText = 'Project Description';
+  descriptionLabel.innerText = 'ToDo Description';
   descriptionLabel.setAttribute('for', 'description');
   form.appendChild(descriptionLabel);
 
@@ -87,7 +87,7 @@ function makeForm() {
   inputDate.setAttribute('id', 'date');
   inputDate.setAttribute('name', 'date');
   const dateLabel = document.createElement('label');
-  dateLabel.innerText = 'Project Date';
+  dateLabel.innerText = 'Due Date';
   dateLabel.setAttribute('for', 'date');
   form.appendChild(dateLabel);
 
@@ -132,6 +132,7 @@ function makeForm() {
   radioPriority4.setAttribute('id', 'P4');
   radioPriority4.setAttribute('name', 'priority');
   radioPriority4.setAttribute('value', 'P4');
+  radioPriority4.setAttribute('checked', '');
   const labelPriority4 = document.createElement('label');
   labelPriority4.innerText = 'P4';
   labelPriority4.setAttribute('for', 'P4');
@@ -139,8 +140,19 @@ function makeForm() {
 
   createBreak(labelPriority4);
 
+  const notes = document.createElement('textarea');
+  form.appendChild(notes);
+  notes.setAttribute('id', 'notes');
+  notes.setAttribute('name', 'notes');
+  const notesLabel = document.createElement('label');
+  notesLabel.innerText = 'Notes';
+  notesLabel.setAttribute('for', 'notes');
+  form.appendChild(notesLabel);
+
+  createBreak(notesLabel);
+
   const inputButton = document.createElement('button');
-  inputButton.innerText = 'Add Project';
+  inputButton.innerText = 'Add ToDo';
   inputButton.classList.add('form-button');
   form.appendChild(inputButton);
 }
@@ -152,15 +164,15 @@ function createBreak(element) {
   element.appendChild(br);
 }
 
-function displayProjects() {
+function displayToDo() {
   // Loops through the array and grabs each value and it's index position
-  projectArray.forEach((currentValue, index) => {
+  todoArray.forEach((currentValue, index) => {
     // Loops through each object in the array and displays each key/value pair
     for (const [key, value] of Object.entries(currentValue)) {
       console.log(`${key}: ${value}`);
       createParagraph(key, value);
     }
-    console.log(index);
+    console.log(index + ' index');
   });
 }
 
@@ -174,24 +186,24 @@ function removeParagraphs() {
   document.querySelectorAll('p').forEach((e) => e.remove());
 }
 
-function addProjectToArray(project) {
-  projectArray.unshift(project);
+function addToDoToArray(todo) {
+  todoArray.unshift(todo);
 }
 
-function createProject(title, description, date, priority) {
-  return { title, description, date, priority };
+function createToDo(title, description, date, priority, notes) {
+  return { title, description, date, priority, notes };
 }
 
 function getCheckedRadio() {
   document.querySelectorAll('[name="priority"]').forEach((radio) => {
     if (radio.checked) {
-      priority = radio.value;
+      return (priority = radio.value);
     }
   });
-  return priority;
+  // return priority;
 }
 
-// --- PROJECT LOGIC ---
+// --- TODO LOGIC ---
 
 document.querySelector('.form-button').addEventListener('click', (e) => {
   e.preventDefault();
@@ -199,11 +211,12 @@ document.querySelector('.form-button').addEventListener('click', (e) => {
   const description = document.querySelector('#description').value;
   const date = document.querySelector('#date').value;
   getCheckedRadio();
+  const notes = document.querySelector('#notes').value;
 
-  const newProject = createProject(title, description, date, priority);
-  console.log(newProject);
+  const newToDo = createToDo(title, description, date, priority, notes);
+  console.log(newToDo);
 
-  addProjectToArray(newProject);
+  addToDoToArray(newToDo);
   removeParagraphs();
-  displayProjects();
+  displayToDo();
 });
