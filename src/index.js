@@ -52,42 +52,94 @@ let projectArray = [];
 // --- FUNCTIONS ---
 
 function makeForm() {
-  let form = document.createElement('form');
+  const form = document.createElement('form');
   form.setAttribute('action', '');
   form.setAttribute('method', 'get');
   content.appendChild(form);
 
-  let inputTitle = document.createElement('input');
+  const inputTitle = document.createElement('input');
   form.appendChild(inputTitle);
   inputTitle.setAttribute('type', 'text');
   inputTitle.setAttribute('id', 'title');
   inputTitle.setAttribute('name', 'title');
-  let titleLabel = document.createElement('label');
+  const titleLabel = document.createElement('label');
   titleLabel.innerText = 'Project Title';
   titleLabel.setAttribute('for', 'title');
   form.appendChild(titleLabel);
 
-  let inputDescription = document.createElement('input');
+  createBreak(titleLabel);
+
+  const inputDescription = document.createElement('input');
   form.appendChild(inputDescription);
   inputDescription.setAttribute('type', 'text');
   inputDescription.setAttribute('id', 'description');
   inputDescription.setAttribute('name', 'description');
-  let descriptionLabel = document.createElement('label');
+  const descriptionLabel = document.createElement('label');
   descriptionLabel.innerText = 'Project Description';
   descriptionLabel.setAttribute('for', 'description');
   form.appendChild(descriptionLabel);
 
-  let inputDate = document.createElement('input');
+  createBreak(descriptionLabel);
+
+  const inputDate = document.createElement('input');
   form.appendChild(inputDate);
   inputDate.setAttribute('type', 'date');
   inputDate.setAttribute('id', 'date');
   inputDate.setAttribute('name', 'date');
-  let dateLabel = document.createElement('label');
+  const dateLabel = document.createElement('label');
   dateLabel.innerText = 'Project Date';
   dateLabel.setAttribute('for', 'date');
   form.appendChild(dateLabel);
 
-  let inputButton = document.createElement('button');
+  createBreak(dateLabel);
+
+  const radioPriority1 = document.createElement('input');
+  form.appendChild(radioPriority1);
+  radioPriority1.setAttribute('type', 'radio');
+  radioPriority1.setAttribute('id', 'P1');
+  radioPriority1.setAttribute('name', 'priority');
+  radioPriority1.setAttribute('value', 'P1');
+  const labelPriority1 = document.createElement('label');
+  labelPriority1.innerText = 'P1';
+  labelPriority1.setAttribute('for', 'P1');
+  form.appendChild(labelPriority1);
+
+  const radioPriority2 = document.createElement('input');
+  form.appendChild(radioPriority2);
+  radioPriority2.setAttribute('type', 'radio');
+  radioPriority2.setAttribute('id', 'P2');
+  radioPriority2.setAttribute('name', 'priority');
+  radioPriority2.setAttribute('value', 'P2');
+  const labelPriority2 = document.createElement('label');
+  labelPriority2.innerText = 'P2';
+  labelPriority2.setAttribute('for', 'P2');
+  form.appendChild(labelPriority2);
+
+  const radioPriority3 = document.createElement('input');
+  form.appendChild(radioPriority3);
+  radioPriority3.setAttribute('type', 'radio');
+  radioPriority3.setAttribute('id', 'P3');
+  radioPriority3.setAttribute('name', 'priority');
+  radioPriority3.setAttribute('value', 'P3');
+  const labelPriority3 = document.createElement('label');
+  labelPriority3.innerText = 'P3';
+  labelPriority3.setAttribute('for', 'P3');
+  form.appendChild(labelPriority3);
+
+  const radioPriority4 = document.createElement('input');
+  form.appendChild(radioPriority4);
+  radioPriority4.setAttribute('type', 'radio');
+  radioPriority4.setAttribute('id', 'P4');
+  radioPriority4.setAttribute('name', 'priority');
+  radioPriority4.setAttribute('value', 'P4');
+  const labelPriority4 = document.createElement('label');
+  labelPriority4.innerText = 'P4';
+  labelPriority4.setAttribute('for', 'P4');
+  form.appendChild(labelPriority4);
+
+  createBreak(labelPriority4);
+
+  const inputButton = document.createElement('button');
   inputButton.innerText = 'Add Project';
   inputButton.classList.add('form-button');
   form.appendChild(inputButton);
@@ -95,22 +147,27 @@ function makeForm() {
 
 makeForm();
 
-// Maybe split this big mother up!!
+function createBreak(element) {
+  const br = document.createElement('br');
+  element.appendChild(br);
+}
+
 function displayProjects() {
-  // Removing displayed info
-  removeParagraphs();
   // Loops through the array and grabs each value and it's index position
   projectArray.forEach((currentValue, index) => {
     // Loops through each object in the array and displays each key/value pair
     for (const [key, value] of Object.entries(currentValue)) {
       console.log(`${key}: ${value}`);
-      // Creating the displayed info
-      let paragraph = document.createElement('p');
-      paragraph.innerText = `${key}: ${value}`;
-      content.appendChild(paragraph);
+      createParagraph(key, value);
     }
     console.log(index);
   });
+}
+
+function createParagraph(key, value) {
+  let paragraph = document.createElement('p');
+  paragraph.innerText = `${key}: ${value}`;
+  content.appendChild(paragraph);
 }
 
 function removeParagraphs() {
@@ -121,8 +178,17 @@ function addProjectToArray(project) {
   projectArray.unshift(project);
 }
 
-function createProject(title, description, date) {
-  return { title, description, date };
+function createProject(title, description, date, priority) {
+  return { title, description, date, priority };
+}
+
+function getCheckedRadios(priority) {
+  document.querySelectorAll('[name="priority"]').forEach((radio) => {
+    if (radio.checked) {
+      priority = radio.value;
+      console.log(priority);
+    }
+  });
 }
 
 // --- PROJECT LOGIC ---
@@ -133,10 +199,12 @@ document.querySelector('.form-button').addEventListener('click', (e) => {
   let description = document.querySelector('#description').value;
   let date = document.querySelector('#date').value;
 
-  let newProject = createProject(title, description, date);
+  let priority;
+  getCheckedRadios(priority);
+  let newProject = createProject(title, description, date, priority);
   console.log(newProject);
 
   addProjectToArray(newProject);
-
+  removeParagraphs();
   displayProjects();
 });
