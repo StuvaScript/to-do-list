@@ -216,11 +216,11 @@ function clearOptions() {
 function displayToDo() {
   // Loops through the array and grabs each value and it's index position
   todoArray.forEach((currentValue, index) => {
-    console.log(index + ' ' + Object.keys(currentValue)[0]);
+    console.log(index + ' ' + Object.values(currentValue)[0]);
     // Loops through each object in the array and displays each key/value pair
-    for (const [key, value] of Object.entries(currentValue)) {
-      console.log(`${key}: ${value}`);
-      createParagraph(key, value);
+    for (const [objectKey, objectValue] of Object.entries(currentValue)) {
+      // console.log(`${key}: ${value}`);
+      createParagraph(objectKey, objectValue);
     }
   });
 }
@@ -228,7 +228,12 @@ function displayToDo() {
 function createParagraph(key, value) {
   const paragraph = document.createElement('p');
   paragraph.innerText = `${key}: ${value}`;
-  // document.querySelector('#default-project').appendChild(paragraph);
+
+  // todoArray.forEach((currentValue, index) => {
+  //   console.log(index + ' ' + Object.values(currentValue)[0]);
+
+  // }
+
   content.appendChild(paragraph);
 }
 
