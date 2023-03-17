@@ -234,6 +234,41 @@ function makeForm() {
   form.setAttribute('method', 'get');
   content.appendChild(form);
 
+  const assignProject = document.createElement('select');
+  form.appendChild(assignProject);
+  assignProject.setAttribute('id', 'assignProject');
+  assignProject.setAttribute('name', 'assignProject');
+  const assignProjectLabel = document.createElement('label');
+  assignProjectLabel.innerText = 'Assign To Project';
+  assignProjectLabel.setAttribute('for', 'assignProject');
+  form.appendChild(assignProjectLabel);
+
+  const defaultOption = document.createElement('option');
+  assignProject.appendChild(defaultOption);
+  defaultOption.setAttribute('value', 'default-project');
+  defaultOption.innerText = 'Default Project';
+
+  createBreak(form);
+
+  const newProjectTitle = document.createElement('input');
+  form.appendChild(newProjectTitle);
+  newProjectTitle.setAttribute('type', 'text');
+  newProjectTitle.setAttribute('id', 'newproject');
+  newProjectTitle.setAttribute('name', 'newproject');
+  const newProjectLabel = document.createElement('label');
+  newProjectLabel.innerText = 'Or Create New Project';
+  newProjectLabel.setAttribute('for', 'newproject');
+  form.appendChild(newProjectLabel);
+
+  createBreak(form);
+
+  const projectButton = document.createElement('button');
+  projectButton.innerText = 'Add New Project';
+  projectButton.classList.add('project-button');
+  form.appendChild(projectButton);
+
+  createBreak(form);
+
   const inputTitle = document.createElement('input');
   form.appendChild(inputTitle);
   inputTitle.setAttribute('type', 'text');
@@ -328,46 +363,10 @@ function makeForm() {
 
   createBreak(form);
 
-  const assignProject = document.createElement('select');
-  form.appendChild(assignProject);
-  assignProject.setAttribute('id', 'assignProject');
-  assignProject.setAttribute('name', 'assignProject');
-  const assignProjectLabel = document.createElement('label');
-  assignProjectLabel.innerText = 'Assign To Project';
-  assignProjectLabel.setAttribute('for', 'assignProject');
-  form.appendChild(assignProjectLabel);
-
-  const defaultOption = document.createElement('option');
-  assignProject.appendChild(defaultOption);
-  defaultOption.setAttribute('value', 'default-project');
-  defaultOption.innerText = 'Default Project';
-
-  createBreak(form);
-
   const todoButton = document.createElement('button');
   todoButton.innerText = 'Add ToDo';
   todoButton.classList.add('todo-button');
   form.appendChild(todoButton);
-
-  createBreak(form);
-  createBreak(form);
-
-  const newProjectTitle = document.createElement('input');
-  form.appendChild(newProjectTitle);
-  newProjectTitle.setAttribute('type', 'text');
-  newProjectTitle.setAttribute('id', 'newproject');
-  newProjectTitle.setAttribute('name', 'newproject');
-  const newProjectLabel = document.createElement('label');
-  newProjectLabel.innerText = 'Create New Project';
-  newProjectLabel.setAttribute('for', 'newproject');
-  form.appendChild(newProjectLabel);
-
-  createBreak(form);
-
-  const projectButton = document.createElement('button');
-  projectButton.innerText = 'Add New Project';
-  projectButton.classList.add('project-button');
-  form.appendChild(projectButton);
 }
 
 makeForm();
@@ -377,17 +376,12 @@ function createBreak(element) {
   element.appendChild(br);
 }
 
-function updateOptions() {
-  clearOptions();
-
-  const findSelect = document.querySelector('#assignProject');
-
-  document.querySelectorAll('.project').forEach((project) => {
-    const option = document.createElement('option');
-    option.setAttribute('value', project.innerText);
-    option.innerText = project.innerText;
-    findSelect.appendChild(option);
-  });
+function updateOptions(newProject) {
+  const getDropdownMenu = document.querySelector('#assignProject');
+  const option = document.createElement('option');
+  option.setAttribute('value', newProject);
+  option.innerText = newProject;
+  getDropdownMenu.appendChild(option);
 }
 
 function clearOptions() {
@@ -399,19 +393,20 @@ function clearOptions() {
 function displayToDo() {
   // Loops through the array and grabs each value and it's index position
   todoArray.forEach((currentValue, index) => {
+    console.log(index + ' ' + Object.keys(currentValue)[0]);
     // Loops through each object in the array and displays each key/value pair
     for (const [key, value] of Object.entries(currentValue)) {
       console.log(`${key}: ${value}`);
       createParagraph(key, value);
     }
-    console.log(index + ' index');
   });
 }
 
 function createParagraph(key, value) {
   const paragraph = document.createElement('p');
   paragraph.innerText = `${key}: ${value}`;
-  document.querySelector('#default-project').appendChild(paragraph);
+  // document.querySelector('#default-project').appendChild(paragraph);
+  content.appendChild(paragraph);
 }
 
 function removeParagraphs() {
@@ -434,24 +429,24 @@ function getCheckedRadio() {
   });
 }
 
-function createDefaultProject() {
-  if (!document.querySelector('#default-project')) {
-    const defaultProject = document.createElement('div');
-    defaultProject.setAttribute('id', 'default-project');
-    defaultProject.classList.add('project');
-    defaultProject.innerText = 'Default Project';
-    content.appendChild(defaultProject);
-  }
-}
+// function createDefaultProject() {
+//   if (!document.querySelector('#default-project')) {
+//     const defaultProject = document.createElement('div');
+//     defaultProject.setAttribute('id', 'default-project');
+//     defaultProject.classList.add('project');
+//     defaultProject.innerText = 'Default Project';
+//     content.appendChild(defaultProject);
+//   }
+// }
 
-function createNewProject(newProject) {
-  if (newProject) {
-    const newProjectDiv = document.createElement('div');
-    newProjectDiv.classList.add('project');
-    newProjectDiv.innerText = newProject;
-    content.appendChild(newProjectDiv);
-  }
-}
+// function createNewProject(newProject) {
+//   if (newProject) {
+//     const newProjectDiv = document.createElement('div');
+//     newProjectDiv.classList.add('project');
+//     newProjectDiv.innerText = newProject;
+//     content.appendChild(newProjectDiv);
+//   }
+// }
 
 // --- TODO BUTTON LOGIC ---
 
@@ -472,11 +467,10 @@ document.querySelector('.todo-button').addEventListener('click', (e) => {
     priority,
     notes
   );
-  console.log(newToDo);
-  console.log(todoArray);
 
   addToDoToArray(newToDo);
-  createDefaultProject();
+  console.log(todoArray);
+  // createDefaultProject();
   removeParagraphs();
   displayToDo();
 });
@@ -487,11 +481,9 @@ document.querySelector('.project-button').addEventListener('click', (e) => {
   e.preventDefault();
   const newProject = document.querySelector('#newproject').value;
 
-  createNewProject(newProject);
-  updateOptions();
+  // createNewProject(newProject);
+  updateOptions(newProject);
 });
-
-// When I create new projects, it deletes the default project option. And it also adds more shit. Idk, I'm braindead. Figure this out tmrw.
 
 })();
 
