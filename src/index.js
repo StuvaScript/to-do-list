@@ -49,7 +49,59 @@ const content = document.querySelector('.content');
 
 const todoArray = [];
 
+makeForm();
+
+// --- 'ADD TODO' BUTTON LOGIC ---
+
+document.querySelector('.todo-button').addEventListener('click', (e) => {
+  e.preventDefault();
+  const project = document.querySelector('#dropdownProjectMenu');
+  let title = document.querySelector('#title');
+  const description = document.querySelector('#description');
+  const date = document.querySelector('#date');
+  getCheckedRadio();
+  const notes = document.querySelector('#notes');
+
+  const newToDo = createToDo(
+    project.value,
+    title.value,
+    description.value,
+    date.value,
+    priority,
+    notes.value
+  );
+
+  addToDoToArray(newToDo);
+  console.log(todoArray);
+  // createDefaultProject();
+  removeParagraphs();
+  displayToDo();
+  resetFormFields(project, title, description, date, notes);
+});
+
+// --- 'ADD NEW PROJECT' BUTTON LOGIC ---
+
+document.querySelector('.project-button').addEventListener('click', (e) => {
+  e.preventDefault();
+  const newProject = document.querySelector('#newproject').value;
+
+  // createNewProject(newProject);
+  updateOptions(newProject);
+});
+
 // --- FUNCTIONS ---
+
+function resetFormFields(project, title, description, date, notes) {
+  project.value = document.querySelector('#dropdownProjectMenu > option').value;
+  title.value = '';
+  description.value = '';
+  date.value = '';
+  notes.value = '';
+  // resets radio buttons
+  document.querySelector('#P4').checked = true;
+  // resets 'create new project' input field
+  document.querySelector('#newproject').value = '';
+}
 
 function makeForm() {
   const form = document.createElement('form');
@@ -57,17 +109,17 @@ function makeForm() {
   form.setAttribute('method', 'get');
   content.appendChild(form);
 
-  const assignProject = document.createElement('select');
-  form.appendChild(assignProject);
-  assignProject.setAttribute('id', 'assignProject');
-  assignProject.setAttribute('name', 'assignProject');
-  const assignProjectLabel = document.createElement('label');
-  assignProjectLabel.innerText = 'Assign To Project';
-  assignProjectLabel.setAttribute('for', 'assignProject');
-  form.appendChild(assignProjectLabel);
+  const dropdownProjectMenu = document.createElement('select');
+  form.appendChild(dropdownProjectMenu);
+  dropdownProjectMenu.setAttribute('id', 'dropdownProjectMenu');
+  dropdownProjectMenu.setAttribute('name', 'dropdownProjectMenu');
+  const dropdownProjectMenuLabel = document.createElement('label');
+  dropdownProjectMenuLabel.innerText = 'Assign To Project';
+  dropdownProjectMenuLabel.setAttribute('for', 'dropdownProjectMenu');
+  form.appendChild(dropdownProjectMenuLabel);
 
   const defaultOption = document.createElement('option');
-  assignProject.appendChild(defaultOption);
+  dropdownProjectMenu.appendChild(defaultOption);
   defaultOption.setAttribute('value', 'default-project');
   defaultOption.innerText = 'Default Project';
 
@@ -92,11 +144,11 @@ function makeForm() {
 
   createBreak(form);
 
-  const inputTitle = document.createElement('input');
-  form.appendChild(inputTitle);
-  inputTitle.setAttribute('type', 'text');
-  inputTitle.setAttribute('id', 'title');
-  inputTitle.setAttribute('name', 'title');
+  const todoTitle = document.createElement('input');
+  form.appendChild(todoTitle);
+  todoTitle.setAttribute('type', 'text');
+  todoTitle.setAttribute('id', 'title');
+  todoTitle.setAttribute('name', 'title');
   const titleLabel = document.createElement('label');
   titleLabel.innerText = 'ToDo Title';
   titleLabel.setAttribute('for', 'title');
@@ -104,11 +156,11 @@ function makeForm() {
 
   createBreak(form);
 
-  const inputDescription = document.createElement('input');
-  form.appendChild(inputDescription);
-  inputDescription.setAttribute('type', 'text');
-  inputDescription.setAttribute('id', 'description');
-  inputDescription.setAttribute('name', 'description');
+  const todoDescription = document.createElement('input');
+  form.appendChild(todoDescription);
+  todoDescription.setAttribute('type', 'text');
+  todoDescription.setAttribute('id', 'description');
+  todoDescription.setAttribute('name', 'description');
   const descriptionLabel = document.createElement('label');
   descriptionLabel.innerText = 'ToDo Description';
   descriptionLabel.setAttribute('for', 'description');
@@ -116,11 +168,11 @@ function makeForm() {
 
   createBreak(form);
 
-  const inputDate = document.createElement('input');
-  form.appendChild(inputDate);
-  inputDate.setAttribute('type', 'date');
-  inputDate.setAttribute('id', 'date');
-  inputDate.setAttribute('name', 'date');
+  const todoDate = document.createElement('input');
+  form.appendChild(todoDate);
+  todoDate.setAttribute('type', 'date');
+  todoDate.setAttribute('id', 'date');
+  todoDate.setAttribute('name', 'date');
   const dateLabel = document.createElement('label');
   dateLabel.innerText = 'Due Date';
   dateLabel.setAttribute('for', 'date');
@@ -192,26 +244,24 @@ function makeForm() {
   form.appendChild(todoButton);
 }
 
-makeForm();
-
 function createBreak(element) {
   const br = document.createElement('br');
   element.appendChild(br);
 }
 
 function updateOptions(newProject) {
-  const getDropdownMenu = document.querySelector('#assignProject');
+  const getDropdownMenu = document.querySelector('#dropdownProjectMenu');
   const option = document.createElement('option');
   option.setAttribute('value', newProject);
   option.innerText = newProject;
   getDropdownMenu.appendChild(option);
 }
 
-function clearOptions() {
-  document.querySelectorAll('option').forEach((option) => {
-    option.remove();
-  });
-}
+// function clearOptions() {
+//   document.querySelectorAll('option').forEach((option) => {
+//     option.remove();
+//   });
+// }
 
 function displayToDo() {
   // Loops through the array and grabs each value and it's index position
@@ -225,9 +275,9 @@ function displayToDo() {
   });
 }
 
-function createParagraph(key, value) {
+function createParagraph(objectKey, objectValue) {
   const paragraph = document.createElement('p');
-  paragraph.innerText = `${key}: ${value}`;
+  paragraph.innerText = `${objectKey}: ${objectValue}`;
 
   // todoArray.forEach((currentValue, index) => {
   //   console.log(index + ' ' + Object.values(currentValue)[0]);
@@ -238,11 +288,11 @@ function createParagraph(key, value) {
 }
 
 function removeParagraphs() {
-  document.querySelectorAll('p').forEach((e) => e.remove());
+  document.querySelectorAll('p').forEach((para) => para.remove());
 }
 
-function addToDoToArray(todo) {
-  todoArray.unshift(todo);
+function addToDoToArray(newTodo) {
+  todoArray.unshift(newTodo);
 }
 
 function createToDo(project, title, description, date, priority, notes) {
@@ -275,40 +325,3 @@ function getCheckedRadio() {
 //     content.appendChild(newProjectDiv);
 //   }
 // }
-
-// --- TODO BUTTON LOGIC ---
-
-document.querySelector('.todo-button').addEventListener('click', (e) => {
-  e.preventDefault();
-  const project = document.querySelector('#assignProject').value;
-  const title = document.querySelector('#title').value;
-  const description = document.querySelector('#description').value;
-  const date = document.querySelector('#date').value;
-  getCheckedRadio();
-  const notes = document.querySelector('#notes').value;
-
-  const newToDo = createToDo(
-    project,
-    title,
-    description,
-    date,
-    priority,
-    notes
-  );
-
-  addToDoToArray(newToDo);
-  console.log(todoArray);
-  // createDefaultProject();
-  removeParagraphs();
-  displayToDo();
-});
-
-// --- PROJECT BUTTON LOGIC ---
-
-document.querySelector('.project-button').addEventListener('click', (e) => {
-  e.preventDefault();
-  const newProject = document.querySelector('#newproject').value;
-
-  // createNewProject(newProject);
-  updateOptions(newProject);
-});
