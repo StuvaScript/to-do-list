@@ -83,10 +83,27 @@ document.querySelector('.todo-button').addEventListener('click', (e) => {
 
 document.querySelector('.project-button').addEventListener('click', (e) => {
   e.preventDefault();
-  const newProject = document.querySelector('#newproject').value;
+  const newProjectField = document.querySelector('#newproject');
 
-  // createNewProject(newProject);
-  updateOptions(newProject);
+  if (newProjectField.value === '') {
+    return;
+  }
+
+  //======================================================================
+  // Trying to make it so that if you type in a project name that already exists, it wont make a duplicate
+  document.querySelectorAll('option').forEach((option) => {
+    console.log(option.innerText);
+    option.innerText == newProjectField.value;
+  });
+  //======================================================================
+
+  updateOptions(newProjectField);
+  // resets 'create new project' input field
+  newProjectField.value = '';
+  // automatically sets dropdown menu to last created new project
+  document.querySelector('#dropdownProjectMenu').value = document.querySelector(
+    '#dropdownProjectMenu > option:last-child'
+  ).value;
 });
 
 // --- FUNCTIONS ---
@@ -249,12 +266,12 @@ function createBreak(element) {
   element.appendChild(br);
 }
 
-function updateOptions(newProject) {
+function updateOptions(newProjectField) {
   const getDropdownMenu = document.querySelector('#dropdownProjectMenu');
-  const option = document.createElement('option');
-  option.setAttribute('value', newProject);
-  option.innerText = newProject;
-  getDropdownMenu.appendChild(option);
+  const makeOption = document.createElement('option');
+  makeOption.setAttribute('value', newProjectField.value);
+  makeOption.innerText = newProjectField.value;
+  getDropdownMenu.appendChild(makeOption);
 }
 
 // function clearOptions() {
