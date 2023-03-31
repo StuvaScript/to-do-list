@@ -49,82 +49,122 @@ const content = document.querySelector('.content');
 
 const todoArray = [];
 
-makeForm();
-
-// --- 'ADD TODO' BUTTON LOGIC ---
-
-document.querySelector('.todo-button').addEventListener('click', (e) => {
-  e.preventDefault();
-  const project = document.querySelector('#dropdownProjectMenu');
-  let title = document.querySelector('#title');
-  const description = document.querySelector('#description');
-  const date = document.querySelector('#date');
-  getCheckedRadio();
-  const notes = document.querySelector('#notes');
-
-  const newToDo = createToDo(
-    project.value,
-    title.value,
-    description.value,
-    date.value,
-    priority,
-    notes.value
-  );
-
-  addToDoToArray(newToDo);
-  console.log(todoArray);
-  // createDefaultProject();
-  removeParagraphs();
-  displayToDo();
-  resetFormFields(project, title, description, date, notes);
-});
-
-// --- 'ADD NEW PROJECT' BUTTON LOGIC ---
-
-document.querySelector('.project-button').addEventListener('click', (e) => {
-  e.preventDefault();
-  const newProjectField = document.querySelector('#newproject');
-
-  if (newProjectField.value === '') {
-    return;
-  }
-
-  //======================================================================
-  // Trying to make it so that if you type in a project name that already exists, it wont make a duplicate
-  document.querySelectorAll('option').forEach((option) => {
-    console.log(option.innerText);
-    option.innerText == newProjectField.value;
-  });
-  //======================================================================
-
-  updateOptions(newProjectField);
-  // resets 'create new project' input field
-  newProjectField.value = '';
-  // automatically sets dropdown menu to last created new project
-  document.querySelector('#dropdownProjectMenu').value = document.querySelector(
-    '#dropdownProjectMenu > option:last-child'
-  ).value;
-});
+createToDoItemButton();
+createToDoItemButtonLogic();
 
 // --- FUNCTIONS ---
 
-function resetFormFields(project, title, description, date, notes) {
-  project.value = document.querySelector('#dropdownProjectMenu > option').value;
-  title.value = '';
-  description.value = '';
-  date.value = '';
-  notes.value = '';
-  // resets radio buttons
-  document.querySelector('#P4').checked = true;
-  // resets 'create new project' input field
-  document.querySelector('#newproject').value = '';
+function removeCreateToDoItemButton() {
+  document.querySelector('.new-todo-button').remove();
+}
+
+function removeForm() {
+  document.querySelector('form').remove();
+}
+
+function createToDoItemButtonLogic() {
+  document.querySelector('.new-todo-button').addEventListener('click', (e) => {
+    e.preventDefault();
+    removeCreateToDoItemButton();
+    makeForm();
+    addToDoButtonLogic();
+    addNewProjectButtonLogic();
+  });
+}
+
+function addToDoButtonLogic() {
+  document.querySelector('.todo-button').addEventListener('click', (e) => {
+    e.preventDefault();
+    const project = document.querySelector('#dropdownProjectMenu');
+    let title = document.querySelector('#title');
+    const description = document.querySelector('#description');
+    const date = document.querySelector('#date');
+    getCheckedRadio();
+    const notes = document.querySelector('#notes');
+
+    const newToDo = createToDo(
+      project.value,
+      title.value,
+      description.value,
+      date.value,
+      priority,
+      notes.value
+    );
+
+    addToDoToArray(newToDo);
+    console.log(todoArray);
+    // createDefaultProject();
+    removeParagraphs();
+    displayProjects();
+    displayToDo();
+    // resetFormFields(project, title, description, date, notes);
+    removeForm();
+    createToDoItemButton();
+    createToDoItemButtonLogic();
+  });
+}
+
+//=======================================================================
+// Need to create a project array. Then when you click 'Add New Project' button, it adds the project name to the array. Then every time the form gets generated, it cycles thru the project array and populates the dropdown menu with the current projects.
+//=======================================================================
+
+function addNewProjectButtonLogic() {
+  document.querySelector('.project-button').addEventListener('click', (e) => {
+    e.preventDefault();
+    const newProjectField = document.querySelector('#newproject');
+
+    if (newProjectField.value === '') {
+      return;
+    }
+
+    checkForDuplicates(newProjectField);
+
+    // resets 'create new project' input field
+    newProjectField.value = '';
+    // automatically sets dropdown menu to last created new project
+    document.querySelector('#dropdownProjectMenu').value =
+      document.querySelector('#dropdownProjectMenu > option:last-child').value;
+  });
+}
+
+function checkForDuplicates(newProjectField) {
+  let optionDuplicate = false;
+
+  document.querySelectorAll('option').forEach((option) => {
+    if (newProjectField.value == option.innerText) {
+      optionDuplicate = true;
+    }
+  });
+
+  if (optionDuplicate !== true) {
+    updateOptions(newProjectField);
+  }
+}
+
+// function resetFormFields(project, title, description, date, notes) {
+//   project.value = document.querySelector('#dropdownProjectMenu > option').value;
+//   title.value = '';
+//   description.value = '';
+//   date.value = '';
+//   notes.value = '';
+//   // resets radio buttons
+//   document.querySelector('#P4').checked = true;
+//   // resets 'create new project' input field
+//   document.querySelector('#newproject').value = '';
+// }
+
+function createToDoItemButton() {
+  const newToDoButton = document.createElement('button');
+  newToDoButton.innerText = 'Create ToDo Item';
+  newToDoButton.classList.add('new-todo-button');
+  content.prepend(newToDoButton);
 }
 
 function makeForm() {
   const form = document.createElement('form');
   form.setAttribute('action', '');
   form.setAttribute('method', 'get');
-  content.appendChild(form);
+  content.prepend(form);
 
   const dropdownProjectMenu = document.createElement('select');
   form.appendChild(dropdownProjectMenu);
@@ -280,19 +320,39 @@ function updateOptions(newProjectField) {
 //   });
 // }
 
+function displayProjects() {
+  // Loops through the array and grabs each value and it's index position
+  todoArray.forEach((currentValue, index) => {
+    const projectValues = Object.values(currentValue)[0];
+    createProjectParagraphs(projectValues);
+  });
+}
+
+function createProjectParagraphs(projectValues) {
+  const paragraph = document.createElement('p');
+  paragraph.innerText = `${projectValues}`;
+
+  // todoArray.forEach((currentValue, index) => {
+  //   console.log(index + ' ' + Object.values(currentValue)[0]);
+
+  // }
+
+  content.appendChild(paragraph);
+}
+
 function displayToDo() {
   // Loops through the array and grabs each value and it's index position
   todoArray.forEach((currentValue, index) => {
     console.log(index + ' ' + Object.values(currentValue)[0]);
     // Loops through each object in the array and displays each key/value pair
     for (const [objectKey, objectValue] of Object.entries(currentValue)) {
-      // console.log(`${key}: ${value}`);
-      createParagraph(objectKey, objectValue);
+      // console.log(`${objectKey}: ${objectValue}`);
+      createToDoParagraphs(objectKey, objectValue);
     }
   });
 }
 
-function createParagraph(objectKey, objectValue) {
+function createToDoParagraphs(objectKey, objectValue) {
   const paragraph = document.createElement('p');
   paragraph.innerText = `${objectKey}: ${objectValue}`;
 
