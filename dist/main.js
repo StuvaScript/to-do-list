@@ -231,6 +231,30 @@ createToDoItemButtonLogic();
 
 // --- FUNCTIONS ---
 
+function populateDropdownMenu() {
+  // Loops through the array and grabs each value and it's index position
+  todoArray.forEach((currentValue, index) => {
+    const projectValues = Object.values(currentValue)[0];
+    console.log(projectValues + ' projVals');
+
+    let optionDuplicate = false;
+
+    document.querySelectorAll('option').forEach((option) => {
+      if (projectValues == option.innerText) {
+        optionDuplicate = true;
+      }
+    });
+
+    if (optionDuplicate !== true) {
+      // fills the dropdown menu with the projects in the array
+      const newOption = document.createElement('option');
+      dropdownProjectMenu.appendChild(newOption);
+      newOption.setAttribute('value', projectValues);
+      newOption.innerText = projectValues;
+    }
+  });
+}
+
 function removeCreateToDoItemButton() {
   document.querySelector('.new-todo-button').remove();
 }
@@ -281,10 +305,6 @@ function addToDoButtonLogic() {
   });
 }
 
-//=======================================================================
-// Need to create a project array. Then when you click 'Add New Project' button, it adds the project name to the array. Then every time the form gets generated, it cycles thru the project array and populates the dropdown menu with the current projects.
-//=======================================================================
-
 function addNewProjectButtonLogic() {
   document.querySelector('.project-button').addEventListener('click', (e) => {
     e.preventDefault();
@@ -318,18 +338,6 @@ function checkForDuplicates(newProjectField) {
   }
 }
 
-// function resetFormFields(project, title, description, date, notes) {
-//   project.value = document.querySelector('#dropdownProjectMenu > option').value;
-//   title.value = '';
-//   description.value = '';
-//   date.value = '';
-//   notes.value = '';
-//   // resets radio buttons
-//   document.querySelector('#P4').checked = true;
-//   // resets 'create new project' input field
-//   document.querySelector('#newproject').value = '';
-// }
-
 function createToDoItemButton() {
   const newToDoButton = document.createElement('button');
   newToDoButton.innerText = 'Create ToDo Item';
@@ -356,6 +364,8 @@ function makeForm() {
   dropdownProjectMenu.appendChild(defaultOption);
   defaultOption.setAttribute('value', 'default-project');
   defaultOption.innerText = 'Default Project';
+
+  populateDropdownMenu();
 
   createBreak(form);
 
