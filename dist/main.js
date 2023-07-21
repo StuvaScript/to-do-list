@@ -235,7 +235,6 @@ function populateDropdownMenu() {
   // Loops through the array and grabs each value and it's index position
   todoArray.forEach((currentValue, index) => {
     const projectValues = Object.values(currentValue)[0];
-    console.log(projectValues + ' projVals');
 
     let optionDuplicate = false;
 
@@ -314,17 +313,15 @@ function addNewProjectButtonLogic() {
       return;
     }
 
-    checkForDuplicates(newProjectField);
+    addOptions(newProjectField);
 
     // resets 'create new project' input field
     newProjectField.value = '';
-    // automatically sets dropdown menu to last created new project
-    document.querySelector('#dropdownProjectMenu').value =
-      document.querySelector('#dropdownProjectMenu > option:last-child').value;
   });
 }
 
-function checkForDuplicates(newProjectField) {
+function addOptions(newProjectField) {
+  // Checks for duplicates
   let optionDuplicate = false;
 
   document.querySelectorAll('option').forEach((option) => {
@@ -335,6 +332,10 @@ function checkForDuplicates(newProjectField) {
 
   if (optionDuplicate !== true) {
     updateOptions(newProjectField);
+
+    // automatically sets dropdown menu to last created new project
+    document.querySelector('#dropdownProjectMenu').value =
+      document.querySelector('#dropdownProjectMenu > option:last-child').value;
   }
 }
 
@@ -496,16 +497,11 @@ function createBreak(element) {
 function updateOptions(newProjectField) {
   const getDropdownMenu = document.querySelector('#dropdownProjectMenu');
   const makeOption = document.createElement('option');
+
   makeOption.setAttribute('value', newProjectField.value);
   makeOption.innerText = newProjectField.value;
   getDropdownMenu.appendChild(makeOption);
 }
-
-// function clearOptions() {
-//   document.querySelectorAll('option').forEach((option) => {
-//     option.remove();
-//   });
-// }
 
 function displayProjects() {
   // Loops through the array and grabs each value and it's index position
