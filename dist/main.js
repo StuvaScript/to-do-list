@@ -127,54 +127,25 @@ ${r}`}n.exports={isPragma:t,hasPragma:s,insertPragma:a}}}),cg=ee({"src/language-
 `).map(N=>N.slice(C));if(o.proseWrap==="preserve"||f.type==="blockLiteral")return b(_.map(N=>N.length===0?[]:[N]));return b(_.map(N=>N.length===0?[]:B(N)).reduce((N,k,R)=>R!==0&&_[R-1].length>0&&k.length>0&&!/^\s/.test(k[0])&&!/^\s|\s$/.test(t(N))?[...N.slice(0,-1),[...t(N),...k]]:[...N,k],[]).map(N=>N.reduce((k,R)=>k.length>0&&/\s$/.test(t(k))?[...k.slice(0,-1),t(k)+" "+R]:[...k,R],[])).map(N=>o.proseWrap==="never"?[N.join(" ")]:N));function b(N){if(f.chomping==="keep")return t(N).length===0?N.slice(0,-1):N;let k=0;for(let R=N.length-1;R>=0&&N[R].length===0;R--)k++;return k===0?N:k>=2&&!E?N.slice(0,-(k-1)):N.slice(0,-k)}}function $(f){if(!f)return!0;switch(f.type){case"plain":case"quoteDouble":case"quoteSingle":case"alias":case"flowMapping":case"flowSequence":return!0;default:return!1}}n.exports={getLast:t,getAncestorCount:a,isNode:r,isEmptyNode:p,isInlineNode:$,mapNode:u,defineShortcut:i,isNextLineEmpty:l,isLastDescendantNode:c,getBlockValueLineContents:P,getFlowScalarLineContents:I,getLastDescendantNode:y,hasPrettierIgnore:g,hasLeadingComments:v,hasMiddleComments:w,hasIndicatorComment:T,hasTrailingComment:F,hasEndComments:A}}}),fg=ee({"src/language-yaml/print-preprocess.js"(e,n){"use strict";re();var{defineShortcut:t,mapNode:s}=Rt();function a(u){return s(u,r)}function r(u){switch(u.type){case"document":t(u,"head",()=>u.children[0]),t(u,"body",()=>u.children[1]);break;case"documentBody":case"sequenceItem":case"flowSequenceItem":case"mappingKey":case"mappingValue":t(u,"content",()=>u.children[0]);break;case"mappingItem":case"flowMappingItem":t(u,"key",()=>u.children[0]),t(u,"value",()=>u.children[1]);break}return u}n.exports=a}}),qr=ee({"src/language-yaml/print/misc.js"(e,n){"use strict";re();var{builders:{softline:t,align:s}}=qe(),{hasEndComments:a,isNextLineEmpty:r,isNode:u}=Rt(),i=new WeakMap;function l(h,g){let p=h.getValue(),D=h.stack[0],v;return i.has(D)?v=i.get(D):(v=new Set,i.set(D,v)),!v.has(p.position.end.line)&&(v.add(p.position.end.line),r(p,g)&&!c(h.getParentNode()))?t:""}function c(h){return a(h)&&!u(h,["documentHead","documentBody","flowMapping","flowSequence"])}function y(h,g){return s(" ".repeat(h),g)}n.exports={alignWithSpaces:y,shouldPrintEndComments:c,printNextEmptyLine:l}}}),Dg=ee({"src/language-yaml/print/flow-mapping-sequence.js"(e,n){"use strict";re();var{builders:{ifBreak:t,line:s,softline:a,hardline:r,join:u}}=qe(),{isEmptyNode:i,getLast:l,hasEndComments:c}=Rt(),{printNextEmptyLine:y,alignWithSpaces:h}=qr();function g(D,v,w){let T=D.getValue(),F=T.type==="flowMapping",A=F?"{":"[",B=F?"}":"]",I=a;F&&T.children.length>0&&w.bracketSpacing&&(I=s);let P=l(T.children),$=P&&P.type==="flowMappingItem"&&i(P.key)&&i(P.value);return[A,h(w.tabWidth,[I,p(D,v,w),w.trailingComma==="none"?"":t(","),c(T)?[r,u(r,D.map(v,"endComments"))]:""]),$?"":I,B]}function p(D,v,w){let T=D.getValue();return D.map((A,B)=>[v(),B===T.children.length-1?"":[",",s,T.children[B].position.start.line!==T.children[B+1].position.start.line?y(A,w.originalText):""]],"children")}n.exports={printFlowMapping:g,printFlowSequence:g}}}),mg=ee({"src/language-yaml/print/mapping-item.js"(e,n){"use strict";re();var{builders:{conditionalGroup:t,group:s,hardline:a,ifBreak:r,join:u,line:i}}=qe(),{hasLeadingComments:l,hasMiddleComments:c,hasTrailingComment:y,hasEndComments:h,isNode:g,isEmptyNode:p,isInlineNode:D}=Rt(),{alignWithSpaces:v}=qr();function w(B,I,P,$,f){let{key:x,value:m}=B,E=p(x),o=p(m);if(E&&o)return": ";let d=$("key"),C=F(B)?" ":"";if(o)return B.type==="flowMappingItem"&&I.type==="flowMapping"?d:B.type==="mappingItem"&&T(x.content,f)&&!y(x.content)&&(!I.tag||I.tag.value!=="tag:yaml.org,2002:set")?[d,C,":"]:["? ",v(2,d)];let _=$("value");if(E)return[": ",v(2,_)];if(l(m)||!D(x.content))return["? ",v(2,d),a,u("",P.map($,"value","leadingComments").map(q=>[q,a])),": ",v(2,_)];if(A(x.content)&&!l(x.content)&&!c(x.content)&&!y(x.content)&&!h(x)&&!l(m.content)&&!c(m.content)&&!h(m)&&T(m.content,f))return[d,C,": ",_];let b=Symbol("mappingKey"),N=s([r("? "),s(v(2,d),{id:b})]),k=[a,": ",v(2,_)],R=[C,":"];l(m.content)||h(m)&&m.content&&!g(m.content,["mapping","sequence"])||I.type==="mapping"&&y(x.content)&&D(m.content)||g(m.content,["mapping","sequence"])&&m.content.tag===null&&m.content.anchor===null?R.push(a):m.content&&R.push(i),R.push(_);let M=v(f.tabWidth,R);return T(x.content,f)&&!l(x.content)&&!c(x.content)&&!h(x)?t([[d,M]]):t([[N,r(k,M,{groupId:b})]])}function T(B,I){if(!B)return!0;switch(B.type){case"plain":case"quoteSingle":case"quoteDouble":break;case"alias":return!0;default:return!1}if(I.proseWrap==="preserve")return B.position.start.line===B.position.end.line;if(/\\$/m.test(I.originalText.slice(B.position.start.offset,B.position.end.offset)))return!1;switch(I.proseWrap){case"never":return!B.value.includes(`
 `);case"always":return!/[\n ]/.test(B.value);default:return!1}}function F(B){return B.key.content&&B.key.content.type==="alias"}function A(B){if(!B)return!0;switch(B.type){case"plain":case"quoteDouble":case"quoteSingle":return B.position.start.line===B.position.end.line;case"alias":return!0;default:return!1}}n.exports=w}}),dg=ee({"src/language-yaml/print/block.js"(e,n){"use strict";re();var{builders:{dedent:t,dedentToRoot:s,fill:a,hardline:r,join:u,line:i,literalline:l,markAsRoot:c},utils:{getDocParts:y}}=qe(),{getAncestorCount:h,getBlockValueLineContents:g,hasIndicatorComment:p,isLastDescendantNode:D,isNode:v}=Rt(),{alignWithSpaces:w}=qr();function T(F,A,B){let I=F.getValue(),P=h(F,E=>v(E,["sequence","mapping"])),$=D(F),f=[I.type==="blockFolded"?">":"|"];I.indent!==null&&f.push(I.indent.toString()),I.chomping!=="clip"&&f.push(I.chomping==="keep"?"+":"-"),p(I)&&f.push(" ",A("indicatorComment"));let x=g(I,{parentIndent:P,isLastDescendant:$,options:B}),m=[];for(let[E,o]of x.entries())E===0&&m.push(r),m.push(a(y(u(i,o)))),E!==x.length-1?m.push(o.length===0?r:c(l)):I.chomping==="keep"&&$&&m.push(s(o.length===0?r:l));return I.indent===null?f.push(t(w(B.tabWidth,m))):f.push(s(w(I.indent-1+P,m))),f}n.exports=T}}),gg=ee({"src/language-yaml/printer-yaml.js"(e,n){"use strict";re();var{builders:{breakParent:t,fill:s,group:a,hardline:r,join:u,line:i,lineSuffix:l,literalline:c},utils:{getDocParts:y,replaceTextEndOfLine:h}}=qe(),{isPreviousLineEmpty:g}=Ge(),{insertPragma:p,isPragma:D}=lg(),{locStart:v}=cg(),w=pg(),{getFlowScalarLineContents:T,getLastDescendantNode:F,hasLeadingComments:A,hasMiddleComments:B,hasTrailingComment:I,hasEndComments:P,hasPrettierIgnore:$,isLastDescendantNode:f,isNode:x,isInlineNode:m}=Rt(),E=fg(),{alignWithSpaces:o,printNextEmptyLine:d,shouldPrintEndComments:C}=qr(),{printFlowMapping:_,printFlowSequence:b}=Dg(),N=mg(),k=dg();function R(O,K,se){let Q=O.getValue(),le=[];Q.type!=="mappingValue"&&A(Q)&&le.push([u(r,O.map(se,"leadingComments")),r]);let{tag:W,anchor:X}=Q;W&&le.push(se("tag")),W&&X&&le.push(" "),X&&le.push(se("anchor"));let oe="";x(Q,["mapping","sequence","comment","directive","mappingItem","sequenceItem"])&&!f(O)&&(oe=d(O,K.originalText)),(W||X)&&(x(Q,["sequence","mapping"])&&!B(Q)?le.push(r):le.push(" ")),B(Q)&&le.push([Q.middleComments.length===1?"":r,u(r,O.map(se,"middleComments")),r]);let ae=O.getParentNode();return $(O)?le.push(h(K.originalText.slice(Q.position.start.offset,Q.position.end.offset).trimEnd(),c)):le.push(a(M(Q,ae,O,K,se))),I(Q)&&!x(Q,["document","documentHead"])&&le.push(l([Q.type==="mappingValue"&&!Q.content?"":" ",ae.type==="mappingKey"&&O.getParentNode(2).type==="mapping"&&m(Q)?"":t,se("trailingComment")])),C(Q)&&le.push(o(Q.type==="sequenceItem"?2:0,[r,u(r,O.map(Ae=>[g(K.originalText,Ae.getValue(),v)?r:"",se()],"endComments"))])),le.push(oe),le}function M(O,K,se,Q,le){switch(O.type){case"root":{let{children:W}=O,X=[];se.each((ae,Ae)=>{let z=W[Ae],H=W[Ae+1];Ae!==0&&X.push(r),X.push(le()),J(z,H)?(X.push(r,"..."),I(z)&&X.push(" ",le("trailingComment"))):H&&!I(H.head)&&X.push(r,"---")},"children");let oe=F(O);return(!x(oe,["blockLiteral","blockFolded"])||oe.chomping!=="keep")&&X.push(r),X}case"document":{let W=K.children[se.getName()+1],X=[];return L(O,W,K,Q)==="head"&&((O.head.children.length>0||O.head.endComments.length>0)&&X.push(le("head")),I(O.head)?X.push(["---"," ",le(["head","trailingComment"])]):X.push("---")),q(O)&&X.push(le("body")),u(r,X)}case"documentHead":return u(r,[...se.map(le,"children"),...se.map(le,"endComments")]);case"documentBody":{let{children:W,endComments:X}=O,oe="";if(W.length>0&&X.length>0){let ae=F(O);x(ae,["blockFolded","blockLiteral"])?ae.chomping!=="keep"&&(oe=[r,r]):oe=r}return[u(r,se.map(le,"children")),oe,u(r,se.map(le,"endComments"))]}case"directive":return["%",u(" ",[O.name,...O.parameters])];case"comment":return["#",O.value];case"alias":return["*",O.value];case"tag":return Q.originalText.slice(O.position.start.offset,O.position.end.offset);case"anchor":return["&",O.value];case"plain":return Y(O.type,Q.originalText.slice(O.position.start.offset,O.position.end.offset),Q);case"quoteDouble":case"quoteSingle":{let W="'",X='"',oe=Q.originalText.slice(O.position.start.offset+1,O.position.end.offset-1);if(O.type==="quoteSingle"&&oe.includes("\\")||O.type==="quoteDouble"&&/\\[^"]/.test(oe)){let Ae=O.type==="quoteDouble"?X:W;return[Ae,Y(O.type,oe,Q),Ae]}if(oe.includes(X))return[W,Y(O.type,O.type==="quoteDouble"?oe.replace(/\\"/g,X).replace(/'/g,W.repeat(2)):oe,Q),W];if(oe.includes(W))return[X,Y(O.type,O.type==="quoteSingle"?oe.replace(/''/g,W):oe,Q),X];let ae=Q.singleQuote?W:X;return[ae,Y(O.type,oe,Q),ae]}case"blockFolded":case"blockLiteral":return k(se,le,Q);case"mapping":case"sequence":return u(r,se.map(le,"children"));case"sequenceItem":return["- ",o(2,O.content?le("content"):"")];case"mappingKey":case"mappingValue":return O.content?le("content"):"";case"mappingItem":case"flowMappingItem":return N(O,K,se,le,Q);case"flowMapping":return _(se,le,Q);case"flowSequence":return b(se,le,Q);case"flowSequenceItem":return le("content");default:throw new Error(`Unexpected node type ${O.type}`)}}function q(O){return O.body.children.length>0||P(O.body)}function J(O,K){return I(O)||K&&(K.head.children.length>0||P(K.head))}function L(O,K,se,Q){return se.children[0]===O&&/---(?:\s|$)/.test(Q.originalText.slice(v(O),v(O)+4))||O.head.children.length>0||P(O.head)||I(O.head)?"head":J(O,K)?!1:K?"root":!1}function Y(O,K,se){let Q=T(O,K,se);return u(r,Q.map(le=>s(y(u(i,le)))))}function V(O,K){if(x(K))switch(delete K.position,K.type){case"comment":if(D(K.value))return null;break;case"quoteDouble":case"quoteSingle":K.type="quote";break}}n.exports={preprocess:E,embed:w,print:R,massageAstNode:V,insertPragma:p}}}),yg=ee({"src/language-yaml/options.js"(e,n){"use strict";re();var t=qt();n.exports={bracketSpacing:t.bracketSpacing,singleQuote:t.singleQuote,proseWrap:t.proseWrap}}}),hg=ee({"src/language-yaml/parsers.js"(){re()}}),vg=ee({"node_modules/linguist-languages/data/YAML.json"(e,n){n.exports={name:"YAML",type:"data",color:"#cb171e",tmScope:"source.yaml",aliases:["yml"],extensions:[".yml",".mir",".reek",".rviz",".sublime-syntax",".syntax",".yaml",".yaml-tmlanguage",".yaml.sed",".yml.mysql"],filenames:[".clang-format",".clang-tidy",".gemrc","CITATION.cff","glide.lock","yarn.lock"],aceMode:"yaml",codemirrorMode:"yaml",codemirrorMimeType:"text/x-yaml",languageId:407}}}),Cg=ee({"src/language-yaml/index.js"(e,n){"use strict";re();var t=wt(),s=gg(),a=yg(),r=hg(),u=[t(vg(),i=>({since:"1.14.0",parsers:["yaml"],vscodeLanguageIds:["yaml","ansible","home-assistant"],filenames:[...i.filenames.filter(l=>l!=="yarn.lock"),".prettierrc",".stylelintrc",".lintstagedrc"]}))];n.exports={languages:u,printers:{yaml:s},options:a,parsers:r}}}),Eg=ee({"src/languages.js"(e,n){"use strict";re(),n.exports=[td(),vd(),Td(),kd(),Vd(),og(),Cg()]}});re();var{version:Fg}=fa(),kt=vm(),{getSupportInfo:Ag}=Rn(),Sg=Cm(),xg=Eg(),bg=qe();function Bt(e){let n=arguments.length>1&&arguments[1]!==void 0?arguments[1]:1;return function(){for(var t=arguments.length,s=new Array(t),a=0;a<t;a++)s[a]=arguments[a];let r=s[n]||{},u=r.plugins||[];return s[n]=Object.assign(Object.assign({},r),{},{plugins:[...xg,...Array.isArray(u)?u:Object.values(u)]}),e(...s)}}var Bn=Bt(kt.formatWithCursor);mo.exports={formatWithCursor:Bn,format(e,n){return Bn(e,n).formatted},check(e,n){let{formatted:t}=Bn(e,n);return t===e},doc:bg,getSupportInfo:Bt(Ag,0),version:Fg,util:Sg,__debug:{parse:Bt(kt.parse),formatAST:Bt(kt.formatAST),formatDoc:Bt(kt.formatDoc),printToDoc:Bt(kt.printToDoc),printDocToString:Bt(kt.printDocToString)}}});return Tg();});
 
-/***/ })
+/***/ }),
 
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/ 	
-/************************************************************************/
-/******/ 	/* webpack/runtime/global */
-/******/ 	(() => {
-/******/ 		__webpack_require__.g = (function() {
-/******/ 			if (typeof globalThis === 'object') return globalThis;
-/******/ 			try {
-/******/ 				return this || new Function('return this')();
-/******/ 			} catch (e) {
-/******/ 				if (typeof window === 'object') return window;
-/******/ 			}
-/******/ 		})();
-/******/ 	})();
-/******/ 	
-/************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
-(() => {
+/***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "content": () => (/* binding */ content),
+/* harmony export */   "populateDropdownMenu": () => (/* binding */ populateDropdownMenu)
+/* harmony export */ });
+/* harmony import */ var _modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/dom-manipulation */ "./src/modules/dom-manipulation.js");
+
+
+
+
 // import projects from './modules/projects.js';
 // import projectContainer from './modules/project-container.js';
 // import projectForm from './modules/project-form.js';
@@ -213,20 +184,18 @@ const { doc } = __webpack_require__(/*! prettier */ "./node_modules/prettier/sta
 // Will need to change mode to production mode after the project is finished.
 // Read this page => https://webpack.js.org/guides/production/
 
-// Remember to change the source branch on Github in order for your
-// page to be displayed on Github. Check the very bottom
-// of the Assignments part => https://www.theodinproject.com/lessons/node-path-javascript-restaurant-page
-
 // =======================================================================================================================================
 // =======================================================================================================================================
 
 // Everything above this line is my old code
 
+// ? I got a console.log shortcut. Put your cursor on a word and do ctr+alt+w then either W or up or down arrows. Also to make it a string, do shift+alt+W and either W or up or down arrows.
+
 const content = document.querySelector('.content');
 
 const todoArray = [];
 
-createToDoItemButton();
+(0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.createToDoItemButton)();
 createToDoItemButtonLogic();
 
 // --- FUNCTIONS ---
@@ -266,7 +235,7 @@ function createToDoItemButtonLogic() {
   document.querySelector('.new-todo-button').addEventListener('click', (e) => {
     e.preventDefault();
     removeCreateToDoItemButton();
-    makeForm();
+    (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.makeForm)();
     addToDoButtonLogic();
     addNewProjectButtonLogic();
   });
@@ -279,7 +248,13 @@ function addToDoButtonLogic() {
     let title = document.querySelector('#title');
     const description = document.querySelector('#description');
     const date = document.querySelector('#date');
-    getCheckedRadio();
+    let priority;
+    document.querySelectorAll('[name="priority"]').forEach((radio) => {
+      if (radio.checked) {
+        priority = radio.value;
+      }
+    });
+
     const notes = document.querySelector('#notes');
 
     const newToDo = createToDo(
@@ -299,7 +274,7 @@ function addToDoButtonLogic() {
     displayToDo();
     // resetFormFields(project, title, description, date, notes);
     removeForm();
-    createToDoItemButton();
+    (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.createToDoItemButton)();
     createToDoItemButtonLogic();
   });
 }
@@ -339,18 +314,286 @@ function addOptions(newProjectField) {
   }
 }
 
+// ! ``** DOM MANIPULATION **``
+
+// function createToDoItemButton() {
+//   const newToDoButton = document.createElement('button');
+//   newToDoButton.innerText = 'Create ToDo Item';
+//   newToDoButton.classList.add('new-todo-button');
+//   content.prepend(newToDoButton);
+// }
+
+// function makeForm() {
+//   const form = document.createElement('form');
+//   form.setAttribute('action', '');
+//   form.setAttribute('method', 'get');
+//   content.prepend(form);
+
+//   const dropdownProjectMenu = document.createElement('select');
+//   form.appendChild(dropdownProjectMenu);
+//   dropdownProjectMenu.setAttribute('id', 'dropdownProjectMenu');
+//   dropdownProjectMenu.setAttribute('name', 'dropdownProjectMenu');
+//   const dropdownProjectMenuLabel = document.createElement('label');
+//   dropdownProjectMenuLabel.innerText = 'Assign To Project';
+//   dropdownProjectMenuLabel.setAttribute('for', 'dropdownProjectMenu');
+//   form.appendChild(dropdownProjectMenuLabel);
+
+//   const defaultOption = document.createElement('option');
+//   dropdownProjectMenu.appendChild(defaultOption);
+//   defaultOption.setAttribute('value', 'default-project');
+//   defaultOption.innerText = 'Default Project';
+
+//   populateDropdownMenu();
+
+//   createBreak(form);
+
+//   const newProjectTitle = document.createElement('input');
+//   form.appendChild(newProjectTitle);
+//   newProjectTitle.setAttribute('type', 'text');
+//   newProjectTitle.setAttribute('id', 'newproject');
+//   newProjectTitle.setAttribute('name', 'newproject');
+//   const newProjectLabel = document.createElement('label');
+//   newProjectLabel.innerText = 'Or Create New Project';
+//   newProjectLabel.setAttribute('for', 'newproject');
+//   form.appendChild(newProjectLabel);
+
+//   createBreak(form);
+
+//   const projectButton = document.createElement('button');
+//   projectButton.innerText = 'Add New Project';
+//   projectButton.classList.add('project-button');
+//   form.appendChild(projectButton);
+
+//   createBreak(form);
+
+//   const todoTitle = document.createElement('input');
+//   form.appendChild(todoTitle);
+//   todoTitle.setAttribute('type', 'text');
+//   todoTitle.setAttribute('id', 'title');
+//   todoTitle.setAttribute('name', 'title');
+//   const titleLabel = document.createElement('label');
+//   titleLabel.innerText = 'ToDo Title';
+//   titleLabel.setAttribute('for', 'title');
+//   form.appendChild(titleLabel);
+
+//   createBreak(form);
+
+//   const todoDescription = document.createElement('input');
+//   form.appendChild(todoDescription);
+//   todoDescription.setAttribute('type', 'text');
+//   todoDescription.setAttribute('id', 'description');
+//   todoDescription.setAttribute('name', 'description');
+//   const descriptionLabel = document.createElement('label');
+//   descriptionLabel.innerText = 'ToDo Description';
+//   descriptionLabel.setAttribute('for', 'description');
+//   form.appendChild(descriptionLabel);
+
+//   createBreak(form);
+
+//   const todoDate = document.createElement('input');
+//   form.appendChild(todoDate);
+//   todoDate.setAttribute('type', 'date');
+//   todoDate.setAttribute('id', 'date');
+//   todoDate.setAttribute('name', 'date');
+//   const dateLabel = document.createElement('label');
+//   dateLabel.innerText = 'Due Date';
+//   dateLabel.setAttribute('for', 'date');
+//   form.appendChild(dateLabel);
+
+//   createBreak(form);
+
+//   const radioPriority1 = document.createElement('input');
+//   form.appendChild(radioPriority1);
+//   radioPriority1.setAttribute('type', 'radio');
+//   radioPriority1.setAttribute('id', 'P1');
+//   radioPriority1.setAttribute('name', 'priority');
+//   radioPriority1.setAttribute('value', 'P1');
+//   const labelPriority1 = document.createElement('label');
+//   labelPriority1.innerText = 'P1';
+//   labelPriority1.setAttribute('for', 'P1');
+//   form.appendChild(labelPriority1);
+
+//   const radioPriority2 = document.createElement('input');
+//   form.appendChild(radioPriority2);
+//   radioPriority2.setAttribute('type', 'radio');
+//   radioPriority2.setAttribute('id', 'P2');
+//   radioPriority2.setAttribute('name', 'priority');
+//   radioPriority2.setAttribute('value', 'P2');
+//   const labelPriority2 = document.createElement('label');
+//   labelPriority2.innerText = 'P2';
+//   labelPriority2.setAttribute('for', 'P2');
+//   form.appendChild(labelPriority2);
+
+//   const radioPriority3 = document.createElement('input');
+//   form.appendChild(radioPriority3);
+//   radioPriority3.setAttribute('type', 'radio');
+//   radioPriority3.setAttribute('id', 'P3');
+//   radioPriority3.setAttribute('name', 'priority');
+//   radioPriority3.setAttribute('value', 'P3');
+//   const labelPriority3 = document.createElement('label');
+//   labelPriority3.innerText = 'P3';
+//   labelPriority3.setAttribute('for', 'P3');
+//   form.appendChild(labelPriority3);
+
+//   const radioPriority4 = document.createElement('input');
+//   form.appendChild(radioPriority4);
+//   radioPriority4.setAttribute('type', 'radio');
+//   radioPriority4.setAttribute('id', 'P4');
+//   radioPriority4.setAttribute('name', 'priority');
+//   radioPriority4.setAttribute('value', 'P4');
+//   radioPriority4.setAttribute('checked', '');
+//   const labelPriority4 = document.createElement('label');
+//   labelPriority4.innerText = 'P4';
+//   labelPriority4.setAttribute('for', 'P4');
+//   form.appendChild(labelPriority4);
+
+//   createBreak(form);
+
+//   const notes = document.createElement('textarea');
+//   form.appendChild(notes);
+//   notes.setAttribute('id', 'notes');
+//   notes.setAttribute('name', 'notes');
+//   const notesLabel = document.createElement('label');
+//   notesLabel.innerText = 'Notes';
+//   notesLabel.setAttribute('for', 'notes');
+//   form.appendChild(notesLabel);
+
+//   createBreak(form);
+
+//   const todoButton = document.createElement('button');
+//   todoButton.innerText = 'Add ToDo';
+//   todoButton.classList.add('todo-button');
+//   form.appendChild(todoButton);
+// }
+
+// function createBreak(element) {
+//   const br = document.createElement('br');
+//   element.appendChild(br);
+// }
+
+function updateOptions(newProjectField) {
+  const getDropdownMenu = document.querySelector('#dropdownProjectMenu');
+  const makeOption = document.createElement('option');
+
+  makeOption.setAttribute('value', newProjectField.value);
+  makeOption.innerText = newProjectField.value;
+  getDropdownMenu.appendChild(makeOption);
+}
+
+function displayProjects() {
+  // Loops through the array and grabs each value and it's index position
+  todoArray.forEach((currentValue, index) => {
+    const projectValues = Object.values(currentValue)[0];
+    createProjectParagraphs(projectValues);
+  });
+}
+
+function createProjectParagraphs(projectValues) {
+  const paragraph = document.createElement('p');
+  paragraph.innerText = `${projectValues}`;
+
+  // todoArray.forEach((currentValue, index) => {
+  //   console.log(index + ' ' + Object.values(currentValue)[0]);
+
+  // }
+
+  content.appendChild(paragraph);
+}
+
+function displayToDo() {
+  // Loops through the array and grabs each value and it's index position
+  todoArray.forEach((currentValue, index) => {
+    console.log(index + ' ' + Object.values(currentValue)[0]);
+    // Loops through each object in the array and displays each key/value pair
+    for (const [objectKey, objectValue] of Object.entries(currentValue)) {
+      // console.log(`${objectKey}: ${objectValue}`);
+      createToDoParagraphs(objectKey, objectValue);
+    }
+  });
+}
+
+function createToDoParagraphs(objectKey, objectValue) {
+  const paragraph = document.createElement('p');
+  paragraph.innerText = `${objectKey}: ${objectValue}`;
+
+  // todoArray.forEach((currentValue, index) => {
+  //   console.log(index + ' ' + Object.values(currentValue)[0]);
+
+  // }
+
+  content.appendChild(paragraph);
+}
+
+function removeParagraphs() {
+  document.querySelectorAll('p').forEach((para) => para.remove());
+}
+
+function addToDoToArray(newTodo) {
+  todoArray.unshift(newTodo);
+}
+
+function createToDo(project, title, description, date, priority, notes) {
+  return { project, title, description, date, priority, notes };
+}
+
+// function updateOptions(newProjectField) {
+//   const getDropdownMenu = document.querySelector('#dropdownProjectMenu');
+//   const makeOption = document.createElement('option');
+
+//   makeOption.setAttribute('value', newProjectField.value);
+//   makeOption.innerText = newProjectField.value;
+//   getDropdownMenu.appendChild(makeOption);
+// }
+
+//     const defaultProject = document.createElement('div');
+//     defaultProject.setAttribute('id', 'default-project');
+//     defaultProject.classList.add('project');
+//     defaultProject.innerText = 'Default Project';
+//     content.appendChild(defaultProject);
+//   }
+// }
+
+// function createNewProject(newProject) {
+//   if (newProject) {
+//     const newProjectDiv = document.createElement('div');
+//     newProjectDiv.classList.add('project');
+//     newProjectDiv.innerText = newProject;
+//     content.appendChild(newProjectDiv);
+//   }
+// }
+
+
+/***/ }),
+
+/***/ "./src/modules/dom-manipulation.js":
+/*!*****************************************!*\
+  !*** ./src/modules/dom-manipulation.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createToDoItemButton": () => (/* binding */ createToDoItemButton),
+/* harmony export */   "makeForm": () => (/* binding */ makeForm)
+/* harmony export */ });
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../index */ "./src/index.js");
+
+
+
+
 function createToDoItemButton() {
   const newToDoButton = document.createElement('button');
   newToDoButton.innerText = 'Create ToDo Item';
   newToDoButton.classList.add('new-todo-button');
-  content.prepend(newToDoButton);
+  _index__WEBPACK_IMPORTED_MODULE_0__.content.prepend(newToDoButton);
 }
 
 function makeForm() {
   const form = document.createElement('form');
   form.setAttribute('action', '');
   form.setAttribute('method', 'get');
-  content.prepend(form);
+  _index__WEBPACK_IMPORTED_MODULE_0__.content.prepend(form);
 
   const dropdownProjectMenu = document.createElement('select');
   form.appendChild(dropdownProjectMenu);
@@ -366,7 +609,7 @@ function makeForm() {
   defaultOption.setAttribute('value', 'default-project');
   defaultOption.innerText = 'Default Project';
 
-  populateDropdownMenu();
+  (0,_index__WEBPACK_IMPORTED_MODULE_0__.populateDropdownMenu)();
 
   createBreak(form);
 
@@ -494,100 +737,83 @@ function createBreak(element) {
   element.appendChild(br);
 }
 
-function updateOptions(newProjectField) {
-  const getDropdownMenu = document.querySelector('#dropdownProjectMenu');
-  const makeOption = document.createElement('option');
 
-  makeOption.setAttribute('value', newProjectField.value);
-  makeOption.innerText = newProjectField.value;
-  getDropdownMenu.appendChild(makeOption);
-}
+/***/ })
 
-function displayProjects() {
-  // Loops through the array and grabs each value and it's index position
-  todoArray.forEach((currentValue, index) => {
-    const projectValues = Object.values(currentValue)[0];
-    createProjectParagraphs(projectValues);
-  });
-}
-
-function createProjectParagraphs(projectValues) {
-  const paragraph = document.createElement('p');
-  paragraph.innerText = `${projectValues}`;
-
-  // todoArray.forEach((currentValue, index) => {
-  //   console.log(index + ' ' + Object.values(currentValue)[0]);
-
-  // }
-
-  content.appendChild(paragraph);
-}
-
-function displayToDo() {
-  // Loops through the array and grabs each value and it's index position
-  todoArray.forEach((currentValue, index) => {
-    console.log(index + ' ' + Object.values(currentValue)[0]);
-    // Loops through each object in the array and displays each key/value pair
-    for (const [objectKey, objectValue] of Object.entries(currentValue)) {
-      // console.log(`${objectKey}: ${objectValue}`);
-      createToDoParagraphs(objectKey, objectValue);
-    }
-  });
-}
-
-function createToDoParagraphs(objectKey, objectValue) {
-  const paragraph = document.createElement('p');
-  paragraph.innerText = `${objectKey}: ${objectValue}`;
-
-  // todoArray.forEach((currentValue, index) => {
-  //   console.log(index + ' ' + Object.values(currentValue)[0]);
-
-  // }
-
-  content.appendChild(paragraph);
-}
-
-function removeParagraphs() {
-  document.querySelectorAll('p').forEach((para) => para.remove());
-}
-
-function addToDoToArray(newTodo) {
-  todoArray.unshift(newTodo);
-}
-
-function createToDo(project, title, description, date, priority, notes) {
-  return { project, title, description, date, priority, notes };
-}
-
-function getCheckedRadio() {
-  document.querySelectorAll('[name="priority"]').forEach((radio) => {
-    if (radio.checked) {
-      return (priority = radio.value);
-    }
-  });
-}
-
-// function createDefaultProject() {
-//   if (!document.querySelector('#default-project')) {
-//     const defaultProject = document.createElement('div');
-//     defaultProject.setAttribute('id', 'default-project');
-//     defaultProject.classList.add('project');
-//     defaultProject.innerText = 'Default Project';
-//     content.appendChild(defaultProject);
-//   }
-// }
-
-// function createNewProject(newProject) {
-//   if (newProject) {
-//     const newProjectDiv = document.createElement('div');
-//     newProjectDiv.classList.add('project');
-//     newProjectDiv.innerText = newProject;
-//     content.appendChild(newProjectDiv);
-//   }
-// }
-
-})();
-
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/global */
+/******/ 	(() => {
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
+/******/ 			}
+/******/ 		})();
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/index.js");
+/******/ 	
 /******/ })()
 ;
 //# sourceMappingURL=main.js.map
