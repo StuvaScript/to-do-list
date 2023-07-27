@@ -269,7 +269,7 @@ function addToDoButtonLogic() {
     addToDoToArray(newToDo);
     console.log(todoArray);
     // createDefaultProject();
-    removeParagraphs();
+    (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.removeParagraphs)();
     displayProjects();
     displayToDo();
     // resetFormFields(project, title, description, date, notes);
@@ -484,21 +484,21 @@ function displayProjects() {
   // Loops through the array and grabs each value and it's index position
   todoArray.forEach((currentValue, index) => {
     const projectValues = Object.values(currentValue)[0];
-    createProjectParagraphs(projectValues);
+    (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.createProjectParagraphs)(projectValues);
   });
 }
 
-function createProjectParagraphs(projectValues) {
-  const paragraph = document.createElement('p');
-  paragraph.innerText = `${projectValues}`;
+// function createProjectParagraphs(projectValues) {
+//   const paragraph = document.createElement('p');
+//   paragraph.innerText = `${projectValues}`;
 
-  // todoArray.forEach((currentValue, index) => {
-  //   console.log(index + ' ' + Object.values(currentValue)[0]);
+//   // todoArray.forEach((currentValue, index) => {
+//   //   console.log(index + ' ' + Object.values(currentValue)[0]);
 
-  // }
+//   // }
 
-  content.appendChild(paragraph);
-}
+//   content.appendChild(paragraph);
+// }
 
 function displayToDo() {
   // Loops through the array and grabs each value and it's index position
@@ -507,26 +507,26 @@ function displayToDo() {
     // Loops through each object in the array and displays each key/value pair
     for (const [objectKey, objectValue] of Object.entries(currentValue)) {
       // console.log(`${objectKey}: ${objectValue}`);
-      createToDoParagraphs(objectKey, objectValue);
+      (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.createToDoParagraphs)(objectKey, objectValue);
     }
   });
 }
 
-function createToDoParagraphs(objectKey, objectValue) {
-  const paragraph = document.createElement('p');
-  paragraph.innerText = `${objectKey}: ${objectValue}`;
+// function createToDoParagraphs(objectKey, objectValue) {
+//   const paragraph = document.createElement('p');
+//   paragraph.innerText = `${objectKey}: ${objectValue}`;
 
-  // todoArray.forEach((currentValue, index) => {
-  //   console.log(index + ' ' + Object.values(currentValue)[0]);
+//   // todoArray.forEach((currentValue, index) => {
+//   //   console.log(index + ' ' + Object.values(currentValue)[0]);
 
-  // }
+//   // }
 
-  content.appendChild(paragraph);
-}
+//   content.appendChild(paragraph);
+// }
 
-function removeParagraphs() {
-  document.querySelectorAll('p').forEach((para) => para.remove());
-}
+// function removeParagraphs() {
+//   document.querySelectorAll('p').forEach((para) => para.remove());
+// }
 
 function addToDoToArray(newTodo) {
   todoArray.unshift(newTodo);
@@ -574,8 +574,11 @@ function createToDo(project, title, description, date, priority, notes) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createProjectParagraphs": () => (/* binding */ createProjectParagraphs),
 /* harmony export */   "createToDoItemButton": () => (/* binding */ createToDoItemButton),
-/* harmony export */   "makeForm": () => (/* binding */ makeForm)
+/* harmony export */   "createToDoParagraphs": () => (/* binding */ createToDoParagraphs),
+/* harmony export */   "makeForm": () => (/* binding */ makeForm),
+/* harmony export */   "removeParagraphs": () => (/* binding */ removeParagraphs)
 /* harmony export */ });
 /* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../index */ "./src/index.js");
 
@@ -735,6 +738,34 @@ function makeForm() {
 function createBreak(element) {
   const br = document.createElement('br');
   element.appendChild(br);
+}
+
+function createProjectParagraphs(projectValues) {
+  const paragraph = document.createElement('p');
+  paragraph.innerText = `${projectValues}`;
+
+  // todoArray.forEach((currentValue, index) => {
+  //   console.log(index + ' ' + Object.values(currentValue)[0]);
+
+  // }
+
+  _index__WEBPACK_IMPORTED_MODULE_0__.content.appendChild(paragraph);
+}
+
+function createToDoParagraphs(objectKey, objectValue) {
+  const paragraph = document.createElement('p');
+  paragraph.innerText = `${objectKey}: ${objectValue}`;
+
+  // todoArray.forEach((currentValue, index) => {
+  //   console.log(index + ' ' + Object.values(currentValue)[0]);
+
+  // }
+
+  _index__WEBPACK_IMPORTED_MODULE_0__.content.appendChild(paragraph);
+}
+
+function removeParagraphs() {
+  document.querySelectorAll('p').forEach((para) => para.remove());
 }
 
 
