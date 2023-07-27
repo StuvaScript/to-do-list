@@ -1,6 +1,12 @@
 import { populateDropdownMenu, content } from '../index';
 
-export { createToDoItemButton, makeForm };
+export {
+  createToDoItemButton,
+  makeForm,
+  createProjectParagraphs,
+  createToDoParagraphs,
+  removeParagraphs,
+};
 
 function createToDoItemButton() {
   const newToDoButton = document.createElement('button');
@@ -155,4 +161,32 @@ function makeForm() {
 function createBreak(element) {
   const br = document.createElement('br');
   element.appendChild(br);
+}
+
+function createProjectParagraphs(projectValues) {
+  const paragraph = document.createElement('p');
+  paragraph.innerText = `${projectValues}`;
+
+  // todoArray.forEach((currentValue, index) => {
+  //   console.log(index + ' ' + Object.values(currentValue)[0]);
+
+  // }
+
+  content.appendChild(paragraph);
+}
+
+function createToDoParagraphs(objectKey, objectValue) {
+  const paragraph = document.createElement('p');
+  paragraph.innerText = `${objectKey}: ${objectValue}`;
+
+  // todoArray.forEach((currentValue, index) => {
+  //   console.log(index + ' ' + Object.values(currentValue)[0]);
+
+  // }
+
+  content.appendChild(paragraph);
+}
+
+function removeParagraphs() {
+  document.querySelectorAll('p').forEach((para) => para.remove());
 }

@@ -1,4 +1,10 @@
-import { createToDoItemButton, makeForm } from './modules/dom-manipulation';
+import {
+  createToDoItemButton,
+  makeForm,
+  createProjectParagraphs,
+  createToDoParagraphs,
+  removeParagraphs,
+} from './modules/dom-manipulation';
 
 export { populateDropdownMenu, content };
 
@@ -344,17 +350,17 @@ function displayProjects() {
   });
 }
 
-function createProjectParagraphs(projectValues) {
-  const paragraph = document.createElement('p');
-  paragraph.innerText = `${projectValues}`;
+// function createProjectParagraphs(projectValues) {
+//   const paragraph = document.createElement('p');
+//   paragraph.innerText = `${projectValues}`;
 
-  // todoArray.forEach((currentValue, index) => {
-  //   console.log(index + ' ' + Object.values(currentValue)[0]);
+//   // todoArray.forEach((currentValue, index) => {
+//   //   console.log(index + ' ' + Object.values(currentValue)[0]);
 
-  // }
+//   // }
 
-  content.appendChild(paragraph);
-}
+//   content.appendChild(paragraph);
+// }
 
 function displayToDo() {
   // Loops through the array and grabs each value and it's index position
@@ -368,21 +374,21 @@ function displayToDo() {
   });
 }
 
-function createToDoParagraphs(objectKey, objectValue) {
-  const paragraph = document.createElement('p');
-  paragraph.innerText = `${objectKey}: ${objectValue}`;
+// function createToDoParagraphs(objectKey, objectValue) {
+//   const paragraph = document.createElement('p');
+//   paragraph.innerText = `${objectKey}: ${objectValue}`;
 
-  // todoArray.forEach((currentValue, index) => {
-  //   console.log(index + ' ' + Object.values(currentValue)[0]);
+//   // todoArray.forEach((currentValue, index) => {
+//   //   console.log(index + ' ' + Object.values(currentValue)[0]);
 
-  // }
+//   // }
 
-  content.appendChild(paragraph);
-}
+//   content.appendChild(paragraph);
+// }
 
-function removeParagraphs() {
-  document.querySelectorAll('p').forEach((para) => para.remove());
-}
+// function removeParagraphs() {
+//   document.querySelectorAll('p').forEach((para) => para.remove());
+// }
 
 function addToDoToArray(newTodo) {
   todoArray.unshift(newTodo);
