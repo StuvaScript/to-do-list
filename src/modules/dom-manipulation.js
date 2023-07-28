@@ -1,4 +1,4 @@
-import { populateDropdownMenu, content } from '../index';
+import { populateDropdownMenu } from '../index';
 
 export {
   createToDoItemButton,
@@ -7,6 +7,8 @@ export {
   createToDoParagraphs,
   removeParagraphs,
 };
+
+const content = document.querySelector('.content');
 
 function createToDoItemButton() {
   const newToDoButton = document.createElement('button');
@@ -166,24 +168,12 @@ function createBreak(element) {
 function createProjectParagraphs(projectValues) {
   const paragraph = document.createElement('p');
   paragraph.innerText = `${projectValues}`;
-
-  // todoArray.forEach((currentValue, index) => {
-  //   console.log(index + ' ' + Object.values(currentValue)[0]);
-
-  // }
-
   content.appendChild(paragraph);
 }
 
 function createToDoParagraphs(objectKey, objectValue) {
   const paragraph = document.createElement('p');
   paragraph.innerText = `${objectKey}: ${objectValue}`;
-
-  // todoArray.forEach((currentValue, index) => {
-  //   console.log(index + ' ' + Object.values(currentValue)[0]);
-
-  // }
-
   content.appendChild(paragraph);
 }
 
