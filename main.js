@@ -10,9 +10,20 @@
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "populateDropdownMenu": () => (/* binding */ populateDropdownMenu)
+/* harmony export */   "addOptions": () => (/* binding */ addOptions),
+/* harmony export */   "addToDoToArray": () => (/* binding */ addToDoToArray),
+/* harmony export */   "createToDo": () => (/* binding */ createToDo),
+/* harmony export */   "displayProjects": () => (/* binding */ displayProjects),
+/* harmony export */   "displayToDo": () => (/* binding */ displayToDo),
+/* harmony export */   "populateDropdownMenu": () => (/* binding */ populateDropdownMenu),
+/* harmony export */   "removeCreateToDoItemButton": () => (/* binding */ removeCreateToDoItemButton),
+/* harmony export */   "removeForm": () => (/* binding */ removeForm),
+/* harmony export */   "todoArray": () => (/* binding */ todoArray)
 /* harmony export */ });
 /* harmony import */ var _modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/dom-manipulation */ "./src/modules/dom-manipulation.js");
+/* harmony import */ var _modules_event_handler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/event-handler */ "./src/modules/event-handler.js");
+
+
 
 
 
@@ -25,7 +36,7 @@ __webpack_require__.r(__webpack_exports__);
 const todoArray = [];
 
 (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.createToDoItemButton)();
-createToDoItemButtonLogic();
+(0,_modules_event_handler__WEBPACK_IMPORTED_MODULE_1__.createToDoItemButtonLogic)();
 
 // --- FUNCTIONS ---
 
@@ -58,68 +69,6 @@ function removeCreateToDoItemButton() {
 
 function removeForm() {
   document.querySelector('form').remove();
-}
-
-function createToDoItemButtonLogic() {
-  document.querySelector('.new-todo-button').addEventListener('click', (e) => {
-    e.preventDefault();
-    removeCreateToDoItemButton();
-    (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.makeForm)();
-    addToDoButtonLogic();
-    addNewProjectButtonLogic();
-  });
-}
-
-function addToDoButtonLogic() {
-  document.querySelector('.todo-button').addEventListener('click', (e) => {
-    e.preventDefault();
-    const project = document.querySelector('#dropdownProjectMenu');
-    let title = document.querySelector('#title');
-    const description = document.querySelector('#description');
-    const date = document.querySelector('#date');
-    let priority;
-    document.querySelectorAll('[name="priority"]').forEach((radio) => {
-      if (radio.checked) {
-        priority = radio.value;
-      }
-    });
-
-    const notes = document.querySelector('#notes');
-
-    const newToDo = createToDo(
-      project.value,
-      title.value,
-      description.value,
-      date.value,
-      priority,
-      notes.value
-    );
-
-    addToDoToArray(newToDo);
-    console.log(todoArray);
-    (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.removeParagraphs)();
-    displayProjects();
-    displayToDo();
-    removeForm();
-    (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.createToDoItemButton)();
-    createToDoItemButtonLogic();
-  });
-}
-
-function addNewProjectButtonLogic() {
-  document.querySelector('.project-button').addEventListener('click', (e) => {
-    e.preventDefault();
-    const newProjectField = document.querySelector('#newproject');
-
-    if (newProjectField.value === '') {
-      return;
-    }
-
-    addOptions(newProjectField);
-
-    // resets 'create new project' input field
-    newProjectField.value = '';
-  });
 }
 
 function addOptions(newProjectField) {
@@ -371,6 +320,90 @@ function createToDoParagraphs(objectKey, objectValue) {
 
 function removeParagraphs() {
   document.querySelectorAll('p').forEach((para) => para.remove());
+}
+
+
+/***/ }),
+
+/***/ "./src/modules/event-handler.js":
+/*!**************************************!*\
+  !*** ./src/modules/event-handler.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "addToDoButtonLogic": () => (/* binding */ addToDoButtonLogic),
+/* harmony export */   "createToDoItemButtonLogic": () => (/* binding */ createToDoItemButtonLogic)
+/* harmony export */ });
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../index */ "./src/index.js");
+/* harmony import */ var _dom_manipulation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dom-manipulation */ "./src/modules/dom-manipulation.js");
+
+
+
+
+
+
+function createToDoItemButtonLogic() {
+  document.querySelector('.new-todo-button').addEventListener('click', (e) => {
+    e.preventDefault();
+    (0,_index__WEBPACK_IMPORTED_MODULE_0__.removeCreateToDoItemButton)();
+    (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.makeForm)();
+    addToDoButtonLogic();
+    addNewProjectButtonLogic();
+  });
+}
+
+function addToDoButtonLogic() {
+  document.querySelector('.todo-button').addEventListener('click', (e) => {
+    e.preventDefault();
+    const project = document.querySelector('#dropdownProjectMenu');
+    let title = document.querySelector('#title');
+    const description = document.querySelector('#description');
+    const date = document.querySelector('#date');
+    let priority;
+    document.querySelectorAll('[name="priority"]').forEach((radio) => {
+      if (radio.checked) {
+        priority = radio.value;
+      }
+    });
+
+    const notes = document.querySelector('#notes');
+
+    const newToDo = (0,_index__WEBPACK_IMPORTED_MODULE_0__.createToDo)(
+      project.value,
+      title.value,
+      description.value,
+      date.value,
+      priority,
+      notes.value
+    );
+
+    (0,_index__WEBPACK_IMPORTED_MODULE_0__.addToDoToArray)(newToDo);
+    console.log(_index__WEBPACK_IMPORTED_MODULE_0__.todoArray);
+    (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.removeParagraphs)();
+    (0,_index__WEBPACK_IMPORTED_MODULE_0__.displayProjects)();
+    (0,_index__WEBPACK_IMPORTED_MODULE_0__.displayToDo)();
+    (0,_index__WEBPACK_IMPORTED_MODULE_0__.removeForm)();
+    (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.createToDoItemButton)();
+    createToDoItemButtonLogic();
+  });
+}
+
+function addNewProjectButtonLogic() {
+  document.querySelector('.project-button').addEventListener('click', (e) => {
+    e.preventDefault();
+    const newProjectField = document.querySelector('#newproject');
+
+    if (newProjectField.value === '') {
+      return;
+    }
+
+    (0,_index__WEBPACK_IMPORTED_MODULE_0__.addOptions)(newProjectField);
+
+    // resets 'create new project' input field
+    newProjectField.value = '';
+  });
 }
 
 
