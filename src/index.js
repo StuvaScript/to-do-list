@@ -8,11 +8,9 @@ import { createToDoItemButtonLogic } from './modules/event-handler';
 
 export {
   populateDropdownMenu,
-  removeCreateToDoItemButton,
   addToDoToArray,
   displayProjects,
   displayToDo,
-  removeForm,
   addOptions,
   createToDo,
   todoArray,
@@ -53,13 +51,13 @@ function populateDropdownMenu() {
   });
 }
 
-function removeCreateToDoItemButton() {
-  document.querySelector('.new-todo-button').remove();
-}
+// function removeCreateToDoItemButton() {
+//   document.querySelector('.new-todo-button').remove();
+// }
 
-function removeForm() {
-  document.querySelector('form').remove();
-}
+// function removeForm() {
+//   document.querySelector('form').remove();
+// }
 
 function addOptions(newProjectField) {
   // Checks for duplicates

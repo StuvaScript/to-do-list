@@ -6,6 +6,8 @@ export {
   createProjectParagraphs,
   createToDoParagraphs,
   removeParagraphs,
+  removeCreateToDoItemButton,
+  removeForm,
 };
 
 const content = document.querySelector('.content');
@@ -179,4 +181,12 @@ function createToDoParagraphs(objectKey, objectValue) {
 
 function removeParagraphs() {
   document.querySelectorAll('p').forEach((para) => para.remove());
+}
+
+function removeCreateToDoItemButton() {
+  document.querySelector('.new-todo-button').remove();
+}
+
+function removeForm() {
+  document.querySelector('form').remove();
 }
