@@ -13,8 +13,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "addOptions": () => (/* binding */ addOptions),
 /* harmony export */   "addToDoToArray": () => (/* binding */ addToDoToArray),
 /* harmony export */   "createToDo": () => (/* binding */ createToDo),
-/* harmony export */   "displayProjects": () => (/* binding */ displayProjects),
 /* harmony export */   "displayToDo": () => (/* binding */ displayToDo),
+/* harmony export */   "getProjectName": () => (/* binding */ getProjectName),
 /* harmony export */   "populateDropdownMenu": () => (/* binding */ populateDropdownMenu),
 /* harmony export */   "todoArray": () => (/* binding */ todoArray)
 /* harmony export */ });
@@ -36,10 +36,10 @@ const todoArray = [];
 (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.createToDoItemButton)();
 (0,_modules_event_handler__WEBPACK_IMPORTED_MODULE_1__.createToDoItemButtonLogic)();
 
-// --- FUNCTIONS ---
+//* **`` FUNCTIONS ``**
 
 function populateDropdownMenu() {
-  // Loops through the array and grabs each value and it's index position
+  //? **`` Loops through the array and grabs each value and it's index position
   todoArray.forEach((currentValue, index) => {
     const projectValues = Object.values(currentValue)[0];
 
@@ -52,7 +52,7 @@ function populateDropdownMenu() {
     });
 
     if (optionDuplicate !== true) {
-      // fills the dropdown menu with the projects in the array
+      //? **`` fills the dropdown menu with the projects in the array
       const newOption = document.createElement('option');
       dropdownProjectMenu.appendChild(newOption);
       newOption.setAttribute('value', projectValues);
@@ -60,34 +60,27 @@ function populateDropdownMenu() {
     }
   });
 }
-
-// function removeCreateToDoItemButton() {
-//   document.querySelector('.new-todo-button').remove();
-// }
-
-// function removeForm() {
-//   document.querySelector('form').remove();
-// }
-
+//? **`` Updates the select dropdown options with the 'Create New Project' value
 function addOptions(newProjectField) {
-  // Checks for duplicates
+  //? **`` Duplicate check initial value
   let optionDuplicate = false;
-
+  //? **`` Loops through all the select dropdown options
   document.querySelectorAll('option').forEach((option) => {
+    //? **`` Checks for duplicates
     if (newProjectField.value == option.innerText) {
       optionDuplicate = true;
     }
   });
-
+  //? **`` If the project input is NOT a duplicate, it adds it to the project select dropdown options
   if (optionDuplicate !== true) {
     updateOptions(newProjectField);
 
-    // automatically sets dropdown menu to last created new project
+    //? **`` Automatically sets dropdown menu to last created new project
     document.querySelector('#dropdownProjectMenu').value =
       document.querySelector('#dropdownProjectMenu > option:last-child').value;
   }
 }
-
+//? **`` Creates a new <option> element and sets it as the new project value
 function updateOptions(newProjectField) {
   const getDropdownMenu = document.querySelector('#dropdownProjectMenu');
   const makeOption = document.createElement('option');
@@ -96,22 +89,24 @@ function updateOptions(newProjectField) {
   makeOption.innerText = newProjectField.value;
   getDropdownMenu.appendChild(makeOption);
 }
-
-function displayProjects() {
-  // Loops through the array and grabs each value and it's index position
+//? **`` Gets the project name and displays it
+function getProjectName() {
+  //? **`` Loops through the array and grabs each value and it's index position
   todoArray.forEach((currentValue, index) => {
-    const projectValues = Object.values(currentValue)[0];
-    (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.createProjectParagraphs)(projectValues);
+    //? **`` Gets the first value in the object (in this case, it's the project name)
+    const projectName = Object.values(currentValue)[0];
+    console.log('projectName');
+    console.log(projectName);
+    //? **`` Displays the project name
+    (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayProjectName)(projectName);
   });
 }
-
+//? **`` Displays all the form values
 function displayToDo() {
-  // Loops through the array and grabs each value and it's index position
+  //? **`` Loops through the array and grabs each value and it's index position
   todoArray.forEach((currentValue, index) => {
-    console.log(index + ' ' + Object.values(currentValue)[0]);
-    // Loops through each object in the array and displays each key/value pair
+    //? **`` Loops through each object in the array and displays each key/value pair
     for (const [objectKey, objectValue] of Object.entries(currentValue)) {
-      // console.log(`${objectKey}: ${objectValue}`);
       (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.createToDoParagraphs)(objectKey, objectValue);
     }
   });
@@ -121,8 +116,8 @@ function addToDoToArray(newTodo) {
   todoArray.unshift(newTodo);
 }
 
-function createToDo(project, title, description, date, priority, notes) {
-  return { project, title, description, date, priority, notes };
+function createToDo(project, task, date, priority, notes) {
+  return { project, task, date, priority, notes };
 }
 
 
@@ -136,9 +131,9 @@ function createToDo(project, title, description, date, priority, notes) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "createProjectParagraphs": () => (/* binding */ createProjectParagraphs),
 /* harmony export */   "createToDoItemButton": () => (/* binding */ createToDoItemButton),
 /* harmony export */   "createToDoParagraphs": () => (/* binding */ createToDoParagraphs),
+/* harmony export */   "displayProjectName": () => (/* binding */ displayProjectName),
 /* harmony export */   "makeForm": () => (/* binding */ makeForm),
 /* harmony export */   "removeCreateToDoItemButton": () => (/* binding */ removeCreateToDoItemButton),
 /* harmony export */   "removeForm": () => (/* binding */ removeForm),
@@ -151,13 +146,14 @@ __webpack_require__.r(__webpack_exports__);
 
 const content = document.querySelector('.content');
 
+//? **`` Creates the initial 'ToDo' button
 function createToDoItemButton() {
   const newToDoButton = document.createElement('button');
   newToDoButton.innerText = 'Create ToDo Item';
   newToDoButton.classList.add('new-todo-button');
   content.prepend(newToDoButton);
 }
-
+//? **`` Creates the form that takes all the todo info
 function makeForm() {
   const form = document.createElement('form');
   form.setAttribute('action', '');
@@ -195,33 +191,21 @@ function makeForm() {
   createBreak(form);
 
   const projectButton = document.createElement('button');
-  projectButton.innerText = 'Add New Project';
+  projectButton.innerText = 'Create New Project';
   projectButton.classList.add('project-button');
   form.appendChild(projectButton);
 
   createBreak(form);
 
-  const todoTitle = document.createElement('input');
-  form.appendChild(todoTitle);
-  todoTitle.setAttribute('type', 'text');
-  todoTitle.setAttribute('id', 'title');
-  todoTitle.setAttribute('name', 'title');
-  const titleLabel = document.createElement('label');
-  titleLabel.innerText = 'ToDo Title';
-  titleLabel.setAttribute('for', 'title');
-  form.appendChild(titleLabel);
-
-  createBreak(form);
-
-  const todoDescription = document.createElement('input');
-  form.appendChild(todoDescription);
-  todoDescription.setAttribute('type', 'text');
-  todoDescription.setAttribute('id', 'description');
-  todoDescription.setAttribute('name', 'description');
-  const descriptionLabel = document.createElement('label');
-  descriptionLabel.innerText = 'ToDo Description';
-  descriptionLabel.setAttribute('for', 'description');
-  form.appendChild(descriptionLabel);
+  const todoTask = document.createElement('input');
+  form.appendChild(todoTask);
+  todoTask.setAttribute('type', 'text');
+  todoTask.setAttribute('id', 'task');
+  todoTask.setAttribute('name', 'task');
+  const taskLabel = document.createElement('label');
+  taskLabel.innerText = 'ToDo Task';
+  taskLabel.setAttribute('for', 'task');
+  form.appendChild(taskLabel);
 
   createBreak(form);
 
@@ -300,32 +284,32 @@ function makeForm() {
   todoButton.classList.add('todo-button');
   form.appendChild(todoButton);
 }
-
+//? **`` Simply creates a <br> element to be used in the form
 function createBreak(element) {
   const br = document.createElement('br');
   element.appendChild(br);
 }
-
-function createProjectParagraphs(projectValues) {
+//? **`` Takes the project name as an argument and displays it
+function displayProjectName(projectName) {
   const paragraph = document.createElement('p');
-  paragraph.innerText = `${projectValues}`;
+  paragraph.innerText = `${projectName}`;
   content.appendChild(paragraph);
 }
-
+//? **`` Displays the object key/value pair (in this case, its the form fields and their values)
 function createToDoParagraphs(objectKey, objectValue) {
   const paragraph = document.createElement('p');
   paragraph.innerText = `${objectKey}: ${objectValue}`;
   content.appendChild(paragraph);
 }
-
+//? **`` Finds all paragraph elements and removes them
 function removeParagraphs() {
   document.querySelectorAll('p').forEach((para) => para.remove());
 }
-
+//? **`` Removes the initial 'ToDo' button
 function removeCreateToDoItemButton() {
   document.querySelector('.new-todo-button').remove();
 }
-
+//? **`` Removes the <form> element and all it's content
 function removeForm() {
   document.querySelector('form').remove();
 }
@@ -367,9 +351,9 @@ function createToDoItemButtonLogic() {
 function addToDoButtonLogic() {
   document.querySelector('.todo-button').addEventListener('click', (e) => {
     e.preventDefault();
+    //? **`` Assigns all the form values to their own variables
     const project = document.querySelector('#dropdownProjectMenu').value;
-    const title = document.querySelector('#title').value;
-    const description = document.querySelector('#description').value;
+    const task = document.querySelector('#task').value;
     const date = document.querySelector('#date').value;
     const notes = document.querySelector('#notes').value;
     let priority;
@@ -378,20 +362,14 @@ function addToDoButtonLogic() {
         priority = radio.value;
       }
     });
-
-    const newToDo = (0,_index__WEBPACK_IMPORTED_MODULE_0__.createToDo)(
-      project,
-      title,
-      description,
-      date,
-      priority,
-      notes
-    );
+    //? **`` Creates a new object composed of all the form values
+    const newToDo = (0,_index__WEBPACK_IMPORTED_MODULE_0__.createToDo)(project, task, date, priority, notes);
 
     (0,_index__WEBPACK_IMPORTED_MODULE_0__.addToDoToArray)(newToDo);
+    console.log('todoArray');
     console.log(_index__WEBPACK_IMPORTED_MODULE_0__.todoArray);
     (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.removeParagraphs)();
-    (0,_index__WEBPACK_IMPORTED_MODULE_0__.displayProjects)();
+    (0,_index__WEBPACK_IMPORTED_MODULE_0__.getProjectName)();
     (0,_index__WEBPACK_IMPORTED_MODULE_0__.displayToDo)();
     (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.removeForm)();
     (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.createToDoItemButton)();
@@ -405,13 +383,14 @@ function addNewProjectButtonLogic() {
     e.preventDefault();
     const newProjectField = document.querySelector('#newproject');
 
+    //? **`` Returns if nothing is added to the new project field
     if (newProjectField.value === '') {
       return;
     }
 
     (0,_index__WEBPACK_IMPORTED_MODULE_0__.addOptions)(newProjectField);
 
-    // ? **`` resets 'create new project' input field
+    //? **`` resets 'create new project' input field
     newProjectField.value = '';
   });
 }
