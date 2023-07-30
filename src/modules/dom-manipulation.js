@@ -3,7 +3,7 @@ import { populateDropdownMenu } from '../index';
 export {
   createToDoItemButton,
   makeForm,
-  createProjectParagraphs,
+  displayProjectName,
   createToDoParagraphs,
   removeParagraphs,
   removeCreateToDoItemButton,
@@ -12,13 +12,14 @@ export {
 
 const content = document.querySelector('.content');
 
+//? **`` Creates the initial 'ToDo' button
 function createToDoItemButton() {
   const newToDoButton = document.createElement('button');
   newToDoButton.innerText = 'Create ToDo Item';
   newToDoButton.classList.add('new-todo-button');
   content.prepend(newToDoButton);
 }
-
+//? **`` Creates the form that takes all the todo info
 function makeForm() {
   const form = document.createElement('form');
   form.setAttribute('action', '');
@@ -56,33 +57,21 @@ function makeForm() {
   createBreak(form);
 
   const projectButton = document.createElement('button');
-  projectButton.innerText = 'Add New Project';
+  projectButton.innerText = 'Create New Project';
   projectButton.classList.add('project-button');
   form.appendChild(projectButton);
 
   createBreak(form);
 
-  const todoTitle = document.createElement('input');
-  form.appendChild(todoTitle);
-  todoTitle.setAttribute('type', 'text');
-  todoTitle.setAttribute('id', 'title');
-  todoTitle.setAttribute('name', 'title');
-  const titleLabel = document.createElement('label');
-  titleLabel.innerText = 'ToDo Title';
-  titleLabel.setAttribute('for', 'title');
-  form.appendChild(titleLabel);
-
-  createBreak(form);
-
-  const todoDescription = document.createElement('input');
-  form.appendChild(todoDescription);
-  todoDescription.setAttribute('type', 'text');
-  todoDescription.setAttribute('id', 'description');
-  todoDescription.setAttribute('name', 'description');
-  const descriptionLabel = document.createElement('label');
-  descriptionLabel.innerText = 'ToDo Description';
-  descriptionLabel.setAttribute('for', 'description');
-  form.appendChild(descriptionLabel);
+  const todoTask = document.createElement('input');
+  form.appendChild(todoTask);
+  todoTask.setAttribute('type', 'text');
+  todoTask.setAttribute('id', 'task');
+  todoTask.setAttribute('name', 'task');
+  const taskLabel = document.createElement('label');
+  taskLabel.innerText = 'ToDo Task';
+  taskLabel.setAttribute('for', 'task');
+  form.appendChild(taskLabel);
 
   createBreak(form);
 
@@ -161,32 +150,32 @@ function makeForm() {
   todoButton.classList.add('todo-button');
   form.appendChild(todoButton);
 }
-
+//? **`` Simply creates a <br> element to be used in the form
 function createBreak(element) {
   const br = document.createElement('br');
   element.appendChild(br);
 }
-
-function createProjectParagraphs(projectValues) {
+//? **`` Takes the project name as an argument and displays it
+function displayProjectName(projectName) {
   const paragraph = document.createElement('p');
-  paragraph.innerText = `${projectValues}`;
+  paragraph.innerText = `${projectName}`;
   content.appendChild(paragraph);
 }
-
+//? **`` Displays the object key/value pair (in this case, its the form fields and their values)
 function createToDoParagraphs(objectKey, objectValue) {
   const paragraph = document.createElement('p');
   paragraph.innerText = `${objectKey}: ${objectValue}`;
   content.appendChild(paragraph);
 }
-
+//? **`` Finds all paragraph elements and removes them
 function removeParagraphs() {
   document.querySelectorAll('p').forEach((para) => para.remove());
 }
-
+//? **`` Removes the initial 'ToDo' button
 function removeCreateToDoItemButton() {
   document.querySelector('.new-todo-button').remove();
 }
-
+//? **`` Removes the <form> element and all it's content
 function removeForm() {
   document.querySelector('form').remove();
 }

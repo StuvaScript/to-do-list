@@ -1,6 +1,6 @@
 import {
   addToDoToArray,
-  displayProjects,
+  getProjectName,
   displayToDo,
   addOptions,
   createToDo,
@@ -32,9 +32,9 @@ function createToDoItemButtonLogic() {
 function addToDoButtonLogic() {
   document.querySelector('.todo-button').addEventListener('click', (e) => {
     e.preventDefault();
+    //? **`` Assigns all the form values to their own variables
     const project = document.querySelector('#dropdownProjectMenu').value;
-    const title = document.querySelector('#title').value;
-    const description = document.querySelector('#description').value;
+    const task = document.querySelector('#task').value;
     const date = document.querySelector('#date').value;
     const notes = document.querySelector('#notes').value;
     let priority;
@@ -43,20 +43,14 @@ function addToDoButtonLogic() {
         priority = radio.value;
       }
     });
-
-    const newToDo = createToDo(
-      project,
-      title,
-      description,
-      date,
-      priority,
-      notes
-    );
+    //? **`` Creates a new object composed of all the form values
+    const newToDo = createToDo(project, task, date, priority, notes);
 
     addToDoToArray(newToDo);
+    console.log('todoArray');
     console.log(todoArray);
     removeParagraphs();
-    displayProjects();
+    getProjectName();
     displayToDo();
     removeForm();
     createToDoItemButton();
@@ -70,13 +64,14 @@ function addNewProjectButtonLogic() {
     e.preventDefault();
     const newProjectField = document.querySelector('#newproject');
 
+    //? **`` Returns if nothing is added to the new project field
     if (newProjectField.value === '') {
       return;
     }
 
     addOptions(newProjectField);
 
-    // ? **`` resets 'create new project' input field
+    //? **`` resets 'create new project' input field
     newProjectField.value = '';
   });
 }
