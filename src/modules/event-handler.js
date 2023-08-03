@@ -1,9 +1,9 @@
 import {
-  addToDoToArray,
+  addObjectToArray,
   getProjectName,
   displayToDo,
   addOptions,
-  createToDo,
+  createObject,
   todoArray,
 } from '../index';
 
@@ -43,10 +43,10 @@ function addToDoButtonLogic() {
         priority = radio.value;
       }
     });
-    //? **`` Creates a new object composed of all the form values
-    const newToDo = createToDo(project, task, date, priority, notes);
+    //? **`` Takes all the form values, turns them into a new object, and turns the object into it's own variable
+    const newObject = createObject(project, task, date, priority, notes);
 
-    addToDoToArray(newToDo);
+    addObjectToArray(newObject);
     console.log('todoArray');
     console.log(todoArray);
     removeParagraphs();

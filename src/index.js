@@ -8,11 +8,11 @@ import { createToDoItemButtonLogic } from './modules/event-handler';
 
 export {
   populateDropdownMenu,
-  addToDoToArray,
+  addObjectToArray,
   getProjectName,
   displayToDo,
   addOptions,
-  createToDo,
+  createObject,
   todoArray,
 };
 
@@ -20,6 +20,19 @@ export {
 // const { doc } = require('prettier');
 
 // ? I got a console.log shortcut. Put your cursor on a word and do ctr+alt+w then either W or up or down arrows. Also to make it a string, do shift+alt+W and either W or up or down arrows.
+//! **************************************************************************************************
+//todo **`` In the middle of grabbing today's date and I want to display it at the top of the page like my phone's app does
+
+function getTodaysDate() {
+  const date = new Date();
+  //? **`` These are the date formatting options
+  const dateOptions = { month: 'short', day: 'numeric' };
+  const todaysDate = date.toLocaleDateString(undefined, dateOptions);
+  return todaysDate;
+}
+console.log(getTodaysDate() + ' • today');
+
+//! **************************************************************************************************
 
 const todoArray = [];
 
@@ -101,11 +114,12 @@ function displayToDo() {
     }
   });
 }
-
-function addToDoToArray(newTodo) {
-  todoArray.unshift(newTodo);
+//? **`` Takes a new object as an argument and adds it to the front of the array
+function addObjectToArray(newObject) {
+  todoArray.unshift(newObject);
 }
 
-function createToDo(project, task, date, priority, notes) {
+//? **`` Factory function that creates a new object of all the form values
+function createObject(project, task, date, priority, notes) {
   return { project, task, date, priority, notes };
 }
