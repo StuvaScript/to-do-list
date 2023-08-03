@@ -10,9 +10,9 @@
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "addObjectToArray": () => (/* binding */ addObjectToArray),
 /* harmony export */   "addOptions": () => (/* binding */ addOptions),
-/* harmony export */   "addToDoToArray": () => (/* binding */ addToDoToArray),
-/* harmony export */   "createToDo": () => (/* binding */ createToDo),
+/* harmony export */   "createObject": () => (/* binding */ createObject),
 /* harmony export */   "displayToDo": () => (/* binding */ displayToDo),
 /* harmony export */   "getProjectName": () => (/* binding */ getProjectName),
 /* harmony export */   "populateDropdownMenu": () => (/* binding */ populateDropdownMenu),
@@ -30,6 +30,19 @@ __webpack_require__.r(__webpack_exports__);
 // const { doc } = require('prettier');
 
 // ? I got a console.log shortcut. Put your cursor on a word and do ctr+alt+w then either W or up or down arrows. Also to make it a string, do shift+alt+W and either W or up or down arrows.
+//! **************************************************************************************************
+//todo **`` In the middle of grabbing today's date and I want to display it at the top of the page like my phone's app does
+
+function getTodaysDate() {
+  const date = new Date();
+  //? **`` These are the date formatting options
+  const dateOptions = { month: 'short', day: 'numeric' };
+  const todaysDate = date.toLocaleDateString(undefined, dateOptions);
+  return todaysDate;
+}
+console.log(getTodaysDate() + ' • today');
+
+//! **************************************************************************************************
 
 const todoArray = [];
 
@@ -111,12 +124,13 @@ function displayToDo() {
     }
   });
 }
-
-function addToDoToArray(newTodo) {
-  todoArray.unshift(newTodo);
+//? **`` Takes a new object as an argument and adds it to the front of the array
+function addObjectToArray(newObject) {
+  todoArray.unshift(newObject);
 }
 
-function createToDo(project, task, date, priority, notes) {
+//? **`` Factory function that creates a new object of all the form values
+function createObject(project, task, date, priority, notes) {
   return { project, task, date, priority, notes };
 }
 
@@ -362,10 +376,10 @@ function addToDoButtonLogic() {
         priority = radio.value;
       }
     });
-    //? **`` Creates a new object composed of all the form values
-    const newToDo = (0,_index__WEBPACK_IMPORTED_MODULE_0__.createToDo)(project, task, date, priority, notes);
+    //? **`` Takes all the form values, turns them into a new object, and turns the object into it's own variable
+    const newObject = (0,_index__WEBPACK_IMPORTED_MODULE_0__.createObject)(project, task, date, priority, notes);
 
-    (0,_index__WEBPACK_IMPORTED_MODULE_0__.addToDoToArray)(newToDo);
+    (0,_index__WEBPACK_IMPORTED_MODULE_0__.addObjectToArray)(newObject);
     console.log('todoArray');
     console.log(_index__WEBPACK_IMPORTED_MODULE_0__.todoArray);
     (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.removeParagraphs)();
