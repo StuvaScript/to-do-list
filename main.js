@@ -13,8 +13,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "addObjectToArray": () => (/* binding */ addObjectToArray),
 /* harmony export */   "addOptions": () => (/* binding */ addOptions),
 /* harmony export */   "createObject": () => (/* binding */ createObject),
-/* harmony export */   "displayToDo": () => (/* binding */ displayToDo),
-/* harmony export */   "getProjectName": () => (/* binding */ getProjectName),
 /* harmony export */   "getTodaysDate": () => (/* binding */ getTodaysDate),
 /* harmony export */   "populateDropdownMenu": () => (/* binding */ populateDropdownMenu),
 /* harmony export */   "todoArray": () => (/* binding */ todoArray)
@@ -31,9 +29,9 @@ __webpack_require__.r(__webpack_exports__);
 
 const todoArray = [];
 
-(0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayTodaysDate)();
 (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.createToDoItemButton)();
 (0,_modules_event_handler__WEBPACK_IMPORTED_MODULE_1__.createToDoItemButtonLogic)();
+(0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayTodaysDate)();
 
 //* **`` FUNCTIONS ``**
 
@@ -68,6 +66,7 @@ function populateDropdownMenu() {
     }
   });
 }
+
 //? **`` Updates the select dropdown options with the 'Create New Project' value
 function addOptions(newProjectField) {
   //? **`` Duplicate check initial value
@@ -81,44 +80,14 @@ function addOptions(newProjectField) {
   });
   //? **`` If the project input is NOT a duplicate, it adds it to the project select dropdown options
   if (optionDuplicate !== true) {
-    updateOptions(newProjectField);
+    (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.updateOptions)(newProjectField);
 
     //? **`` Automatically sets dropdown menu to last created new project
     document.querySelector('#dropdownProjectMenu').value =
       document.querySelector('#dropdownProjectMenu > option:last-child').value;
   }
 }
-//? **`` Creates a new <option> element and sets it as the new project value
-function updateOptions(newProjectField) {
-  const getDropdownMenu = document.querySelector('#dropdownProjectMenu');
-  const makeOption = document.createElement('option');
 
-  makeOption.setAttribute('value', newProjectField.value);
-  makeOption.innerText = newProjectField.value;
-  getDropdownMenu.appendChild(makeOption);
-}
-//? **`` Gets the project name and displays it
-function getProjectName() {
-  //? **`` Loops through the array and grabs each value and it's index position
-  todoArray.forEach((currentValue, index) => {
-    //? **`` Gets the first value in the object (in this case, it's the project name)
-    const projectName = Object.values(currentValue)[0];
-    console.log('projectName');
-    console.log(projectName);
-    //? **`` Displays the project name
-    (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayProjectName)(projectName);
-  });
-}
-//? **`` Displays all the form values
-function displayToDo() {
-  //? **`` Loops through the array and grabs each value and it's index position
-  todoArray.forEach((currentValue, index) => {
-    //? **`` Loops through each object in the array and displays each key/value pair
-    for (const [objectKey, objectValue] of Object.entries(currentValue)) {
-      (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.createToDoParagraphs)(objectKey, objectValue);
-    }
-  });
-}
 //? **`` Takes a new object as an argument and adds it to the front of the array
 function addObjectToArray(newObject) {
   todoArray.unshift(newObject);
@@ -141,11 +110,14 @@ function createObject(project, task, date, priority, notes) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "createToDoItemButton": () => (/* binding */ createToDoItemButton),
-/* harmony export */   "createToDoParagraphs": () => (/* binding */ createToDoParagraphs),
 /* harmony export */   "displayProjectName": () => (/* binding */ displayProjectName),
+/* harmony export */   "displayToDo": () => (/* binding */ displayToDo),
+/* harmony export */   "displayToDoInfo": () => (/* binding */ displayToDoInfo),
 /* harmony export */   "displayTodaysDate": () => (/* binding */ displayTodaysDate),
+/* harmony export */   "getProjectName": () => (/* binding */ getProjectName),
 /* harmony export */   "makeForm": () => (/* binding */ makeForm),
-/* harmony export */   "removeChildrenOfContent": () => (/* binding */ removeChildrenOfContent)
+/* harmony export */   "removeChildrenOfContent": () => (/* binding */ removeChildrenOfContent),
+/* harmony export */   "updateOptions": () => (/* binding */ updateOptions)
 /* harmony export */ });
 /* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../index */ "./src/index.js");
 
@@ -153,6 +125,40 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const content = document.querySelector('.content');
+
+//? **`` Creates a new <option> element and sets it as the new project value
+function updateOptions(newProjectField) {
+  const getDropdownMenu = document.querySelector('#dropdownProjectMenu');
+  const makeOption = document.createElement('option');
+
+  makeOption.setAttribute('value', newProjectField.value);
+  makeOption.innerText = newProjectField.value;
+  getDropdownMenu.appendChild(makeOption);
+}
+
+//? **`` Gets the project name and displays it
+function getProjectName() {
+  //? **`` Loops through the array and grabs each value and it's index position
+  _index__WEBPACK_IMPORTED_MODULE_0__.todoArray.forEach((currentValue, index) => {
+    //? **`` Gets the first value in the object (in this case, it's the project name)
+    const projectName = Object.values(currentValue)[0];
+    console.log('projectName');
+    console.log(projectName);
+    //? **`` Displays the project name
+    displayProjectName(projectName);
+  });
+}
+
+//? **`` Displays all the form values
+function displayToDo() {
+  //? **`` Loops through the array and grabs each value and it's index position
+  _index__WEBPACK_IMPORTED_MODULE_0__.todoArray.forEach((currentValue, index) => {
+    //? **`` Loops through each object in the array and displays each key/value pair
+    for (const [objectKey, objectValue] of Object.entries(currentValue)) {
+      displayToDoInfo(objectKey, objectValue);
+    }
+  });
+}
 
 //? **`` Shows the date
 function displayTodaysDate() {
@@ -312,7 +318,7 @@ function displayProjectName(projectName) {
   content.appendChild(paragraph);
 }
 //? **`` Displays the object key/value pair (in this case, its the form fields and their values)
-function createToDoParagraphs(objectKey, objectValue) {
+function displayToDoInfo(objectKey, objectValue) {
   const paragraph = document.createElement('p');
   paragraph.innerText = `${objectKey}: ${objectValue}`;
   content.appendChild(paragraph);
@@ -380,12 +386,11 @@ function addToDoButtonLogic() {
     console.log('todoArray');
     console.log(_index__WEBPACK_IMPORTED_MODULE_0__.todoArray);
     (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.removeChildrenOfContent)();
-
-    (0,_index__WEBPACK_IMPORTED_MODULE_0__.getProjectName)();
-    (0,_index__WEBPACK_IMPORTED_MODULE_0__.displayToDo)();
-    (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayTodaysDate)();
+    (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.getProjectName)();
+    (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayToDo)();
     (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.createToDoItemButton)();
     createToDoItemButtonLogic();
+    (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayTodaysDate)();
   });
 }
 
