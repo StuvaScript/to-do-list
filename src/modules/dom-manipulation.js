@@ -1,16 +1,23 @@
-import { populateDropdownMenu } from '../index';
+import { populateDropdownMenu, getTodaysDate } from '../index';
 
 export {
   createToDoItemButton,
   makeForm,
   displayProjectName,
   createToDoParagraphs,
-  removeParagraphs,
-  removeCreateToDoItemButton,
-  removeForm,
+  displayTodaysDate,
+  removeChildrenOfContent,
 };
 
 const content = document.querySelector('.content');
+
+//? **`` Shows the date
+function displayTodaysDate() {
+  const today = getTodaysDate();
+  const dateDiv = document.createElement('div');
+  dateDiv.innerText = today + ' • today';
+  content.prepend(dateDiv);
+}
 
 //? **`` Creates the initial 'ToDo' button
 function createToDoItemButton() {
@@ -167,15 +174,10 @@ function createToDoParagraphs(objectKey, objectValue) {
   paragraph.innerText = `${objectKey}: ${objectValue}`;
   content.appendChild(paragraph);
 }
-//? **`` Finds all paragraph elements and removes them
-function removeParagraphs() {
-  document.querySelectorAll('p').forEach((para) => para.remove());
-}
-//? **`` Removes the initial 'ToDo' button
-function removeCreateToDoItemButton() {
-  document.querySelector('.new-todo-button').remove();
-}
-//? **`` Removes the <form> element and all it's content
-function removeForm() {
-  document.querySelector('form').remove();
+
+//? **`` Removes all the elements within the main "content" class element
+function removeChildrenOfContent() {
+  while (content.firstChild) {
+    content.removeChild(content.firstChild);
+  }
 }

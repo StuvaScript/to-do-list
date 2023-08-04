@@ -11,6 +11,6 @@
   },
   "rules": {
     "no-console": "off",
-    "no-plusplus": [2, { "allowForLoopAfterThought": true }]
+    "no-plusplus": [2, { "allowForLoopAfterThoughts": true }]
   }
 }

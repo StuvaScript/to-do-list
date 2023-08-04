@@ -9,10 +9,9 @@ import {
 
 import {
   makeForm,
-  removeParagraphs,
   createToDoItemButton,
-  removeCreateToDoItemButton,
-  removeForm,
+  displayTodaysDate,
+  removeChildrenOfContent,
 } from './dom-manipulation';
 
 export { createToDoItemButtonLogic, addToDoButtonLogic };
@@ -21,7 +20,7 @@ export { createToDoItemButtonLogic, addToDoButtonLogic };
 function createToDoItemButtonLogic() {
   document.querySelector('.new-todo-button').addEventListener('click', (e) => {
     e.preventDefault();
-    removeCreateToDoItemButton();
+    removeChildrenOfContent();
     makeForm();
     addToDoButtonLogic();
     addNewProjectButtonLogic();
@@ -49,10 +48,11 @@ function addToDoButtonLogic() {
     addObjectToArray(newObject);
     console.log('todoArray');
     console.log(todoArray);
-    removeParagraphs();
+    removeChildrenOfContent();
+
     getProjectName();
     displayToDo();
-    removeForm();
+    displayTodaysDate();
     createToDoItemButton();
     createToDoItemButtonLogic();
   });

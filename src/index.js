@@ -2,6 +2,7 @@ import {
   createToDoItemButton,
   displayProjectName,
   createToDoParagraphs,
+  displayTodaysDate,
 } from './modules/dom-manipulation';
 
 import { createToDoItemButtonLogic } from './modules/event-handler';
@@ -14,14 +15,18 @@ export {
   addOptions,
   createObject,
   todoArray,
+  getTodaysDate,
 };
 
-// ! Do I need this code below for Prettier to work??
-// const { doc } = require('prettier');
-
 // ? I got a console.log shortcut. Put your cursor on a word and do ctr+alt+w then either W or up or down arrows. Also to make it a string, do shift+alt+W and either W or up or down arrows.
-//! **************************************************************************************************
-//todo **`` In the middle of grabbing today's date and I want to display it at the top of the page like my phone's app does
+
+const todoArray = [];
+
+displayTodaysDate();
+createToDoItemButton();
+createToDoItemButtonLogic();
+
+//* **`` FUNCTIONS ``**
 
 function getTodaysDate() {
   const date = new Date();
@@ -30,17 +35,8 @@ function getTodaysDate() {
   const todaysDate = date.toLocaleDateString(undefined, dateOptions);
   return todaysDate;
 }
-console.log(getTodaysDate() + ' • today');
 
-//! **************************************************************************************************
-
-const todoArray = [];
-
-createToDoItemButton();
-createToDoItemButtonLogic();
-
-//* **`` FUNCTIONS ``**
-
+//? **`` Adds the new projects as options to the select dropdown
 function populateDropdownMenu() {
   //? **`` Loops through the array and grabs each value and it's index position
   todoArray.forEach((currentValue, index) => {
