@@ -1,8 +1,9 @@
 import {
   createToDoItemButton,
   displayProjectName,
-  createToDoParagraphs,
+  displayToDoInfo,
   displayTodaysDate,
+  updateOptions,
 } from './modules/dom-manipulation';
 
 import { createToDoItemButtonLogic } from './modules/event-handler';
@@ -10,8 +11,6 @@ import { createToDoItemButtonLogic } from './modules/event-handler';
 export {
   populateDropdownMenu,
   addObjectToArray,
-  getProjectName,
-  displayToDo,
   addOptions,
   createObject,
   todoArray,
@@ -22,9 +21,9 @@ export {
 
 const todoArray = [];
 
-displayTodaysDate();
 createToDoItemButton();
 createToDoItemButtonLogic();
+displayTodaysDate();
 
 //* **`` FUNCTIONS ``**
 
@@ -59,6 +58,7 @@ function populateDropdownMenu() {
     }
   });
 }
+
 //? **`` Updates the select dropdown options with the 'Create New Project' value
 function addOptions(newProjectField) {
   //? **`` Duplicate check initial value
@@ -79,37 +79,7 @@ function addOptions(newProjectField) {
       document.querySelector('#dropdownProjectMenu > option:last-child').value;
   }
 }
-//? **`` Creates a new <option> element and sets it as the new project value
-function updateOptions(newProjectField) {
-  const getDropdownMenu = document.querySelector('#dropdownProjectMenu');
-  const makeOption = document.createElement('option');
 
-  makeOption.setAttribute('value', newProjectField.value);
-  makeOption.innerText = newProjectField.value;
-  getDropdownMenu.appendChild(makeOption);
-}
-//? **`` Gets the project name and displays it
-function getProjectName() {
-  //? **`` Loops through the array and grabs each value and it's index position
-  todoArray.forEach((currentValue, index) => {
-    //? **`` Gets the first value in the object (in this case, it's the project name)
-    const projectName = Object.values(currentValue)[0];
-    console.log('projectName');
-    console.log(projectName);
-    //? **`` Displays the project name
-    displayProjectName(projectName);
-  });
-}
-//? **`` Displays all the form values
-function displayToDo() {
-  //? **`` Loops through the array and grabs each value and it's index position
-  todoArray.forEach((currentValue, index) => {
-    //? **`` Loops through each object in the array and displays each key/value pair
-    for (const [objectKey, objectValue] of Object.entries(currentValue)) {
-      createToDoParagraphs(objectKey, objectValue);
-    }
-  });
-}
 //? **`` Takes a new object as an argument and adds it to the front of the array
 function addObjectToArray(newObject) {
   todoArray.unshift(newObject);

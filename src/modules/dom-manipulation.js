@@ -1,15 +1,52 @@
-import { populateDropdownMenu, getTodaysDate } from '../index';
+import { populateDropdownMenu, getTodaysDate, todoArray } from '../index';
 
 export {
   createToDoItemButton,
   makeForm,
   displayProjectName,
-  createToDoParagraphs,
+  displayToDoInfo,
   displayTodaysDate,
   removeChildrenOfContent,
+  getProjectName,
+  displayToDo,
+  updateOptions,
 };
 
 const content = document.querySelector('.content');
+
+//? **`` Creates a new <option> element and sets it as the new project value
+function updateOptions(newProjectField) {
+  const getDropdownMenu = document.querySelector('#dropdownProjectMenu');
+  const makeOption = document.createElement('option');
+
+  makeOption.setAttribute('value', newProjectField.value);
+  makeOption.innerText = newProjectField.value;
+  getDropdownMenu.appendChild(makeOption);
+}
+
+//? **`` Gets the project name and displays it
+function getProjectName() {
+  //? **`` Loops through the array and grabs each value and it's index position
+  todoArray.forEach((currentValue, index) => {
+    //? **`` Gets the first value in the object (in this case, it's the project name)
+    const projectName = Object.values(currentValue)[0];
+    console.log('projectName');
+    console.log(projectName);
+    //? **`` Displays the project name
+    displayProjectName(projectName);
+  });
+}
+
+//? **`` Displays all the form values
+function displayToDo() {
+  //? **`` Loops through the array and grabs each value and it's index position
+  todoArray.forEach((currentValue, index) => {
+    //? **`` Loops through each object in the array and displays each key/value pair
+    for (const [objectKey, objectValue] of Object.entries(currentValue)) {
+      displayToDoInfo(objectKey, objectValue);
+    }
+  });
+}
 
 //? **`` Shows the date
 function displayTodaysDate() {
@@ -169,7 +206,7 @@ function displayProjectName(projectName) {
   content.appendChild(paragraph);
 }
 //? **`` Displays the object key/value pair (in this case, its the form fields and their values)
-function createToDoParagraphs(objectKey, objectValue) {
+function displayToDoInfo(objectKey, objectValue) {
   const paragraph = document.createElement('p');
   paragraph.innerText = `${objectKey}: ${objectValue}`;
   content.appendChild(paragraph);

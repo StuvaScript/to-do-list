@@ -1,13 +1,13 @@
 import {
   addObjectToArray,
-  getProjectName,
-  displayToDo,
   addOptions,
   createObject,
   todoArray,
 } from '../index';
 
 import {
+  getProjectName,
+  displayToDo,
   makeForm,
   createToDoItemButton,
   displayTodaysDate,
@@ -49,12 +49,11 @@ function addToDoButtonLogic() {
     console.log('todoArray');
     console.log(todoArray);
     removeChildrenOfContent();
-
     getProjectName();
     displayToDo();
-    displayTodaysDate();
     createToDoItemButton();
     createToDoItemButtonLogic();
+    displayTodaysDate();
   });
 }
 
