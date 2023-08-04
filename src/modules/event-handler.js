@@ -57,6 +57,8 @@ function addToDoButtonLogic() {
   });
 }
 
+//todo I want to display the tasks, only display the info when the tasks are clicked, able to view tasks by project
+
 //? **`` This gets the value for a new project, then populates the select field with the new project.
 function addNewProjectButtonLogic() {
   document.querySelector('.project-button').addEventListener('click', (e) => {
