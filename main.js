@@ -15,6 +15,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "createObject": () => (/* binding */ createObject),
 /* harmony export */   "displayToDo": () => (/* binding */ displayToDo),
 /* harmony export */   "getProjectName": () => (/* binding */ getProjectName),
+/* harmony export */   "getTodaysDate": () => (/* binding */ getTodaysDate),
 /* harmony export */   "populateDropdownMenu": () => (/* binding */ populateDropdownMenu),
 /* harmony export */   "todoArray": () => (/* binding */ todoArray)
 /* harmony export */ });
@@ -26,12 +27,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// ! Do I need this code below for Prettier to work??
-// const { doc } = require('prettier');
-
 // ? I got a console.log shortcut. Put your cursor on a word and do ctr+alt+w then either W or up or down arrows. Also to make it a string, do shift+alt+W and either W or up or down arrows.
-//! **************************************************************************************************
-//todo **`` In the middle of grabbing today's date and I want to display it at the top of the page like my phone's app does
+
+const todoArray = [];
+
+(0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayTodaysDate)();
+(0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.createToDoItemButton)();
+(0,_modules_event_handler__WEBPACK_IMPORTED_MODULE_1__.createToDoItemButtonLogic)();
+
+//* **`` FUNCTIONS ``**
 
 function getTodaysDate() {
   const date = new Date();
@@ -40,17 +44,8 @@ function getTodaysDate() {
   const todaysDate = date.toLocaleDateString(undefined, dateOptions);
   return todaysDate;
 }
-console.log(getTodaysDate() + ' • today');
 
-//! **************************************************************************************************
-
-const todoArray = [];
-
-(0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.createToDoItemButton)();
-(0,_modules_event_handler__WEBPACK_IMPORTED_MODULE_1__.createToDoItemButtonLogic)();
-
-//* **`` FUNCTIONS ``**
-
+//? **`` Adds the new projects as options to the select dropdown
 function populateDropdownMenu() {
   //? **`` Loops through the array and grabs each value and it's index position
   todoArray.forEach((currentValue, index) => {
@@ -148,10 +143,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "createToDoItemButton": () => (/* binding */ createToDoItemButton),
 /* harmony export */   "createToDoParagraphs": () => (/* binding */ createToDoParagraphs),
 /* harmony export */   "displayProjectName": () => (/* binding */ displayProjectName),
+/* harmony export */   "displayTodaysDate": () => (/* binding */ displayTodaysDate),
 /* harmony export */   "makeForm": () => (/* binding */ makeForm),
-/* harmony export */   "removeCreateToDoItemButton": () => (/* binding */ removeCreateToDoItemButton),
-/* harmony export */   "removeForm": () => (/* binding */ removeForm),
-/* harmony export */   "removeParagraphs": () => (/* binding */ removeParagraphs)
+/* harmony export */   "removeChildrenOfContent": () => (/* binding */ removeChildrenOfContent)
 /* harmony export */ });
 /* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../index */ "./src/index.js");
 
@@ -159,6 +153,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const content = document.querySelector('.content');
+
+//? **`` Shows the date
+function displayTodaysDate() {
+  const today = (0,_index__WEBPACK_IMPORTED_MODULE_0__.getTodaysDate)();
+  const dateDiv = document.createElement('div');
+  dateDiv.innerText = today + ' • today';
+  content.prepend(dateDiv);
+}
 
 //? **`` Creates the initial 'ToDo' button
 function createToDoItemButton() {
@@ -315,17 +317,12 @@ function createToDoParagraphs(objectKey, objectValue) {
   paragraph.innerText = `${objectKey}: ${objectValue}`;
   content.appendChild(paragraph);
 }
-//? **`` Finds all paragraph elements and removes them
-function removeParagraphs() {
-  document.querySelectorAll('p').forEach((para) => para.remove());
-}
-//? **`` Removes the initial 'ToDo' button
-function removeCreateToDoItemButton() {
-  document.querySelector('.new-todo-button').remove();
-}
-//? **`` Removes the <form> element and all it's content
-function removeForm() {
-  document.querySelector('form').remove();
+
+//? **`` Removes all the elements within the main "content" class element
+function removeChildrenOfContent() {
+  while (content.firstChild) {
+    content.removeChild(content.firstChild);
+  }
 }
 
 
@@ -354,7 +351,7 @@ __webpack_require__.r(__webpack_exports__);
 function createToDoItemButtonLogic() {
   document.querySelector('.new-todo-button').addEventListener('click', (e) => {
     e.preventDefault();
-    (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.removeCreateToDoItemButton)();
+    (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.removeChildrenOfContent)();
     (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.makeForm)();
     addToDoButtonLogic();
     addNewProjectButtonLogic();
@@ -382,10 +379,11 @@ function addToDoButtonLogic() {
     (0,_index__WEBPACK_IMPORTED_MODULE_0__.addObjectToArray)(newObject);
     console.log('todoArray');
     console.log(_index__WEBPACK_IMPORTED_MODULE_0__.todoArray);
-    (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.removeParagraphs)();
+    (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.removeChildrenOfContent)();
+
     (0,_index__WEBPACK_IMPORTED_MODULE_0__.getProjectName)();
     (0,_index__WEBPACK_IMPORTED_MODULE_0__.displayToDo)();
-    (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.removeForm)();
+    (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayTodaysDate)();
     (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.createToDoItemButton)();
     createToDoItemButtonLogic();
   });
