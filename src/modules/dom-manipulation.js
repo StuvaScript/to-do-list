@@ -3,11 +3,10 @@ import { populateDropdownMenu, getTodaysDate, todoArray } from '../index';
 export {
   createToDoItemButton,
   makeForm,
-  displayProjectName,
-  displayToDoInfo,
   displayTodaysDate,
   removeChildrenOfContent,
   getProjectName,
+  getTaskName,
   displayToDo,
   updateOptions,
 };
@@ -28,12 +27,25 @@ function updateOptions(newProjectField) {
 function getProjectName() {
   //? **`` Loops through the array and grabs each value and it's index position
   todoArray.forEach((currentValue, index) => {
-    //? **`` Gets the first value in the object (in this case, it's the project name)
+    //? **`` Gets the value in the object (in this case, it's the project name)
     const projectName = Object.values(currentValue)[0];
     console.log('projectName');
     console.log(projectName);
     //? **`` Displays the project name
-    displayProjectName(projectName);
+    displayName(projectName);
+  });
+}
+
+//? **`` Gets the task name and displays it
+function getTaskName(idNUmber) {
+  //? **`` Loops through the array and grabs each value and it's index position
+  todoArray.forEach((currentValue, index) => {
+    //? **`` Gets the value in the object (in this case, it's the task name)
+    const taskName = Object.values(currentValue)[1];
+    console.log('**`` taskName ``**');
+    console.log(taskName);
+    //? **`` Displays the task name
+    displayName(taskName, idNUmber);
   });
 }
 
@@ -199,11 +211,13 @@ function createBreak(element) {
   const br = document.createElement('br');
   element.appendChild(br);
 }
-//? **`` Takes the project name as an argument and displays it
-function displayProjectName(projectName) {
-  const paragraph = document.createElement('p');
-  paragraph.innerText = `${projectName}`;
-  content.appendChild(paragraph);
+//? **`` Takes the name as an argument and displays it
+function displayName(name, idNUmber) {
+  const button = document.createElement('button');
+  button.innerText = `${name}`;
+  button.classList.add('task');
+  button.setAttribute('id', idNUmber);
+  content.appendChild(button);
 }
 //? **`` Displays the object key/value pair (in this case, its the form fields and their values)
 function displayToDoInfo(objectKey, objectValue) {

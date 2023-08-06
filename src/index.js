@@ -1,7 +1,5 @@
 import {
   createToDoItemButton,
-  displayProjectName,
-  displayToDoInfo,
   displayTodaysDate,
   updateOptions,
 } from './modules/dom-manipulation';
