@@ -12,6 +12,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "addObjectToArray": () => (/* binding */ addObjectToArray),
 /* harmony export */   "addOptions": () => (/* binding */ addOptions),
+/* harmony export */   "createID": () => (/* binding */ createID),
 /* harmony export */   "createObject": () => (/* binding */ createObject),
 /* harmony export */   "getTodaysDate": () => (/* binding */ getTodaysDate),
 /* harmony export */   "populateDropdownMenu": () => (/* binding */ populateDropdownMenu),
@@ -34,6 +35,11 @@ const todoArray = [];
 (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayTodaysDate)();
 
 //* **`` FUNCTIONS ``**
+
+//? **`` Creates a unique ID that gets attached to an object
+const createID = () => {
+  return Math.floor(Math.random() * (999999 - 100000) + 100000);
+};
 
 function getTodaysDate() {
   const date = new Date();
@@ -94,8 +100,8 @@ function addObjectToArray(newObject) {
 }
 
 //? **`` Factory function that creates a new object of all the form values
-function createObject(project, task, date, priority, notes) {
-  return { project, task, date, priority, notes };
+function createObject(project, task, date, priority, notes, idNUmber) {
+  return { project, task, date, priority, notes, idNUmber };
 }
 
 
@@ -143,21 +149,30 @@ function getProjectName() {
     const projectName = Object.values(currentValue)[0];
     console.log('projectName');
     console.log(projectName);
+    //! The function below is now unique to displaying only tasks.
     //? **`` Displays the project name
-    displayName(projectName);
+    displayTask(projectName);
+    //! ********************************************************
   });
 }
+//todo **`` Apply some logic to the new ID function when you click on the new task button it finds it's id number and matches that to the array object and displays it's info.
+
+//todo **`` Make a factory function that just grabs and returns the values out of the objects using "Object.values(currentValue)[1]" and the other numbers too. Like the function below.
 
 //? **`` Gets the task name and displays it
-function getTaskName(idNUmber) {
+function getTaskName() {
   //? **`` Loops through the array and grabs each value and it's index position
   _index__WEBPACK_IMPORTED_MODULE_0__.todoArray.forEach((currentValue, index) => {
     //? **`` Gets the value in the object (in this case, it's the task name)
     const taskName = Object.values(currentValue)[1];
     console.log('**`` taskName ``**');
     console.log(taskName);
+    //? **`` Gets the value in the object (in this case, it's the unique ID number)
+    const idNUmber = Object.values(currentValue)[5];
+    console.log('idNUmber');
+    console.log(idNUmber);
     //? **`` Displays the task name
-    displayName(taskName, idNUmber);
+    displayTask(taskName, idNUmber);
   });
 }
 
@@ -323,10 +338,10 @@ function createBreak(element) {
   const br = document.createElement('br');
   element.appendChild(br);
 }
-//? **`` Takes the name as an argument and displays it
-function displayName(name, idNUmber) {
+//? **`` Takes the name as an argument, creates a class, adds a unique ID, and displays it
+function displayTask(taskName, idNUmber) {
   const button = document.createElement('button');
-  button.innerText = `${name}`;
+  button.innerText = `${taskName}`;
   button.classList.add('task');
   button.setAttribute('id', idNUmber);
   content.appendChild(button);
@@ -393,16 +408,10 @@ function addToDoButtonLogic() {
         priority = radio.value;
       }
     });
+    const idNUmber = (0,_index__WEBPACK_IMPORTED_MODULE_0__.createID)();
+    console.log(idNUmber);
     //? **`` If the task field is empty, nothing happens.
     if (task == '') return;
-
-    //todo **`` Write a description next to the new ID function and other places it affects, try to get the idNumber to show up in the console.log array display, apply some logic to when you click on the new task button it finds it's id number and matches that to the array object and displays it's info.
-
-    const createID = () => {
-      return Math.floor(Math.random() * (999999 - 100000) + 100000);
-    };
-    const idNUmber = createID();
-    console.log(idNUmber);
 
     //? **`` Takes all the form values, turns them into a new object, and turns the object into it's own variable
     const newObject = (0,_index__WEBPACK_IMPORTED_MODULE_0__.createObject)(
@@ -415,15 +424,15 @@ function addToDoButtonLogic() {
     );
 
     (0,_index__WEBPACK_IMPORTED_MODULE_0__.addObjectToArray)(newObject);
-    console.log('**`` todoArray ``**');
-    console.log(_index__WEBPACK_IMPORTED_MODULE_0__.todoArray);
     (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.removeChildrenOfContent)();
     // getProjectName();
-    (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.getTaskName)(idNUmber);
+    (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.getTaskName)();
     // displayToDo();
     (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.createToDoItemButton)();
     createToDoItemButtonLogic();
     (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayTodaysDate)();
+    console.log('**`` todoArray ``**');
+    console.log(_index__WEBPACK_IMPORTED_MODULE_0__.todoArray);
   });
 }
 
