@@ -13,6 +13,7 @@ export {
   createObject,
   todoArray,
   getTodaysDate,
+  createID,
 };
 
 // ? I got a console.log shortcut. Put your cursor on a word and do ctr+alt+w then either W or up or down arrows. Also to make it a string, do shift+alt+W and either W or up or down arrows.
@@ -24,6 +25,11 @@ createToDoItemButtonLogic();
 displayTodaysDate();
 
 //* **`` FUNCTIONS ``**
+
+//? **`` Creates a unique ID that gets attached to an object
+const createID = () => {
+  return Math.floor(Math.random() * (999999 - 100000) + 100000);
+};
 
 function getTodaysDate() {
   const date = new Date();
@@ -84,6 +90,6 @@ function addObjectToArray(newObject) {
 }
 
 //? **`` Factory function that creates a new object of all the form values
-function createObject(project, task, date, priority, notes) {
-  return { project, task, date, priority, notes };
+function createObject(project, task, date, priority, notes, idNUmber) {
+  return { project, task, date, priority, notes, idNUmber };
 }

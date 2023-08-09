@@ -31,21 +31,30 @@ function getProjectName() {
     const projectName = Object.values(currentValue)[0];
     console.log('projectName');
     console.log(projectName);
+    //! The function below is now unique to displaying only tasks.
     //? **`` Displays the project name
-    displayName(projectName);
+    displayTask(projectName);
+    //! ********************************************************
   });
 }
+//todo **`` Apply some logic to the new ID function when you click on the new task button it finds it's id number and matches that to the array object and displays it's info.
+
+//todo **`` Make a factory function that just grabs and returns the values out of the objects using "Object.values(currentValue)[1]" and the other numbers too. Like the function below.
 
 //? **`` Gets the task name and displays it
-function getTaskName(idNUmber) {
+function getTaskName() {
   //? **`` Loops through the array and grabs each value and it's index position
   todoArray.forEach((currentValue, index) => {
     //? **`` Gets the value in the object (in this case, it's the task name)
     const taskName = Object.values(currentValue)[1];
     console.log('**`` taskName ``**');
     console.log(taskName);
+    //? **`` Gets the value in the object (in this case, it's the unique ID number)
+    const idNUmber = Object.values(currentValue)[5];
+    console.log('idNUmber');
+    console.log(idNUmber);
     //? **`` Displays the task name
-    displayName(taskName, idNUmber);
+    displayTask(taskName, idNUmber);
   });
 }
 
@@ -211,10 +220,10 @@ function createBreak(element) {
   const br = document.createElement('br');
   element.appendChild(br);
 }
-//? **`` Takes the name as an argument and displays it
-function displayName(name, idNUmber) {
+//? **`` Takes the name as an argument, creates a class, adds a unique ID, and displays it
+function displayTask(taskName, idNUmber) {
   const button = document.createElement('button');
-  button.innerText = `${name}`;
+  button.innerText = `${taskName}`;
   button.classList.add('task');
   button.setAttribute('id', idNUmber);
   content.appendChild(button);

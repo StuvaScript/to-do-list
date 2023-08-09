@@ -3,6 +3,7 @@ import {
   addOptions,
   createObject,
   todoArray,
+  createID,
 } from '../index';
 
 import {
@@ -43,16 +44,10 @@ function addToDoButtonLogic() {
         priority = radio.value;
       }
     });
-    //? **`` If the task field is empty, nothing happens.
-    if (task == '') return;
-
-    //todo **`` Write a description next to the new ID function and other places it affects, try to get the idNumber to show up in the console.log array display, apply some logic to when you click on the new task button it finds it's id number and matches that to the array object and displays it's info.
-
-    const createID = () => {
-      return Math.floor(Math.random() * (999999 - 100000) + 100000);
-    };
     const idNUmber = createID();
     console.log(idNUmber);
+    //? **`` If the task field is empty, nothing happens.
+    if (task == '') return;
 
     //? **`` Takes all the form values, turns them into a new object, and turns the object into it's own variable
     const newObject = createObject(
@@ -65,15 +60,15 @@ function addToDoButtonLogic() {
     );
 
     addObjectToArray(newObject);
-    console.log('**`` todoArray ``**');
-    console.log(todoArray);
     removeChildrenOfContent();
     // getProjectName();
-    getTaskName(idNUmber);
+    getTaskName();
     // displayToDo();
     createToDoItemButton();
     createToDoItemButtonLogic();
     displayTodaysDate();
+    console.log('**`` todoArray ``**');
+    console.log(todoArray);
   });
 }
 
