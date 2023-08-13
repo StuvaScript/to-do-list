@@ -43,14 +43,14 @@ function getProjectName() {
 
 //? **`` Gets the task name and displays it
 function getTaskName() {
-  //? **`` Loops through the array and grabs each value and it's index position
-  todoArray.forEach((currentValue, index) => {
+  //? **`` Loops through the array and grabs each object and it's index position
+  todoArray.forEach((currentObject, index) => {
     //? **`` Gets the value in the object (in this case, it's the task name)
-    const taskName = Object.values(currentValue)[1];
+    const taskName = Object.values(currentObject)[1];
     console.log('**`` taskName ``**');
     console.log(taskName);
     //? **`` Gets the value in the object (in this case, it's the unique ID number)
-    const idNUmber = Object.values(currentValue)[5];
+    const idNUmber = Object.values(currentObject)[5];
     console.log('idNUmber');
     console.log(idNUmber);
     //? **`` Displays the task name
@@ -60,10 +60,10 @@ function getTaskName() {
 
 //? **`` Displays all the form values
 function displayToDo() {
-  //? **`` Loops through the array and grabs each value and it's index position
-  todoArray.forEach((currentValue, index) => {
+  //? **`` Loops through the array and grabs each object and it's index position
+  todoArray.forEach((currentObject, index) => {
     //? **`` Loops through each object in the array and displays each key/value pair
-    for (const [objectKey, objectValue] of Object.entries(currentValue)) {
+    for (const [objectKey, objectValue] of Object.entries(currentObject)) {
       displayToDoInfo(objectKey, objectValue);
     }
   });

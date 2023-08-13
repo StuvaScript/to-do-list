@@ -45,7 +45,7 @@ function addToDoButtonLogic() {
       }
     });
     const idNUmber = createID();
-    console.log(idNUmber);
+
     //? **`` If the task field is empty, nothing happens.
     if (task == '') return;
 

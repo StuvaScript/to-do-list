@@ -27,9 +27,19 @@ displayTodaysDate();
 //* **`` FUNCTIONS ``**
 
 //? **`` Creates a unique ID that gets attached to an object
-const createID = () => {
-  return Math.floor(Math.random() * (999999 - 100000) + 100000);
-};
+function createID() {
+  let number = Math.floor(Math.random() * (999999 - 100000) + 100000);
+  //? **`` To check for duplicates, this loops through the array and grabs each object and it's index position
+  todoArray.forEach((currentObject, index) => {
+    //? **`` Compares the new number to the other object's unique IDs
+    if (number === Object.values(currentObject)[5]) {
+      //? **`` If there is a duplicate ID number, it will run recursively on itself until there is a unique ID
+      createID();
+    }
+  });
+
+  return number;
+}
 
 function getTodaysDate() {
   const date = new Date();
