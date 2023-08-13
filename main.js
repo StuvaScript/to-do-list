@@ -37,9 +37,19 @@ const todoArray = [];
 //* **`` FUNCTIONS ``**
 
 //? **`` Creates a unique ID that gets attached to an object
-const createID = () => {
-  return Math.floor(Math.random() * (999999 - 100000) + 100000);
-};
+function createID() {
+  let number = Math.floor(Math.random() * (999999 - 100000) + 100000);
+  //? **`` To check for duplicates, this loops through the array and grabs each object and it's index position
+  todoArray.forEach((currentObject, index) => {
+    //? **`` Compares the new number to the other object's unique IDs
+    if (number === Object.values(currentObject)[5]) {
+      //? **`` If there is a duplicate ID number, it will run recursively on itself until there is a unique ID
+      createID();
+    }
+  });
+
+  return number;
+}
 
 function getTodaysDate() {
   const date = new Date();
@@ -161,14 +171,14 @@ function getProjectName() {
 
 //? **`` Gets the task name and displays it
 function getTaskName() {
-  //? **`` Loops through the array and grabs each value and it's index position
-  _index__WEBPACK_IMPORTED_MODULE_0__.todoArray.forEach((currentValue, index) => {
+  //? **`` Loops through the array and grabs each object and it's index position
+  _index__WEBPACK_IMPORTED_MODULE_0__.todoArray.forEach((currentObject, index) => {
     //? **`` Gets the value in the object (in this case, it's the task name)
-    const taskName = Object.values(currentValue)[1];
+    const taskName = Object.values(currentObject)[1];
     console.log('**`` taskName ``**');
     console.log(taskName);
     //? **`` Gets the value in the object (in this case, it's the unique ID number)
-    const idNUmber = Object.values(currentValue)[5];
+    const idNUmber = Object.values(currentObject)[5];
     console.log('idNUmber');
     console.log(idNUmber);
     //? **`` Displays the task name
@@ -178,10 +188,10 @@ function getTaskName() {
 
 //? **`` Displays all the form values
 function displayToDo() {
-  //? **`` Loops through the array and grabs each value and it's index position
-  _index__WEBPACK_IMPORTED_MODULE_0__.todoArray.forEach((currentValue, index) => {
+  //? **`` Loops through the array and grabs each object and it's index position
+  _index__WEBPACK_IMPORTED_MODULE_0__.todoArray.forEach((currentObject, index) => {
     //? **`` Loops through each object in the array and displays each key/value pair
-    for (const [objectKey, objectValue] of Object.entries(currentValue)) {
+    for (const [objectKey, objectValue] of Object.entries(currentObject)) {
       displayToDoInfo(objectKey, objectValue);
     }
   });
@@ -409,7 +419,7 @@ function addToDoButtonLogic() {
       }
     });
     const idNUmber = (0,_index__WEBPACK_IMPORTED_MODULE_0__.createID)();
-    console.log(idNUmber);
+
     //? **`` If the task field is empty, nothing happens.
     if (task == '') return;
 
