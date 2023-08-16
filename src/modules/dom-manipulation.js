@@ -9,6 +9,7 @@ export {
   displayTask,
   displayToDoInfo,
   updateOptions,
+  displayBackButton,
 };
 
 const content = document.querySelector('.content');
@@ -190,18 +191,24 @@ function createBreak(element) {
   element.appendChild(br);
 }
 //? **`` Takes the name as an argument, creates a class, adds a unique ID, and displays it
-function displayTask(taskName, idNUmber) {
+function displayTask(taskName, idNumber) {
   const button = document.createElement('button');
   button.innerText = `${taskName}`;
   button.classList.add('task');
-  button.setAttribute('id', idNUmber);
+  button.setAttribute('id', idNumber);
   content.appendChild(button);
 }
-//? **`` Displays the object key/value pair (in this case, its the form fields and their values)
+//? **`` Displays the object key/value pair
 function displayToDoInfo(objectKey, objectValue) {
   const paragraph = document.createElement('p');
   paragraph.innerText = `${objectKey}: ${objectValue}`;
   content.appendChild(paragraph);
+}
+
+function displayBackButton() {
+  const button = document.createElement('button');
+  button.innerText = 'Go Back';
+  content.appendChild(button);
 }
 
 //? **`` Removes all the elements within the main "content" class element

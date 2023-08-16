@@ -39,11 +39,11 @@ function getTaskName() {
     console.log('**`` taskName ``**');
     console.log(taskName);
     //? **`` Gets the value in the object (in this case, it's the unique ID number)
-    const idNUmber = Object.values(currentObject)[5];
-    console.log('idNUmber');
-    console.log(idNUmber);
+    const idNumber = Object.values(currentObject)[5];
+    console.log('idNumber');
+    console.log(idNumber);
     //? **`` Displays the task name
-    displayTask(taskName, idNUmber);
+    displayTask(taskName, idNumber);
   });
 }
 
@@ -132,6 +132,6 @@ function addObjectToArray(newObject) {
 }
 
 //? **`` Factory function that creates a new object of all the form values
-function createObject(project, task, date, priority, notes, idNUmber) {
-  return { project, task, date, priority, notes, idNUmber };
+function createObject(project, task, date, priority, notes, idNumber) {
+  return { project, task, date, priority, notes, idNumber };
 }

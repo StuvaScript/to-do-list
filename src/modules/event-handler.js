@@ -12,8 +12,10 @@ import {
   getProjectName,
   makeForm,
   createToDoItemButton,
+  displayToDoInfo,
   displayTodaysDate,
   removeChildrenOfContent,
+  displayBackButton,
 } from './dom-manipulation';
 
 export { createToDoItemButtonLogic, addToDoButtonLogic };
@@ -22,19 +24,28 @@ export { createToDoItemButtonLogic, addToDoButtonLogic };
 
 //todo **`` Apply some logic when you click on the new task button it finds it's id number and matches that to the array object and displays it's info.
 
-//! **`` Move the function below to index.js when done building logic
 //? **`` Gets the ID assigned to the task button you clicked on
-function getID() {
+function taskDisplayLogic() {
   document.querySelectorAll('.task').forEach((task) => {
     task.addEventListener('click', (e) => {
-      console.log(e.target.id);
-      return e.target.id;
+      //? **`` Gets the ID from the html element
+      const ID = e.target.id;
+      //? **`` Loops through the array and grabs each object and it's index position
+      todoArray.forEach((currentObject, index) => {
+        //? **`` Compares the task ID number to the other object's unique IDs
+        if (ID == Object.values(currentObject)[5]) {
+          removeChildrenOfContent();
+          //? **`` If there is a matching number, it displays that task's info
+          for (const [objectKey, objectValue] of Object.entries(
+            currentObject
+          )) {
+            displayToDoInfo(objectKey, objectValue);
+          }
+          displayBackButton();
+        }
+      });
     });
   });
-}
-
-function taskDisplayLogic() {
-  const ID = getID();
 }
 
 //todo *************************************************************************************
@@ -65,7 +76,7 @@ function addToDoButtonLogic() {
         priority = radio.value;
       }
     });
-    const idNUmber = createID();
+    const idNumber = createID();
 
     //? **`` If the task field is empty, nothing happens.
     if (task == '') return;
@@ -77,7 +88,7 @@ function addToDoButtonLogic() {
       date,
       priority,
       notes,
-      idNUmber
+      idNumber
     );
 
     addObjectToArray(newObject);
