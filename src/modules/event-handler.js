@@ -20,9 +20,17 @@ import {
 
 export { createToDoItemButtonLogic, addToDoButtonLogic };
 
-//todo *************************************************************************************
-
-//todo **`` Apply some logic when you click on the new task button it finds it's id number and matches that to the array object and displays it's info.
+//? **`` Clicking the back button takes you back to the starting screen
+function backButtonLogic() {
+  document.querySelector('.back').addEventListener('click', (e) => {
+    removeChildrenOfContent();
+    getTaskName();
+    createToDoItemButton();
+    createToDoItemButtonLogic();
+    displayTodaysDate();
+    taskDisplayLogic();
+  });
+}
 
 //? **`` Gets the ID assigned to the task button you clicked on
 function taskDisplayLogic() {
@@ -42,13 +50,12 @@ function taskDisplayLogic() {
             displayToDoInfo(objectKey, objectValue);
           }
           displayBackButton();
+          backButtonLogic();
         }
       });
     });
   });
 }
-
-//todo *************************************************************************************
 
 //? **`` This removes the main button, creates the form, then applies the logic to the two buttons within the form.
 function createToDoItemButtonLogic() {

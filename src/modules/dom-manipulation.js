@@ -205,9 +205,11 @@ function displayToDoInfo(objectKey, objectValue) {
   content.appendChild(paragraph);
 }
 
+//? **`` Creates a 'go back' button
 function displayBackButton() {
   const button = document.createElement('button');
   button.innerText = 'Go Back';
+  button.classList.add('back');
   content.appendChild(button);
 }
 

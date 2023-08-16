@@ -363,9 +363,11 @@ function displayToDoInfo(objectKey, objectValue) {
   content.appendChild(paragraph);
 }
 
+//? **`` Creates a 'go back' button
 function displayBackButton() {
   const button = document.createElement('button');
   button.innerText = 'Go Back';
+  button.classList.add('back');
   content.appendChild(button);
 }
 
@@ -398,9 +400,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-//todo *************************************************************************************
-
-//todo **`` Apply some logic when you click on the new task button it finds it's id number and matches that to the array object and displays it's info.
+//? **`` Clicking the back button takes you back to the starting screen
+function backButtonLogic() {
+  document.querySelector('.back').addEventListener('click', (e) => {
+    (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.removeChildrenOfContent)();
+    (0,_index__WEBPACK_IMPORTED_MODULE_0__.getTaskName)();
+    (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.createToDoItemButton)();
+    createToDoItemButtonLogic();
+    (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayTodaysDate)();
+    taskDisplayLogic();
+  });
+}
 
 //? **`` Gets the ID assigned to the task button you clicked on
 function taskDisplayLogic() {
@@ -420,13 +430,12 @@ function taskDisplayLogic() {
             (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayToDoInfo)(objectKey, objectValue);
           }
           (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayBackButton)();
+          backButtonLogic();
         }
       });
     });
   });
 }
-
-//todo *************************************************************************************
 
 //? **`` This removes the main button, creates the form, then applies the logic to the two buttons within the form.
 function createToDoItemButtonLogic() {
