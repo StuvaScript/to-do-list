@@ -47,11 +47,11 @@ function getTaskName() {
     console.log('**`` taskName ``**');
     console.log(taskName);
     //? **`` Gets the value in the object (in this case, it's the unique ID number)
-    const idNUmber = Object.values(currentObject)[5];
-    console.log('idNUmber');
-    console.log(idNUmber);
+    const idNumber = Object.values(currentObject)[5];
+    console.log('idNumber');
+    console.log(idNumber);
     //? **`` Displays the task name
-    (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayTask)(taskName, idNUmber);
+    (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayTask)(taskName, idNumber);
   });
 }
 
@@ -140,8 +140,8 @@ function addObjectToArray(newObject) {
 }
 
 //? **`` Factory function that creates a new object of all the form values
-function createObject(project, task, date, priority, notes, idNUmber) {
-  return { project, task, date, priority, notes, idNUmber };
+function createObject(project, task, date, priority, notes, idNumber) {
+  return { project, task, date, priority, notes, idNumber };
 }
 
 
@@ -156,6 +156,7 @@ function createObject(project, task, date, priority, notes, idNUmber) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "createToDoItemButton": () => (/* binding */ createToDoItemButton),
+/* harmony export */   "displayBackButton": () => (/* binding */ displayBackButton),
 /* harmony export */   "displayTask": () => (/* binding */ displayTask),
 /* harmony export */   "displayToDoInfo": () => (/* binding */ displayToDoInfo),
 /* harmony export */   "displayTodaysDate": () => (/* binding */ displayTodaysDate),
@@ -348,18 +349,24 @@ function createBreak(element) {
   element.appendChild(br);
 }
 //? **`` Takes the name as an argument, creates a class, adds a unique ID, and displays it
-function displayTask(taskName, idNUmber) {
+function displayTask(taskName, idNumber) {
   const button = document.createElement('button');
   button.innerText = `${taskName}`;
   button.classList.add('task');
-  button.setAttribute('id', idNUmber);
+  button.setAttribute('id', idNumber);
   content.appendChild(button);
 }
-//? **`` Displays the object key/value pair (in this case, its the form fields and their values)
+//? **`` Displays the object key/value pair
 function displayToDoInfo(objectKey, objectValue) {
   const paragraph = document.createElement('p');
   paragraph.innerText = `${objectKey}: ${objectValue}`;
   content.appendChild(paragraph);
+}
+
+function displayBackButton() {
+  const button = document.createElement('button');
+  button.innerText = 'Go Back';
+  content.appendChild(button);
 }
 
 //? **`` Removes all the elements within the main "content" class element
@@ -395,19 +402,28 @@ __webpack_require__.r(__webpack_exports__);
 
 //todo **`` Apply some logic when you click on the new task button it finds it's id number and matches that to the array object and displays it's info.
 
-//! **`` Move the function below to index.js when done building logic
 //? **`` Gets the ID assigned to the task button you clicked on
-function getID() {
+function taskDisplayLogic() {
   document.querySelectorAll('.task').forEach((task) => {
     task.addEventListener('click', (e) => {
-      console.log(e.target.id);
-      return e.target.id;
+      //? **`` Gets the ID from the html element
+      const ID = e.target.id;
+      //? **`` Loops through the array and grabs each object and it's index position
+      _index__WEBPACK_IMPORTED_MODULE_0__.todoArray.forEach((currentObject, index) => {
+        //? **`` Compares the task ID number to the other object's unique IDs
+        if (ID == Object.values(currentObject)[5]) {
+          (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.removeChildrenOfContent)();
+          //? **`` If there is a matching number, it displays that task's info
+          for (const [objectKey, objectValue] of Object.entries(
+            currentObject
+          )) {
+            (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayToDoInfo)(objectKey, objectValue);
+          }
+          (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayBackButton)();
+        }
+      });
     });
   });
-}
-
-function taskDisplayLogic() {
-  const ID = getID();
 }
 
 //todo *************************************************************************************
@@ -438,7 +454,7 @@ function addToDoButtonLogic() {
         priority = radio.value;
       }
     });
-    const idNUmber = (0,_index__WEBPACK_IMPORTED_MODULE_0__.createID)();
+    const idNumber = (0,_index__WEBPACK_IMPORTED_MODULE_0__.createID)();
 
     //? **`` If the task field is empty, nothing happens.
     if (task == '') return;
@@ -450,7 +466,7 @@ function addToDoButtonLogic() {
       date,
       priority,
       notes,
-      idNUmber
+      idNumber
     );
 
     (0,_index__WEBPACK_IMPORTED_MODULE_0__.addObjectToArray)(newObject);
