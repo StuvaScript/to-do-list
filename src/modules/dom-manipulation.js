@@ -6,8 +6,8 @@ export {
   displayTodaysDate,
   removeChildrenOfContent,
   getProjectName,
-  getTaskName,
-  displayToDo,
+  displayTask,
+  displayToDoInfo,
   updateOptions,
 };
 
@@ -35,37 +35,6 @@ function getProjectName() {
     //? **`` Displays the project name
     displayTask(projectName);
     //! ********************************************************
-  });
-}
-//todo **`` Apply some logic to the new ID function when you click on the new task button it finds it's id number and matches that to the array object and displays it's info.
-
-//todo **`` Make a factory function that just grabs and returns the values out of the objects using "Object.values(currentValue)[1]" and the other numbers too. Like the function below.
-
-//? **`` Gets the task name and displays it
-function getTaskName() {
-  //? **`` Loops through the array and grabs each object and it's index position
-  todoArray.forEach((currentObject, index) => {
-    //? **`` Gets the value in the object (in this case, it's the task name)
-    const taskName = Object.values(currentObject)[1];
-    console.log('**`` taskName ``**');
-    console.log(taskName);
-    //? **`` Gets the value in the object (in this case, it's the unique ID number)
-    const idNUmber = Object.values(currentObject)[5];
-    console.log('idNUmber');
-    console.log(idNUmber);
-    //? **`` Displays the task name
-    displayTask(taskName, idNUmber);
-  });
-}
-
-//? **`` Displays all the form values
-function displayToDo() {
-  //? **`` Loops through the array and grabs each object and it's index position
-  todoArray.forEach((currentObject, index) => {
-    //? **`` Loops through each object in the array and displays each key/value pair
-    for (const [objectKey, objectValue] of Object.entries(currentObject)) {
-      displayToDoInfo(objectKey, objectValue);
-    }
   });
 }
 

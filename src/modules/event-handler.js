@@ -4,12 +4,12 @@ import {
   createObject,
   todoArray,
   createID,
+  getTaskName,
+  getToDoInfo,
 } from '../index';
 
 import {
   getProjectName,
-  getTaskName,
-  displayToDo,
   makeForm,
   createToDoItemButton,
   displayTodaysDate,
@@ -17,6 +17,27 @@ import {
 } from './dom-manipulation';
 
 export { createToDoItemButtonLogic, addToDoButtonLogic };
+
+//todo *************************************************************************************
+
+//todo **`` Apply some logic when you click on the new task button it finds it's id number and matches that to the array object and displays it's info.
+
+//! **`` Move the function below to index.js when done building logic
+//? **`` Gets the ID assigned to the task button you clicked on
+function getID() {
+  document.querySelectorAll('.task').forEach((task) => {
+    task.addEventListener('click', (e) => {
+      console.log(e.target.id);
+      return e.target.id;
+    });
+  });
+}
+
+function taskDisplayLogic() {
+  const ID = getID();
+}
+
+//todo *************************************************************************************
 
 //? **`` This removes the main button, creates the form, then applies the logic to the two buttons within the form.
 function createToDoItemButtonLogic() {
@@ -63,12 +84,13 @@ function addToDoButtonLogic() {
     removeChildrenOfContent();
     // getProjectName();
     getTaskName();
-    // displayToDo();
+    // getToDoInfo();
     createToDoItemButton();
     createToDoItemButtonLogic();
     displayTodaysDate();
     console.log('**`` todoArray ``**');
     console.log(todoArray);
+    taskDisplayLogic();
   });
 }
 

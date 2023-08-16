@@ -1,6 +1,8 @@
 import {
   createToDoItemButton,
   displayTodaysDate,
+  displayTask,
+  displayToDoInfo,
   updateOptions,
 } from './modules/dom-manipulation';
 
@@ -14,6 +16,8 @@ export {
   todoArray,
   getTodaysDate,
   createID,
+  getTaskName,
+  getToDoInfo,
 };
 
 // ? I got a console.log shortcut. Put your cursor on a word and do ctr+alt+w then either W or up or down arrows. Also to make it a string, do shift+alt+W and either W or up or down arrows.
@@ -25,6 +29,34 @@ createToDoItemButtonLogic();
 displayTodaysDate();
 
 //* **`` FUNCTIONS ``**
+
+//? **`` Gets the task name and displays it
+function getTaskName() {
+  //? **`` Loops through the array and grabs each object and it's index position
+  todoArray.forEach((currentObject, index) => {
+    //? **`` Gets the value in the object (in this case, it's the task name)
+    const taskName = Object.values(currentObject)[1];
+    console.log('**`` taskName ``**');
+    console.log(taskName);
+    //? **`` Gets the value in the object (in this case, it's the unique ID number)
+    const idNUmber = Object.values(currentObject)[5];
+    console.log('idNUmber');
+    console.log(idNUmber);
+    //? **`` Displays the task name
+    displayTask(taskName, idNUmber);
+  });
+}
+
+//? **`` Displays all the form values
+function getToDoInfo() {
+  //? **`` Loops through the array and grabs each object and it's index position
+  todoArray.forEach((currentObject, index) => {
+    //? **`` Loops through each object in the array and displays each key/value pair
+    for (const [objectKey, objectValue] of Object.entries(currentObject)) {
+      displayToDoInfo(objectKey, objectValue);
+    }
+  });
+}
 
 //? **`` Creates a unique ID that gets attached to an object
 function createID() {
