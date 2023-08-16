@@ -10,6 +10,8 @@ export {
   displayToDoInfo,
   updateOptions,
   displayBackButton,
+  displayDeleteButton,
+  displayWarning,
 };
 
 const content = document.querySelector('.content');
@@ -198,11 +200,13 @@ function displayTask(taskName, idNumber) {
   button.setAttribute('id', idNumber);
   content.appendChild(button);
 }
-//? **`` Displays the object key/value pair
+//? **`` Displays the object key/value pair except for the ID Number
 function displayToDoInfo(objectKey, objectValue) {
-  const paragraph = document.createElement('p');
-  paragraph.innerText = `${objectKey}: ${objectValue}`;
-  content.appendChild(paragraph);
+  if (objectKey !== 'idNumber') {
+    const paragraph = document.createElement('p');
+    paragraph.innerText = `${objectKey}: ${objectValue}`;
+    content.appendChild(paragraph);
+  }
 }
 
 //? **`` Creates a 'go back' button
@@ -211,6 +215,35 @@ function displayBackButton() {
   button.innerText = 'Go Back';
   button.classList.add('back');
   content.appendChild(button);
+}
+
+//? **`` Creates a 'delete' button
+function displayDeleteButton() {
+  const button = document.createElement('button');
+  button.innerText = 'Delete';
+  button.classList.add('delete');
+  content.appendChild(button);
+}
+
+//? **`` Creates a 'delete' button
+function displayWarning() {
+  const div = document.createElement('div');
+  div.classList.add('warning');
+  content.appendChild(div);
+
+  const paragraph = document.createElement('p');
+  paragraph.innerText = 'Are you sure?';
+  div.appendChild(paragraph);
+
+  const backButton = document.createElement('button');
+  backButton.innerText = 'Go Back';
+  backButton.classList.add('warning-back');
+  div.appendChild(backButton);
+
+  const deleteButton = document.createElement('button');
+  deleteButton.innerText = 'Delete';
+  deleteButton.classList.add('warning-delete');
+  div.appendChild(deleteButton);
 }
 
 //? **`` Removes all the elements within the main "content" class element
