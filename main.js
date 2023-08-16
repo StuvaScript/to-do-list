@@ -14,6 +14,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "addOptions": () => (/* binding */ addOptions),
 /* harmony export */   "createID": () => (/* binding */ createID),
 /* harmony export */   "createObject": () => (/* binding */ createObject),
+/* harmony export */   "getTaskName": () => (/* binding */ getTaskName),
+/* harmony export */   "getToDoInfo": () => (/* binding */ getToDoInfo),
 /* harmony export */   "getTodaysDate": () => (/* binding */ getTodaysDate),
 /* harmony export */   "populateDropdownMenu": () => (/* binding */ populateDropdownMenu),
 /* harmony export */   "todoArray": () => (/* binding */ todoArray)
@@ -35,6 +37,34 @@ const todoArray = [];
 (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayTodaysDate)();
 
 //* **`` FUNCTIONS ``**
+
+//? **`` Gets the task name and displays it
+function getTaskName() {
+  //? **`` Loops through the array and grabs each object and it's index position
+  todoArray.forEach((currentObject, index) => {
+    //? **`` Gets the value in the object (in this case, it's the task name)
+    const taskName = Object.values(currentObject)[1];
+    console.log('**`` taskName ``**');
+    console.log(taskName);
+    //? **`` Gets the value in the object (in this case, it's the unique ID number)
+    const idNUmber = Object.values(currentObject)[5];
+    console.log('idNUmber');
+    console.log(idNUmber);
+    //? **`` Displays the task name
+    (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayTask)(taskName, idNUmber);
+  });
+}
+
+//? **`` Displays all the form values
+function getToDoInfo() {
+  //? **`` Loops through the array and grabs each object and it's index position
+  todoArray.forEach((currentObject, index) => {
+    //? **`` Loops through each object in the array and displays each key/value pair
+    for (const [objectKey, objectValue] of Object.entries(currentObject)) {
+      (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayToDoInfo)(objectKey, objectValue);
+    }
+  });
+}
 
 //? **`` Creates a unique ID that gets attached to an object
 function createID() {
@@ -126,10 +156,10 @@ function createObject(project, task, date, priority, notes, idNUmber) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "createToDoItemButton": () => (/* binding */ createToDoItemButton),
-/* harmony export */   "displayToDo": () => (/* binding */ displayToDo),
+/* harmony export */   "displayTask": () => (/* binding */ displayTask),
+/* harmony export */   "displayToDoInfo": () => (/* binding */ displayToDoInfo),
 /* harmony export */   "displayTodaysDate": () => (/* binding */ displayTodaysDate),
 /* harmony export */   "getProjectName": () => (/* binding */ getProjectName),
-/* harmony export */   "getTaskName": () => (/* binding */ getTaskName),
 /* harmony export */   "makeForm": () => (/* binding */ makeForm),
 /* harmony export */   "removeChildrenOfContent": () => (/* binding */ removeChildrenOfContent),
 /* harmony export */   "updateOptions": () => (/* binding */ updateOptions)
@@ -163,37 +193,6 @@ function getProjectName() {
     //? **`` Displays the project name
     displayTask(projectName);
     //! ********************************************************
-  });
-}
-//todo **`` Apply some logic to the new ID function when you click on the new task button it finds it's id number and matches that to the array object and displays it's info.
-
-//todo **`` Make a factory function that just grabs and returns the values out of the objects using "Object.values(currentValue)[1]" and the other numbers too. Like the function below.
-
-//? **`` Gets the task name and displays it
-function getTaskName() {
-  //? **`` Loops through the array and grabs each object and it's index position
-  _index__WEBPACK_IMPORTED_MODULE_0__.todoArray.forEach((currentObject, index) => {
-    //? **`` Gets the value in the object (in this case, it's the task name)
-    const taskName = Object.values(currentObject)[1];
-    console.log('**`` taskName ``**');
-    console.log(taskName);
-    //? **`` Gets the value in the object (in this case, it's the unique ID number)
-    const idNUmber = Object.values(currentObject)[5];
-    console.log('idNUmber');
-    console.log(idNUmber);
-    //? **`` Displays the task name
-    displayTask(taskName, idNUmber);
-  });
-}
-
-//? **`` Displays all the form values
-function displayToDo() {
-  //? **`` Loops through the array and grabs each object and it's index position
-  _index__WEBPACK_IMPORTED_MODULE_0__.todoArray.forEach((currentObject, index) => {
-    //? **`` Loops through each object in the array and displays each key/value pair
-    for (const [objectKey, objectValue] of Object.entries(currentObject)) {
-      displayToDoInfo(objectKey, objectValue);
-    }
   });
 }
 
@@ -392,6 +391,27 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+//todo *************************************************************************************
+
+//todo **`` Apply some logic when you click on the new task button it finds it's id number and matches that to the array object and displays it's info.
+
+//! **`` Move the function below to index.js when done building logic
+//? **`` Gets the ID assigned to the task button you clicked on
+function getID() {
+  document.querySelectorAll('.task').forEach((task) => {
+    task.addEventListener('click', (e) => {
+      console.log(e.target.id);
+      return e.target.id;
+    });
+  });
+}
+
+function taskDisplayLogic() {
+  const ID = getID();
+}
+
+//todo *************************************************************************************
+
 //? **`` This removes the main button, creates the form, then applies the logic to the two buttons within the form.
 function createToDoItemButtonLogic() {
   document.querySelector('.new-todo-button').addEventListener('click', (e) => {
@@ -436,13 +456,14 @@ function addToDoButtonLogic() {
     (0,_index__WEBPACK_IMPORTED_MODULE_0__.addObjectToArray)(newObject);
     (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.removeChildrenOfContent)();
     // getProjectName();
-    (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.getTaskName)();
-    // displayToDo();
+    (0,_index__WEBPACK_IMPORTED_MODULE_0__.getTaskName)();
+    // getToDoInfo();
     (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.createToDoItemButton)();
     createToDoItemButtonLogic();
     (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayTodaysDate)();
     console.log('**`` todoArray ``**');
     console.log(_index__WEBPACK_IMPORTED_MODULE_0__.todoArray);
+    taskDisplayLogic();
   });
 }
 
