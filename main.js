@@ -157,9 +157,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "createToDoItemButton": () => (/* binding */ createToDoItemButton),
 /* harmony export */   "displayBackButton": () => (/* binding */ displayBackButton),
+/* harmony export */   "displayDeleteButton": () => (/* binding */ displayDeleteButton),
 /* harmony export */   "displayTask": () => (/* binding */ displayTask),
 /* harmony export */   "displayToDoInfo": () => (/* binding */ displayToDoInfo),
 /* harmony export */   "displayTodaysDate": () => (/* binding */ displayTodaysDate),
+/* harmony export */   "displayWarning": () => (/* binding */ displayWarning),
 /* harmony export */   "getProjectName": () => (/* binding */ getProjectName),
 /* harmony export */   "makeForm": () => (/* binding */ makeForm),
 /* harmony export */   "removeChildrenOfContent": () => (/* binding */ removeChildrenOfContent),
@@ -356,11 +358,13 @@ function displayTask(taskName, idNumber) {
   button.setAttribute('id', idNumber);
   content.appendChild(button);
 }
-//? **`` Displays the object key/value pair
+//? **`` Displays the object key/value pair except for the ID Number
 function displayToDoInfo(objectKey, objectValue) {
-  const paragraph = document.createElement('p');
-  paragraph.innerText = `${objectKey}: ${objectValue}`;
-  content.appendChild(paragraph);
+  if (objectKey !== 'idNumber') {
+    const paragraph = document.createElement('p');
+    paragraph.innerText = `${objectKey}: ${objectValue}`;
+    content.appendChild(paragraph);
+  }
 }
 
 //? **`` Creates a 'go back' button
@@ -369,6 +373,35 @@ function displayBackButton() {
   button.innerText = 'Go Back';
   button.classList.add('back');
   content.appendChild(button);
+}
+
+//? **`` Creates a 'delete' button
+function displayDeleteButton() {
+  const button = document.createElement('button');
+  button.innerText = 'Delete';
+  button.classList.add('delete');
+  content.appendChild(button);
+}
+
+//? **`` Creates a 'delete' button
+function displayWarning() {
+  const div = document.createElement('div');
+  div.classList.add('warning');
+  content.appendChild(div);
+
+  const paragraph = document.createElement('p');
+  paragraph.innerText = 'Are you sure?';
+  div.appendChild(paragraph);
+
+  const backButton = document.createElement('button');
+  backButton.innerText = 'Go Back';
+  backButton.classList.add('warning-back');
+  div.appendChild(backButton);
+
+  const deleteButton = document.createElement('button');
+  deleteButton.innerText = 'Delete';
+  deleteButton.classList.add('warning-delete');
+  div.appendChild(deleteButton);
 }
 
 //? **`` Removes all the elements within the main "content" class element
@@ -399,6 +432,62 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+//! **`` Issue with adding project names to dropdown menu. The default project comes back uncapitalized. May be issues with hyphens? Projects with spaces in them get ignored and the new task falls under a different project.
+
+//todo **`` On this page, theres a lot of reused bundled functions that could get put into one big function like goToMainScreen() or whatevs. Also there are a ton of reused loops that could probably get put into one function.
+
+//? **`` This is the 'delete task' warning screen's 'Delete' button logic. It removes the object from the array and returns you to the main screen
+function warningDeleteButtonLogic(ID) {
+  document.querySelector('.warning-delete').addEventListener('click', (e) => {
+    //? **`` Loops through the array and grabs each object and it's index position
+    _index__WEBPACK_IMPORTED_MODULE_0__.todoArray.forEach((currentObject, index) => {
+      //? **`` Compares the task ID number to the other object's unique IDs
+      if (ID == Object.values(currentObject)[5]) {
+        //? **`` This removes the object from the array
+        _index__WEBPACK_IMPORTED_MODULE_0__.todoArray.splice(index, 1);
+
+        (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.removeChildrenOfContent)();
+        (0,_index__WEBPACK_IMPORTED_MODULE_0__.getTaskName)();
+        (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.createToDoItemButton)();
+        createToDoItemButtonLogic();
+        (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayTodaysDate)();
+        taskDisplayLogic();
+      }
+    });
+  });
+}
+
+//? **`` This is the 'delete task' warning screen's 'Go Back' button logic. It takes you back to the task screen.
+function warningBackButtonLogic(ID) {
+  document.querySelector('.warning-back').addEventListener('click', (e) => {
+    (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.removeChildrenOfContent)();
+    //? **`` Loops through the array and grabs each object and it's index position
+    _index__WEBPACK_IMPORTED_MODULE_0__.todoArray.forEach((currentObject, index) => {
+      //? **`` Compares the task ID number to the other object's unique IDs
+      if (ID == Object.values(currentObject)[5]) {
+        //? **`` If there is a matching number, it displays that task's info
+        for (const [objectKey, objectValue] of Object.entries(currentObject)) {
+          (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayToDoInfo)(objectKey, objectValue);
+        }
+        (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayBackButton)();
+        backButtonLogic();
+        (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayDeleteButton)();
+        deleteButtonLogic(ID);
+      }
+    });
+  });
+}
+
+//? **`` Clicking the delete button clears the screen and brings up a warning
+function deleteButtonLogic(ID) {
+  document.querySelector('.delete').addEventListener('click', (e) => {
+    (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.removeChildrenOfContent)();
+    (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayWarning)();
+    warningBackButtonLogic(ID);
+    warningDeleteButtonLogic(ID);
+  });
+}
 
 //? **`` Clicking the back button takes you back to the starting screen
 function backButtonLogic() {
@@ -431,6 +520,8 @@ function taskDisplayLogic() {
           }
           (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayBackButton)();
           backButtonLogic();
+          (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayDeleteButton)();
+          deleteButtonLogic(ID);
         }
       });
     });
