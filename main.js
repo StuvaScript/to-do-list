@@ -17,6 +17,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "getTaskName": () => (/* binding */ getTaskName),
 /* harmony export */   "getToDoInfo": () => (/* binding */ getToDoInfo),
 /* harmony export */   "getTodaysDate": () => (/* binding */ getTodaysDate),
+/* harmony export */   "goToMainScreen": () => (/* binding */ goToMainScreen),
+/* harmony export */   "goToTaskScreen": () => (/* binding */ goToTaskScreen),
 /* harmony export */   "populateDropdownMenu": () => (/* binding */ populateDropdownMenu),
 /* harmony export */   "todoArray": () => (/* binding */ todoArray)
 /* harmony export */ });
@@ -37,6 +39,33 @@ const todoArray = [];
 (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayTodaysDate)();
 
 //* **`` FUNCTIONS ``**
+
+function goToMainScreen() {
+  (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.removeChildrenOfContent)();
+  getTaskName();
+  (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.createToDoItemButton)();
+  (0,_modules_event_handler__WEBPACK_IMPORTED_MODULE_1__.createToDoItemButtonLogic)();
+  (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayTodaysDate)();
+  (0,_modules_event_handler__WEBPACK_IMPORTED_MODULE_1__.taskDisplayLogic)();
+}
+
+function goToTaskScreen(ID) {
+  //? **`` Loops through the array and grabs each object and it's index position
+  todoArray.forEach((currentObject, index) => {
+    //? **`` Compares the task ID number to the other object's unique IDs
+    if (ID == Object.values(currentObject)[5]) {
+      (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.removeChildrenOfContent)();
+      //? **`` If there is a matching number, it displays that task's info
+      for (const [objectKey, objectValue] of Object.entries(currentObject)) {
+        (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayToDoInfo)(objectKey, objectValue);
+      }
+      (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayBackButton)();
+      (0,_modules_event_handler__WEBPACK_IMPORTED_MODULE_1__.backButtonLogic)();
+      (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayDeleteButton)();
+      (0,_modules_event_handler__WEBPACK_IMPORTED_MODULE_1__.deleteButtonLogic)(ID);
+    }
+  });
+}
 
 //? **`` Gets the task name and displays it
 function getTaskName() {
@@ -162,7 +191,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "displayToDoInfo": () => (/* binding */ displayToDoInfo),
 /* harmony export */   "displayTodaysDate": () => (/* binding */ displayTodaysDate),
 /* harmony export */   "displayWarning": () => (/* binding */ displayWarning),
-/* harmony export */   "getProjectName": () => (/* binding */ getProjectName),
 /* harmony export */   "makeForm": () => (/* binding */ makeForm),
 /* harmony export */   "removeChildrenOfContent": () => (/* binding */ removeChildrenOfContent),
 /* harmony export */   "updateOptions": () => (/* binding */ updateOptions)
@@ -383,7 +411,7 @@ function displayDeleteButton() {
   content.appendChild(button);
 }
 
-//? **`` Creates a 'delete' button
+//? **`` Creates a warning screen when trying to delete a task
 function displayWarning() {
   const div = document.createElement('div');
   div.classList.add('warning');
@@ -423,7 +451,10 @@ function removeChildrenOfContent() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "addToDoButtonLogic": () => (/* binding */ addToDoButtonLogic),
-/* harmony export */   "createToDoItemButtonLogic": () => (/* binding */ createToDoItemButtonLogic)
+/* harmony export */   "backButtonLogic": () => (/* binding */ backButtonLogic),
+/* harmony export */   "createToDoItemButtonLogic": () => (/* binding */ createToDoItemButtonLogic),
+/* harmony export */   "deleteButtonLogic": () => (/* binding */ deleteButtonLogic),
+/* harmony export */   "taskDisplayLogic": () => (/* binding */ taskDisplayLogic)
 /* harmony export */ });
 /* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../index */ "./src/index.js");
 /* harmony import */ var _dom_manipulation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dom-manipulation */ "./src/modules/dom-manipulation.js");
@@ -435,8 +466,6 @@ __webpack_require__.r(__webpack_exports__);
 
 //! **`` Issue with adding project names to dropdown menu. The default project comes back uncapitalized. May be issues with hyphens? Projects with spaces in them get ignored and the new task falls under a different project.
 
-//todo **`` On this page, theres a lot of reused bundled functions that could get put into one big function like goToMainScreen() or whatevs. Also there are a ton of reused loops that could probably get put into one function.
-
 //? **`` This is the 'delete task' warning screen's 'Delete' button logic. It removes the object from the array and returns you to the main screen
 function warningDeleteButtonLogic(ID) {
   document.querySelector('.warning-delete').addEventListener('click', (e) => {
@@ -446,13 +475,7 @@ function warningDeleteButtonLogic(ID) {
       if (ID == Object.values(currentObject)[5]) {
         //? **`` This removes the object from the array
         _index__WEBPACK_IMPORTED_MODULE_0__.todoArray.splice(index, 1);
-
-        (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.removeChildrenOfContent)();
-        (0,_index__WEBPACK_IMPORTED_MODULE_0__.getTaskName)();
-        (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.createToDoItemButton)();
-        createToDoItemButtonLogic();
-        (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayTodaysDate)();
-        taskDisplayLogic();
+        (0,_index__WEBPACK_IMPORTED_MODULE_0__.goToMainScreen)();
       }
     });
   });
@@ -461,21 +484,7 @@ function warningDeleteButtonLogic(ID) {
 //? **`` This is the 'delete task' warning screen's 'Go Back' button logic. It takes you back to the task screen.
 function warningBackButtonLogic(ID) {
   document.querySelector('.warning-back').addEventListener('click', (e) => {
-    (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.removeChildrenOfContent)();
-    //? **`` Loops through the array and grabs each object and it's index position
-    _index__WEBPACK_IMPORTED_MODULE_0__.todoArray.forEach((currentObject, index) => {
-      //? **`` Compares the task ID number to the other object's unique IDs
-      if (ID == Object.values(currentObject)[5]) {
-        //? **`` If there is a matching number, it displays that task's info
-        for (const [objectKey, objectValue] of Object.entries(currentObject)) {
-          (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayToDoInfo)(objectKey, objectValue);
-        }
-        (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayBackButton)();
-        backButtonLogic();
-        (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayDeleteButton)();
-        deleteButtonLogic(ID);
-      }
-    });
+    (0,_index__WEBPACK_IMPORTED_MODULE_0__.goToTaskScreen)(ID);
   });
 }
 
@@ -492,12 +501,7 @@ function deleteButtonLogic(ID) {
 //? **`` Clicking the back button takes you back to the starting screen
 function backButtonLogic() {
   document.querySelector('.back').addEventListener('click', (e) => {
-    (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.removeChildrenOfContent)();
-    (0,_index__WEBPACK_IMPORTED_MODULE_0__.getTaskName)();
-    (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.createToDoItemButton)();
-    createToDoItemButtonLogic();
-    (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayTodaysDate)();
-    taskDisplayLogic();
+    (0,_index__WEBPACK_IMPORTED_MODULE_0__.goToMainScreen)();
   });
 }
 
@@ -507,23 +511,7 @@ function taskDisplayLogic() {
     task.addEventListener('click', (e) => {
       //? **`` Gets the ID from the html element
       const ID = e.target.id;
-      //? **`` Loops through the array and grabs each object and it's index position
-      _index__WEBPACK_IMPORTED_MODULE_0__.todoArray.forEach((currentObject, index) => {
-        //? **`` Compares the task ID number to the other object's unique IDs
-        if (ID == Object.values(currentObject)[5]) {
-          (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.removeChildrenOfContent)();
-          //? **`` If there is a matching number, it displays that task's info
-          for (const [objectKey, objectValue] of Object.entries(
-            currentObject
-          )) {
-            (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayToDoInfo)(objectKey, objectValue);
-          }
-          (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayBackButton)();
-          backButtonLogic();
-          (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayDeleteButton)();
-          deleteButtonLogic(ID);
-        }
-      });
+      (0,_index__WEBPACK_IMPORTED_MODULE_0__.goToTaskScreen)(ID);
     });
   });
 }
@@ -570,16 +558,9 @@ function addToDoButtonLogic() {
     );
 
     (0,_index__WEBPACK_IMPORTED_MODULE_0__.addObjectToArray)(newObject);
-    (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.removeChildrenOfContent)();
-    // getProjectName();
-    (0,_index__WEBPACK_IMPORTED_MODULE_0__.getTaskName)();
-    // getToDoInfo();
-    (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.createToDoItemButton)();
-    createToDoItemButtonLogic();
-    (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayTodaysDate)();
+    (0,_index__WEBPACK_IMPORTED_MODULE_0__.goToMainScreen)();
     console.log('**`` todoArray ``**');
     console.log(_index__WEBPACK_IMPORTED_MODULE_0__.todoArray);
-    taskDisplayLogic();
   });
 }
 
