@@ -4,27 +4,25 @@ import {
   createObject,
   todoArray,
   createID,
-  getTaskName,
-  getToDoInfo,
+  goToMainScreen,
+  goToTaskScreen,
 } from '../index';
 
 import {
-  getProjectName,
   makeForm,
-  createToDoItemButton,
-  displayToDoInfo,
-  displayTodaysDate,
   removeChildrenOfContent,
-  displayBackButton,
-  displayDeleteButton,
   displayWarning,
 } from './dom-manipulation';
 
-export { createToDoItemButtonLogic, addToDoButtonLogic };
+export {
+  createToDoItemButtonLogic,
+  addToDoButtonLogic,
+  taskDisplayLogic,
+  backButtonLogic,
+  deleteButtonLogic,
+};
 
 //! **`` Issue with adding project names to dropdown menu. The default project comes back uncapitalized. May be issues with hyphens? Projects with spaces in them get ignored and the new task falls under a different project.
-
-//todo **`` On this page, theres a lot of reused bundled functions that could get put into one big function like goToMainScreen() or whatevs. Also there are a ton of reused loops that could probably get put into one function.
 
 //? **`` This is the 'delete task' warning screen's 'Delete' button logic. It removes the object from the array and returns you to the main screen
 function warningDeleteButtonLogic(ID) {
@@ -35,13 +33,7 @@ function warningDeleteButtonLogic(ID) {
       if (ID == Object.values(currentObject)[5]) {
         //? **`` This removes the object from the array
         todoArray.splice(index, 1);
-
-        removeChildrenOfContent();
-        getTaskName();
-        createToDoItemButton();
-        createToDoItemButtonLogic();
-        displayTodaysDate();
-        taskDisplayLogic();
+        goToMainScreen();
       }
     });
   });
@@ -50,21 +42,7 @@ function warningDeleteButtonLogic(ID) {
 //? **`` This is the 'delete task' warning screen's 'Go Back' button logic. It takes you back to the task screen.
 function warningBackButtonLogic(ID) {
   document.querySelector('.warning-back').addEventListener('click', (e) => {
-    removeChildrenOfContent();
-    //? **`` Loops through the array and grabs each object and it's index position
-    todoArray.forEach((currentObject, index) => {
-      //? **`` Compares the task ID number to the other object's unique IDs
-      if (ID == Object.values(currentObject)[5]) {
-        //? **`` If there is a matching number, it displays that task's info
-        for (const [objectKey, objectValue] of Object.entries(currentObject)) {
-          displayToDoInfo(objectKey, objectValue);
-        }
-        displayBackButton();
-        backButtonLogic();
-        displayDeleteButton();
-        deleteButtonLogic(ID);
-      }
-    });
+    goToTaskScreen(ID);
   });
 }
 
@@ -81,12 +59,7 @@ function deleteButtonLogic(ID) {
 //? **`` Clicking the back button takes you back to the starting screen
 function backButtonLogic() {
   document.querySelector('.back').addEventListener('click', (e) => {
-    removeChildrenOfContent();
-    getTaskName();
-    createToDoItemButton();
-    createToDoItemButtonLogic();
-    displayTodaysDate();
-    taskDisplayLogic();
+    goToMainScreen();
   });
 }
 
@@ -96,23 +69,7 @@ function taskDisplayLogic() {
     task.addEventListener('click', (e) => {
       //? **`` Gets the ID from the html element
       const ID = e.target.id;
-      //? **`` Loops through the array and grabs each object and it's index position
-      todoArray.forEach((currentObject, index) => {
-        //? **`` Compares the task ID number to the other object's unique IDs
-        if (ID == Object.values(currentObject)[5]) {
-          removeChildrenOfContent();
-          //? **`` If there is a matching number, it displays that task's info
-          for (const [objectKey, objectValue] of Object.entries(
-            currentObject
-          )) {
-            displayToDoInfo(objectKey, objectValue);
-          }
-          displayBackButton();
-          backButtonLogic();
-          displayDeleteButton();
-          deleteButtonLogic(ID);
-        }
-      });
+      goToTaskScreen(ID);
     });
   });
 }
@@ -159,16 +116,9 @@ function addToDoButtonLogic() {
     );
 
     addObjectToArray(newObject);
-    removeChildrenOfContent();
-    // getProjectName();
-    getTaskName();
-    // getToDoInfo();
-    createToDoItemButton();
-    createToDoItemButtonLogic();
-    displayTodaysDate();
+    goToMainScreen();
     console.log('**`` todoArray ``**');
     console.log(todoArray);
-    taskDisplayLogic();
   });
 }
 

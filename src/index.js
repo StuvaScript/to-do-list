@@ -4,9 +4,17 @@ import {
   displayTask,
   displayToDoInfo,
   updateOptions,
+  removeChildrenOfContent,
+  displayBackButton,
+  displayDeleteButton,
 } from './modules/dom-manipulation';
 
-import { createToDoItemButtonLogic } from './modules/event-handler';
+import {
+  createToDoItemButtonLogic,
+  taskDisplayLogic,
+  backButtonLogic,
+  deleteButtonLogic,
+} from './modules/event-handler';
 
 export {
   populateDropdownMenu,
@@ -18,6 +26,8 @@ export {
   createID,
   getTaskName,
   getToDoInfo,
+  goToMainScreen,
+  goToTaskScreen,
 };
 
 // ? I got a console.log shortcut. Put your cursor on a word and do ctr+alt+w then either W or up or down arrows. Also to make it a string, do shift+alt+W and either W or up or down arrows.
@@ -29,6 +39,33 @@ createToDoItemButtonLogic();
 displayTodaysDate();
 
 //* **`` FUNCTIONS ``**
+
+function goToMainScreen() {
+  removeChildrenOfContent();
+  getTaskName();
+  createToDoItemButton();
+  createToDoItemButtonLogic();
+  displayTodaysDate();
+  taskDisplayLogic();
+}
+
+function goToTaskScreen(ID) {
+  //? **`` Loops through the array and grabs each object and it's index position
+  todoArray.forEach((currentObject, index) => {
+    //? **`` Compares the task ID number to the other object's unique IDs
+    if (ID == Object.values(currentObject)[5]) {
+      removeChildrenOfContent();
+      //? **`` If there is a matching number, it displays that task's info
+      for (const [objectKey, objectValue] of Object.entries(currentObject)) {
+        displayToDoInfo(objectKey, objectValue);
+      }
+      displayBackButton();
+      backButtonLogic();
+      displayDeleteButton();
+      deleteButtonLogic(ID);
+    }
+  });
+}
 
 //? **`` Gets the task name and displays it
 function getTaskName() {

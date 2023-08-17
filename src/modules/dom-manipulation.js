@@ -5,7 +5,6 @@ export {
   makeForm,
   displayTodaysDate,
   removeChildrenOfContent,
-  getProjectName,
   displayTask,
   displayToDoInfo,
   updateOptions,
@@ -225,7 +224,7 @@ function displayDeleteButton() {
   content.appendChild(button);
 }
 
-//? **`` Creates a 'delete' button
+//? **`` Creates a warning screen when trying to delete a task
 function displayWarning() {
   const div = document.createElement('div');
   div.classList.add('warning');
