@@ -22,6 +22,11 @@ export {
   deleteButtonLogic,
 };
 
+//todo **`` Add better array iterator function like reduce() and find()
+//todo **`` I want to be able to pick tasks by project titles
+//todo **`` I want to be able to pull up upcoming tasks based on due date
+//todo **`` I want to be able to show tasks due only on their date
+
 //? **`` This is the 'delete task' warning screen's 'Delete' button logic. It removes the object from the array and returns you to the main screen
 function warningDeleteButtonLogic(ID) {
   document.querySelector('.warning-delete').addEventListener('click', (e) => {
