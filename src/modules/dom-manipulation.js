@@ -1,4 +1,5 @@
 import { populateDropdownMenu, getTodaysDate, todoArray } from '../index';
+import { backButtonLogic } from './event-handler';
 
 export {
   createToDoItemButton,
@@ -185,6 +186,13 @@ function makeForm() {
   todoButton.innerText = 'Add ToDo';
   todoButton.classList.add('todo-button');
   form.appendChild(todoButton);
+
+  const button = document.createElement('button');
+  button.innerText = 'Go Back';
+  button.classList.add('back');
+  form.appendChild(button);
+
+  backButtonLogic();
 }
 //? **`` Simply creates a <br> element to be used in the form
 function createBreak(element) {

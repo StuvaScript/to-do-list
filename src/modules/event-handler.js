@@ -22,8 +22,6 @@ export {
   deleteButtonLogic,
 };
 
-//! **`` Issue with adding project names to dropdown menu. The default project comes back uncapitalized. May be issues with hyphens? Projects with spaces in them get ignored and the new task falls under a different project.
-
 //? **`` This is the 'delete task' warning screen's 'Delete' button logic. It removes the object from the array and returns you to the main screen
 function warningDeleteButtonLogic(ID) {
   document.querySelector('.warning-delete').addEventListener('click', (e) => {
@@ -59,6 +57,7 @@ function deleteButtonLogic(ID) {
 //? **`` Clicking the back button takes you back to the starting screen
 function backButtonLogic() {
   document.querySelector('.back').addEventListener('click', (e) => {
+    e.preventDefault();
     goToMainScreen();
   });
 }
