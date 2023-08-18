@@ -196,6 +196,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "updateOptions": () => (/* binding */ updateOptions)
 /* harmony export */ });
 /* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../index */ "./src/index.js");
+/* harmony import */ var _event_handler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./event-handler */ "./src/modules/event-handler.js");
+
 
 
 
@@ -372,6 +374,13 @@ function makeForm() {
   todoButton.innerText = 'Add ToDo';
   todoButton.classList.add('todo-button');
   form.appendChild(todoButton);
+
+  const button = document.createElement('button');
+  button.innerText = 'Go Back';
+  button.classList.add('back');
+  form.appendChild(button);
+
+  (0,_event_handler__WEBPACK_IMPORTED_MODULE_1__.backButtonLogic)();
 }
 //? **`` Simply creates a <br> element to be used in the form
 function createBreak(element) {
@@ -465,8 +474,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-//! **`` Issue with adding project names to dropdown menu. The default project comes back uncapitalized. May be issues with hyphens? Projects with spaces in them get ignored and the new task falls under a different project.
-
 //? **`` This is the 'delete task' warning screen's 'Delete' button logic. It removes the object from the array and returns you to the main screen
 function warningDeleteButtonLogic(ID) {
   document.querySelector('.warning-delete').addEventListener('click', (e) => {
@@ -502,6 +509,7 @@ function deleteButtonLogic(ID) {
 //? **`` Clicking the back button takes you back to the starting screen
 function backButtonLogic() {
   document.querySelector('.back').addEventListener('click', (e) => {
+    e.preventDefault();
     (0,_index__WEBPACK_IMPORTED_MODULE_0__.goToMainScreen)();
   });
 }
