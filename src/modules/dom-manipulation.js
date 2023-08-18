@@ -73,7 +73,7 @@ function makeForm() {
 
   const defaultOption = document.createElement('option');
   dropdownProjectMenu.appendChild(defaultOption);
-  defaultOption.setAttribute('value', 'default-project');
+  defaultOption.setAttribute('value', 'Default Project');
   defaultOption.innerText = 'Default Project';
 
   populateDropdownMenu();
@@ -201,6 +201,7 @@ function displayTask(taskName, idNumber) {
 }
 //? **`` Displays the object key/value pair except for the ID Number
 function displayToDoInfo(objectKey, objectValue) {
+  //? **`` This makes sure it doesn't display the 'IDNumber' value in the object
   if (objectKey !== 'idNumber') {
     const paragraph = document.createElement('p');
     paragraph.innerText = `${objectKey}: ${objectValue}`;
