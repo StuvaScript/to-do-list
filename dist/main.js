@@ -15,7 +15,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "createID": () => (/* binding */ createID),
 /* harmony export */   "createObject": () => (/* binding */ createObject),
 /* harmony export */   "getTaskName": () => (/* binding */ getTaskName),
-/* harmony export */   "getToDoInfo": () => (/* binding */ getToDoInfo),
 /* harmony export */   "getTodaysDate": () => (/* binding */ getTodaysDate),
 /* harmony export */   "goToMainScreen": () => (/* binding */ goToMainScreen),
 /* harmony export */   "goToTaskScreen": () => (/* binding */ goToTaskScreen),
@@ -50,21 +49,17 @@ function goToMainScreen() {
 }
 
 function goToTaskScreen(ID) {
-  //? **`` Loops through the array and grabs each object and it's index position
-  todoArray.forEach((currentObject, index) => {
-    //? **`` Compares the task ID number to the other object's unique IDs
-    if (ID == Object.values(currentObject)[5]) {
-      (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.removeChildrenOfContent)();
-      //? **`` If there is a matching number, it displays that task's info
-      for (const [objectKey, objectValue] of Object.entries(currentObject)) {
-        (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayToDoInfo)(objectKey, objectValue);
-      }
-      (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayBackButton)();
-      (0,_modules_event_handler__WEBPACK_IMPORTED_MODULE_1__.backButtonLogic)();
-      (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayDeleteButton)();
-      (0,_modules_event_handler__WEBPACK_IMPORTED_MODULE_1__.deleteButtonLogic)(ID);
-    }
+  //? **`` Filters through all objects in the array and returns an array with the object that matches the ID
+  const currentObjArray = todoArray.filter((object) => ID == object.idNumber);
+  (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.removeChildrenOfContent)();
+  //? **`` Loops through the object and passes the key/value pairs to the display function
+  Object.entries(currentObjArray[0]).map(([key, value]) => {
+    (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayToDoInfo)(key, value);
   });
+  (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayBackButton)();
+  (0,_modules_event_handler__WEBPACK_IMPORTED_MODULE_1__.backButtonLogic)();
+  (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayDeleteButton)();
+  (0,_modules_event_handler__WEBPACK_IMPORTED_MODULE_1__.deleteButtonLogic)(ID);
 }
 
 //? **`` Gets the task name and displays it
@@ -73,12 +68,8 @@ function getTaskName() {
   todoArray.forEach((currentObject, index) => {
     //? **`` Gets the value in the object (in this case, it's the task name)
     const taskName = Object.values(currentObject)[1];
-    console.log('**`` taskName ``**');
-    console.log(taskName);
     //? **`` Gets the value in the object (in this case, it's the unique ID number)
     const idNumber = Object.values(currentObject)[5];
-    console.log('idNumber');
-    console.log(idNumber);
     //? **`` Displays the task name
     (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayTask)(taskName, idNumber);
   });
@@ -144,19 +135,16 @@ function populateDropdownMenu() {
 
 //? **`` Updates the select dropdown options with the 'Create New Project' value
 function addOptions(newProjectField) {
-  //? **`` Duplicate check initial value
-  let optionDuplicate = false;
-  //? **`` Loops through all the select dropdown options
-  document.querySelectorAll('option').forEach((option) => {
-    //? **`` Checks for duplicates
-    if (newProjectField.value == option.innerText) {
-      optionDuplicate = true;
-    }
-  });
-  //? **`` If the project input is NOT a duplicate, it adds it to the project select dropdown options
-  if (optionDuplicate !== true) {
+  const optionNodeList = document.querySelectorAll('option');
+  //? **`` Big "if statement" !!
+  if (
+    //? **`` Turns the node list into an array then checks for duplicate project names. Notice the "bang" mark at the beginning saying "if this is NOT true..."
+    ![...optionNodeList].some(
+      (option) => newProjectField.value == option.innerText
+    )
+  ) {
+    //? **`` If there are no duplicates, it adds it to the select dropdown
     (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.updateOptions)(newProjectField);
-
     //? **`` Automatically sets dropdown menu to last created new project
     document.querySelector('#dropdownProjectMenu').value =
       document.querySelector('#dropdownProjectMenu > option:last-child').value;
@@ -220,8 +208,6 @@ function getProjectName() {
   _index__WEBPACK_IMPORTED_MODULE_0__.todoArray.forEach((currentValue, index) => {
     //? **`` Gets the value in the object (in this case, it's the project name)
     const projectName = Object.values(currentValue)[0];
-    console.log('projectName');
-    console.log(projectName);
     //! The function below is now unique to displaying only tasks.
     //? **`` Displays the project name
     displayTask(projectName);
@@ -244,6 +230,7 @@ function createToDoItemButton() {
   newToDoButton.classList.add('new-todo-button');
   content.prepend(newToDoButton);
 }
+
 //? **`` Creates the form that takes all the todo info
 function makeForm() {
   const form = document.createElement('form');
@@ -382,11 +369,13 @@ function makeForm() {
 
   (0,_event_handler__WEBPACK_IMPORTED_MODULE_1__.backButtonLogic)();
 }
+
 //? **`` Simply creates a <br> element to be used in the form
 function createBreak(element) {
   const br = document.createElement('br');
   element.appendChild(br);
 }
+
 //? **`` Takes the name as an argument, creates a class, adds a unique ID, and displays it
 function displayTask(taskName, idNumber) {
   const button = document.createElement('button');
@@ -395,12 +384,13 @@ function displayTask(taskName, idNumber) {
   button.setAttribute('id', idNumber);
   content.appendChild(button);
 }
+
 //? **`` Displays the object key/value pair except for the ID Number
-function displayToDoInfo(objectKey, objectValue) {
-  //? **`` This makes sure it doesn't display the 'IDNumber' value in the object
-  if (objectKey !== 'idNumber') {
+function displayToDoInfo(key, value) {
+  //? **`` This makes sure it doesn't display the 'IDNumber' value from the object
+  if (key !== 'idNumber') {
     const paragraph = document.createElement('p');
-    paragraph.innerText = `${objectKey}: ${objectValue}`;
+    paragraph.innerText = `${key}: ${value}`;
     content.appendChild(paragraph);
   }
 }
@@ -475,7 +465,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 //todo **`` Add better array iterator function like reduce() and find()
-//todo **`` I want to be able to pick tasks by project titles
+//todo **`` I want to be able to pick tasks by project titles or by priority
 //todo **`` I want to be able to pull up upcoming tasks based on due date
 //todo **`` I want to be able to show tasks due only on their date
 
@@ -573,8 +563,6 @@ function addToDoButtonLogic() {
 
     (0,_index__WEBPACK_IMPORTED_MODULE_0__.addObjectToArray)(newObject);
     (0,_index__WEBPACK_IMPORTED_MODULE_0__.goToMainScreen)();
-    console.log('**`` todoArray ``**');
-    console.log(_index__WEBPACK_IMPORTED_MODULE_0__.todoArray);
   });
 }
 
@@ -582,7 +570,7 @@ function addToDoButtonLogic() {
 function addNewProjectButtonLogic() {
   document.querySelector('.project-button').addEventListener('click', (e) => {
     e.preventDefault();
-    const newProjectField = document.querySelector('#newproject');
+    let newProjectField = document.querySelector('#newproject');
 
     //? **`` Returns if nothing is added to the new project field
     if (newProjectField.value === '') {

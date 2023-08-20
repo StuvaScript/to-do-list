@@ -23,7 +23,7 @@ export {
 };
 
 //todo **`` Add better array iterator function like reduce() and find()
-//todo **`` I want to be able to pick tasks by project titles
+//todo **`` I want to be able to pick tasks by project titles or by priority
 //todo **`` I want to be able to pull up upcoming tasks based on due date
 //todo **`` I want to be able to show tasks due only on their date
 
@@ -121,8 +121,6 @@ function addToDoButtonLogic() {
 
     addObjectToArray(newObject);
     goToMainScreen();
-    console.log('**`` todoArray ``**');
-    console.log(todoArray);
   });
 }
 
@@ -130,7 +128,7 @@ function addToDoButtonLogic() {
 function addNewProjectButtonLogic() {
   document.querySelector('.project-button').addEventListener('click', (e) => {
     e.preventDefault();
-    const newProjectField = document.querySelector('#newproject');
+    let newProjectField = document.querySelector('#newproject');
 
     //? **`` Returns if nothing is added to the new project field
     if (newProjectField.value === '') {

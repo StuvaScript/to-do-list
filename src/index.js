@@ -25,7 +25,6 @@ export {
   getTodaysDate,
   createID,
   getTaskName,
-  getToDoInfo,
   goToMainScreen,
   goToTaskScreen,
 };
@@ -50,21 +49,17 @@ function goToMainScreen() {
 }
 
 function goToTaskScreen(ID) {
-  //? **`` Loops through the array and grabs each object and it's index position
-  todoArray.forEach((currentObject, index) => {
-    //? **`` Compares the task ID number to the other object's unique IDs
-    if (ID == Object.values(currentObject)[5]) {
-      removeChildrenOfContent();
-      //? **`` If there is a matching number, it displays that task's info
-      for (const [objectKey, objectValue] of Object.entries(currentObject)) {
-        displayToDoInfo(objectKey, objectValue);
-      }
-      displayBackButton();
-      backButtonLogic();
-      displayDeleteButton();
-      deleteButtonLogic(ID);
-    }
+  //? **`` Filters through all objects in the array and returns an array with the object that matches the ID
+  const currentObjArray = todoArray.filter((object) => ID == object.idNumber);
+  removeChildrenOfContent();
+  //? **`` Loops through the object and passes the key/value pairs to the display function
+  Object.entries(currentObjArray[0]).map(([key, value]) => {
+    displayToDoInfo(key, value);
   });
+  displayBackButton();
+  backButtonLogic();
+  displayDeleteButton();
+  deleteButtonLogic(ID);
 }
 
 //? **`` Gets the task name and displays it
@@ -73,12 +68,8 @@ function getTaskName() {
   todoArray.forEach((currentObject, index) => {
     //? **`` Gets the value in the object (in this case, it's the task name)
     const taskName = Object.values(currentObject)[1];
-    console.log('**`` taskName ``**');
-    console.log(taskName);
     //? **`` Gets the value in the object (in this case, it's the unique ID number)
     const idNumber = Object.values(currentObject)[5];
-    console.log('idNumber');
-    console.log(idNumber);
     //? **`` Displays the task name
     displayTask(taskName, idNumber);
   });
@@ -144,19 +135,16 @@ function populateDropdownMenu() {
 
 //? **`` Updates the select dropdown options with the 'Create New Project' value
 function addOptions(newProjectField) {
-  //? **`` Duplicate check initial value
-  let optionDuplicate = false;
-  //? **`` Loops through all the select dropdown options
-  document.querySelectorAll('option').forEach((option) => {
-    //? **`` Checks for duplicates
-    if (newProjectField.value == option.innerText) {
-      optionDuplicate = true;
-    }
-  });
-  //? **`` If the project input is NOT a duplicate, it adds it to the project select dropdown options
-  if (optionDuplicate !== true) {
+  const optionNodeList = document.querySelectorAll('option');
+  //? **`` Big "if statement" !!
+  if (
+    //? **`` Turns the node list into an array then checks for duplicate project names. Notice the "bang" mark at the beginning saying "if this is NOT true..."
+    ![...optionNodeList].some(
+      (option) => newProjectField.value == option.innerText
+    )
+  ) {
+    //? **`` If there are no duplicates, it adds it to the select dropdown
     updateOptions(newProjectField);
-
     //? **`` Automatically sets dropdown menu to last created new project
     document.querySelector('#dropdownProjectMenu').value =
       document.querySelector('#dropdownProjectMenu > option:last-child').value;

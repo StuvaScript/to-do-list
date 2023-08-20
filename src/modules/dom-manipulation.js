@@ -32,8 +32,6 @@ function getProjectName() {
   todoArray.forEach((currentValue, index) => {
     //? **`` Gets the value in the object (in this case, it's the project name)
     const projectName = Object.values(currentValue)[0];
-    console.log('projectName');
-    console.log(projectName);
     //! The function below is now unique to displaying only tasks.
     //? **`` Displays the project name
     displayTask(projectName);
@@ -56,6 +54,7 @@ function createToDoItemButton() {
   newToDoButton.classList.add('new-todo-button');
   content.prepend(newToDoButton);
 }
+
 //? **`` Creates the form that takes all the todo info
 function makeForm() {
   const form = document.createElement('form');
@@ -194,11 +193,13 @@ function makeForm() {
 
   backButtonLogic();
 }
+
 //? **`` Simply creates a <br> element to be used in the form
 function createBreak(element) {
   const br = document.createElement('br');
   element.appendChild(br);
 }
+
 //? **`` Takes the name as an argument, creates a class, adds a unique ID, and displays it
 function displayTask(taskName, idNumber) {
   const button = document.createElement('button');
@@ -207,12 +208,13 @@ function displayTask(taskName, idNumber) {
   button.setAttribute('id', idNumber);
   content.appendChild(button);
 }
+
 //? **`` Displays the object key/value pair except for the ID Number
-function displayToDoInfo(objectKey, objectValue) {
-  //? **`` This makes sure it doesn't display the 'IDNumber' value in the object
-  if (objectKey !== 'idNumber') {
+function displayToDoInfo(key, value) {
+  //? **`` This makes sure it doesn't display the 'IDNumber' value from the object
+  if (key !== 'idNumber') {
     const paragraph = document.createElement('p');
-    paragraph.innerText = `${objectKey}: ${objectValue}`;
+    paragraph.innerText = `${key}: ${value}`;
     content.appendChild(paragraph);
   }
 }
