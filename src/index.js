@@ -73,47 +73,16 @@ function getToDoInfo() {
   });
 }
 
-//! ************************************************************************************************
-//todo **`` Trying to get this unique number checker to work. Chat GPT recommended I add used numbers to an array like the code below. I need the usedNumbers array to live outside the function so that it doesn't reset with each function call. Also, that way I can remove the number when I delete a task.
-
 function createID() {
-  const usedNumbers = [];
+  //? **`` This loops forever, and when we find that the random number does NOT match any ID numbers in the objects within the array, then we kill the loop and return the new unique number
   while (true) {
-    const randomNumber = Math.floor(Math.random() * (15 - 10 + 1)) + 10;
-    if (!usedNumbers.includes(randomNumber)) {
-      usedNumbers.push(randomNumber);
-      console.log('usedNumbers');
-      console.log(usedNumbers);
+    const randomNumber =
+      Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
+    if (!todoArray.some((obj) => obj.idNumber === randomNumber)) {
       return randomNumber;
     }
   }
 }
-
-// //? **`` Creates a unique ID that gets attached to an object
-// function createID() {
-
-//   let number = Math.floor(Math.random() * (5 - 1) + 1);
-//   // let number = Math.floor(Math.random() * (999999 - 100000) + 100000);
-//   if (todoArray.some((obj) => obj.idNumber === number)) {
-//     console.log('farts');
-//     createID();
-//   } else {
-//     return number;
-//   }
-
-// let number = Math.floor(Math.random() * (999999 - 100000) + 100000);
-// //? **`` To check for duplicates, this loops through the array and grabs each object and it's index position
-// todoArray.forEach((currentObject, index) => {
-//   //? **`` Compares the new number to the other object's unique IDs
-//   if (number === Object.values(currentObject)[5]) {
-//     //? **`` If there is a duplicate ID number, it will run recursively on itself until there is a unique ID
-//     createID();
-//   }
-// });
-
-// }
-
-//! ************************************************************************************************
 
 function getTodaysDate() {
   const date = new Date();
