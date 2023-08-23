@@ -14,7 +14,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "addOptions": () => (/* binding */ addOptions),
 /* harmony export */   "createID": () => (/* binding */ createID),
 /* harmony export */   "createObject": () => (/* binding */ createObject),
-/* harmony export */   "getTaskName": () => (/* binding */ getTaskName),
 /* harmony export */   "getTodaysDate": () => (/* binding */ getTodaysDate),
 /* harmony export */   "goToMainScreen": () => (/* binding */ goToMainScreen),
 /* harmony export */   "goToTaskScreen": () => (/* binding */ goToTaskScreen),
@@ -41,7 +40,7 @@ const todoArray = [];
 
 function goToMainScreen() {
   (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.removeChildrenOfContent)();
-  getTaskName();
+  (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayTask)();
   (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.createToDoItemButton)();
   (0,_modules_event_handler__WEBPACK_IMPORTED_MODULE_1__.createToDoItemButtonLogic)();
   (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayTodaysDate)();
@@ -49,7 +48,7 @@ function goToMainScreen() {
 }
 
 function goToTaskScreen(ID) {
-  //? **`` Filters through all objects in the array and returns an array with the object that matches the ID
+  //? **`` Filters through all objects in the array and returns a new array with the object that matches the ID
   const currentObjArray = todoArray.filter((object) => ID == object.idNumber);
   (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.removeChildrenOfContent)();
   //? **`` Loops through the object and passes the key/value pairs to the display function
@@ -62,19 +61,7 @@ function goToTaskScreen(ID) {
   (0,_modules_event_handler__WEBPACK_IMPORTED_MODULE_1__.deleteButtonLogic)(ID);
 }
 
-//? **`` Gets the task name and displays it
-function getTaskName() {
-  //? **`` Loops through the array and grabs each object and it's index position
-  todoArray.forEach((currentObject, index) => {
-    //? **`` Gets the value in the object (in this case, it's the task name)
-    const taskName = Object.values(currentObject)[1];
-    //? **`` Gets the value in the object (in this case, it's the unique ID number)
-    const idNumber = Object.values(currentObject)[5];
-    //? **`` Displays the task name
-    (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayTask)(taskName, idNumber);
-  });
-}
-
+//! **`` Not being used anywhere
 //? **`` Displays all the form values
 function getToDoInfo() {
   //? **`` Loops through the array and grabs each object and it's index position
@@ -86,20 +73,47 @@ function getToDoInfo() {
   });
 }
 
-//? **`` Creates a unique ID that gets attached to an object
-function createID() {
-  let number = Math.floor(Math.random() * (999999 - 100000) + 100000);
-  //? **`` To check for duplicates, this loops through the array and grabs each object and it's index position
-  todoArray.forEach((currentObject, index) => {
-    //? **`` Compares the new number to the other object's unique IDs
-    if (number === Object.values(currentObject)[5]) {
-      //? **`` If there is a duplicate ID number, it will run recursively on itself until there is a unique ID
-      createID();
-    }
-  });
+//! ************************************************************************************************
+//todo **`` Trying to get this unique number checker to work. Chat GPT recommended I add used numbers to an array like the code below. I need the usedNumbers array to live outside the function so that it doesn't reset with each function call. Also, that way I can remove the number when I delete a task.
 
-  return number;
+function createID() {
+  const usedNumbers = [];
+  while (true) {
+    const randomNumber = Math.floor(Math.random() * (15 - 10 + 1)) + 10;
+    if (!usedNumbers.includes(randomNumber)) {
+      usedNumbers.push(randomNumber);
+      console.log('usedNumbers');
+      console.log(usedNumbers);
+      return randomNumber;
+    }
+  }
 }
+
+// //? **`` Creates a unique ID that gets attached to an object
+// function createID() {
+
+//   let number = Math.floor(Math.random() * (5 - 1) + 1);
+//   // let number = Math.floor(Math.random() * (999999 - 100000) + 100000);
+//   if (todoArray.some((obj) => obj.idNumber === number)) {
+//     console.log('farts');
+//     createID();
+//   } else {
+//     return number;
+//   }
+
+// let number = Math.floor(Math.random() * (999999 - 100000) + 100000);
+// //? **`` To check for duplicates, this loops through the array and grabs each object and it's index position
+// todoArray.forEach((currentObject, index) => {
+//   //? **`` Compares the new number to the other object's unique IDs
+//   if (number === Object.values(currentObject)[5]) {
+//     //? **`` If there is a duplicate ID number, it will run recursively on itself until there is a unique ID
+//     createID();
+//   }
+// });
+
+// }
+
+//! ************************************************************************************************
 
 function getTodaysDate() {
   const date = new Date();
@@ -376,13 +390,15 @@ function createBreak(element) {
   element.appendChild(br);
 }
 
-//? **`` Takes the name as an argument, creates a class, adds a unique ID, and displays it
-function displayTask(taskName, idNumber) {
-  const button = document.createElement('button');
-  button.innerText = `${taskName}`;
-  button.classList.add('task');
-  button.setAttribute('id', idNumber);
-  content.appendChild(button);
+//? **`` Loops through the array and for each object it creates a button, puts the task name on it, adds a class, sets the object's ID number to the element ID, and displays it
+function displayTask() {
+  _index__WEBPACK_IMPORTED_MODULE_0__.todoArray.map((obj) => {
+    const button = document.createElement('button');
+    button.innerText = `${obj.task}`;
+    button.classList.add('task');
+    button.setAttribute('id', obj.idNumber);
+    content.appendChild(button);
+  });
 }
 
 //? **`` Displays the object key/value pair except for the ID Number

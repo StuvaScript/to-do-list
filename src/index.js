@@ -24,7 +24,6 @@ export {
   todoArray,
   getTodaysDate,
   createID,
-  getTaskName,
   goToMainScreen,
   goToTaskScreen,
 };
@@ -41,7 +40,7 @@ displayTodaysDate();
 
 function goToMainScreen() {
   removeChildrenOfContent();
-  getTaskName();
+  displayTask();
   createToDoItemButton();
   createToDoItemButtonLogic();
   displayTodaysDate();
@@ -49,7 +48,7 @@ function goToMainScreen() {
 }
 
 function goToTaskScreen(ID) {
-  //? **`` Filters through all objects in the array and returns an array with the object that matches the ID
+  //? **`` Filters through all objects in the array and returns a new array with the object that matches the ID
   const currentObjArray = todoArray.filter((object) => ID == object.idNumber);
   removeChildrenOfContent();
   //? **`` Loops through the object and passes the key/value pairs to the display function
@@ -62,19 +61,7 @@ function goToTaskScreen(ID) {
   deleteButtonLogic(ID);
 }
 
-//? **`` Gets the task name and displays it
-function getTaskName() {
-  //? **`` Loops through the array and grabs each object and it's index position
-  todoArray.forEach((currentObject, index) => {
-    //? **`` Gets the value in the object (in this case, it's the task name)
-    const taskName = Object.values(currentObject)[1];
-    //? **`` Gets the value in the object (in this case, it's the unique ID number)
-    const idNumber = Object.values(currentObject)[5];
-    //? **`` Displays the task name
-    displayTask(taskName, idNumber);
-  });
-}
-
+//! **`` Not being used anywhere
 //? **`` Displays all the form values
 function getToDoInfo() {
   //? **`` Loops through the array and grabs each object and it's index position
@@ -86,20 +73,47 @@ function getToDoInfo() {
   });
 }
 
-//? **`` Creates a unique ID that gets attached to an object
-function createID() {
-  let number = Math.floor(Math.random() * (999999 - 100000) + 100000);
-  //? **`` To check for duplicates, this loops through the array and grabs each object and it's index position
-  todoArray.forEach((currentObject, index) => {
-    //? **`` Compares the new number to the other object's unique IDs
-    if (number === Object.values(currentObject)[5]) {
-      //? **`` If there is a duplicate ID number, it will run recursively on itself until there is a unique ID
-      createID();
-    }
-  });
+//! ************************************************************************************************
+//todo **`` Trying to get this unique number checker to work. Chat GPT recommended I add used numbers to an array like the code below. I need the usedNumbers array to live outside the function so that it doesn't reset with each function call. Also, that way I can remove the number when I delete a task.
 
-  return number;
+function createID() {
+  const usedNumbers = [];
+  while (true) {
+    const randomNumber = Math.floor(Math.random() * (15 - 10 + 1)) + 10;
+    if (!usedNumbers.includes(randomNumber)) {
+      usedNumbers.push(randomNumber);
+      console.log('usedNumbers');
+      console.log(usedNumbers);
+      return randomNumber;
+    }
+  }
 }
+
+// //? **`` Creates a unique ID that gets attached to an object
+// function createID() {
+
+//   let number = Math.floor(Math.random() * (5 - 1) + 1);
+//   // let number = Math.floor(Math.random() * (999999 - 100000) + 100000);
+//   if (todoArray.some((obj) => obj.idNumber === number)) {
+//     console.log('farts');
+//     createID();
+//   } else {
+//     return number;
+//   }
+
+// let number = Math.floor(Math.random() * (999999 - 100000) + 100000);
+// //? **`` To check for duplicates, this loops through the array and grabs each object and it's index position
+// todoArray.forEach((currentObject, index) => {
+//   //? **`` Compares the new number to the other object's unique IDs
+//   if (number === Object.values(currentObject)[5]) {
+//     //? **`` If there is a duplicate ID number, it will run recursively on itself until there is a unique ID
+//     createID();
+//   }
+// });
+
+// }
+
+//! ************************************************************************************************
 
 function getTodaysDate() {
   const date = new Date();

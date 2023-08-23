@@ -200,13 +200,15 @@ function createBreak(element) {
   element.appendChild(br);
 }
 
-//? **`` Takes the name as an argument, creates a class, adds a unique ID, and displays it
-function displayTask(taskName, idNumber) {
-  const button = document.createElement('button');
-  button.innerText = `${taskName}`;
-  button.classList.add('task');
-  button.setAttribute('id', idNumber);
-  content.appendChild(button);
+//? **`` Loops through the array and for each object it creates a button, puts the task name on it, adds a class, sets the object's ID number to the element ID, and displays it
+function displayTask() {
+  todoArray.map((obj) => {
+    const button = document.createElement('button');
+    button.innerText = `${obj.task}`;
+    button.classList.add('task');
+    button.setAttribute('id', obj.idNumber);
+    content.appendChild(button);
+  });
 }
 
 //? **`` Displays the object key/value pair except for the ID Number
