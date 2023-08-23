@@ -92,8 +92,25 @@ function getTodaysDate() {
   return todaysDate;
 }
 
+//! ********************************************************************
+//todo **`` Trying to display the project titles in the dropdown menu as the form populates without showing duplicates. The code at the bottom works. Just trying to utilize better iterators.
+
 //? **`` Adds the new projects as options to the select dropdown
 function populateDropdownMenu() {
+  const fudge = todoArray
+    .map((obj) => obj.project)
+    .reduce((obj, item) => {
+      if (!obj[item]) {
+        obj[item] = 0;
+      }
+      obj[item]++;
+      return obj;
+    }, {});
+
+  console.log(fudge);
+
+  //* **`` Above does NOT work how I want it to. Code below does.
+
   //? **`` Loops through the array and grabs each value and it's index position
   todoArray.forEach((currentValue, index) => {
     const projectValues = Object.values(currentValue)[0];
@@ -115,6 +132,8 @@ function populateDropdownMenu() {
     }
   });
 }
+
+//! ********************************************************************
 
 //? **`` Updates the select dropdown options with the 'Create New Project' value
 function addOptions(newProjectField) {
