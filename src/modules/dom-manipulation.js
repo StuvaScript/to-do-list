@@ -26,6 +26,7 @@ function updateOptions(newProjectField) {
   getDropdownMenu.appendChild(makeOption);
 }
 
+//! **`` This function isn't being used
 //? **`` Gets the project name and displays it
 function getProjectName() {
   //? **`` Loops through the array and grabs each value and it's index position
