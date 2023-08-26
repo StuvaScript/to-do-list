@@ -92,48 +92,24 @@ function getTodaysDate() {
   return todaysDate;
 }
 
-//! ********************************************************************
-//todo **`` Trying to display the project titles in the dropdown menu as the form populates without showing duplicates. The code at the bottom works. Just trying to utilize better iterators.
-
 //? **`` Adds the new projects as options to the select dropdown
 function populateDropdownMenu() {
-  const fudge = todoArray
-    .map((obj) => obj.project)
-    .reduce((obj, item) => {
-      if (!obj[item]) {
-        obj[item] = 0;
-      }
-      obj[item]++;
-      return obj;
-    }, {});
-
-  console.log(fudge);
-
-  //* **`` Above does NOT work how I want it to. Code below does.
-
-  //? **`` Loops through the array and grabs each value and it's index position
-  todoArray.forEach((currentValue, index) => {
-    const projectValues = Object.values(currentValue)[0];
-
-    let optionDuplicate = false;
-
-    document.querySelectorAll('option').forEach((option) => {
-      if (projectValues == option.innerText) {
-        optionDuplicate = true;
-      }
-    });
-
-    if (optionDuplicate !== true) {
-      //? **`` fills the dropdown menu with the projects in the array
+  //? **`` Loops through each object in the array
+  todoArray.map((objs) => {
+    //? **`` As it loops, it checks to make sure each objects project name doesn't already exist in the dropdown list
+    const optionNodeList = document.querySelectorAll('option');
+    const duplicateCheck = [...optionNodeList].some(
+      (oppies) => oppies.innerText === objs.project
+    );
+    //? **`` If there are no duplicates, it fills the dropdown menu with the project names
+    if (!duplicateCheck) {
       const newOption = document.createElement('option');
       dropdownProjectMenu.appendChild(newOption);
-      newOption.setAttribute('value', projectValues);
-      newOption.innerText = projectValues;
+      newOption.setAttribute('value', objs.project);
+      newOption.innerText = objs.project;
     }
   });
 }
-
-//! ********************************************************************
 
 //? **`` Updates the select dropdown options with the 'Create New Project' value
 function addOptions(newProjectField) {
@@ -204,6 +180,7 @@ function updateOptions(newProjectField) {
   getDropdownMenu.appendChild(makeOption);
 }
 
+//! **`` This function isn't being used
 //? **`` Gets the project name and displays it
 function getProjectName() {
   //? **`` Loops through the array and grabs each value and it's index position
