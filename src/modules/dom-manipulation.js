@@ -26,20 +26,6 @@ function updateOptions(newProjectField) {
   getDropdownMenu.appendChild(makeOption);
 }
 
-//! **`` This function isn't being used
-//? **`` Gets the project name and displays it
-function getProjectName() {
-  //? **`` Loops through the array and grabs each value and it's index position
-  todoArray.forEach((currentValue, index) => {
-    //? **`` Gets the value in the object (in this case, it's the project name)
-    const projectName = Object.values(currentValue)[0];
-    //! The function below is now unique to displaying only tasks.
-    //? **`` Displays the project name
-    displayTask(projectName);
-    //! ********************************************************
-  });
-}
-
 //? **`` Shows the date
 function displayTodaysDate() {
   const today = getTodaysDate();

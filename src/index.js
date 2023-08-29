@@ -26,6 +26,7 @@ export {
   createID,
   goToMainScreen,
   goToTaskScreen,
+  findPriorities,
 };
 
 // ? I got a console.log shortcut. Put your cursor on a word and do ctr+alt+w then either W or up or down arrows. Also to make it a string, do shift+alt+W and either W or up or down arrows.
@@ -37,6 +38,14 @@ createToDoItemButtonLogic();
 displayTodaysDate();
 
 //* **`` FUNCTIONS ``**
+
+function findPriorities() {
+  //? **``This finds all the 'priority' attributes, spreads the node list into an array, and returns the one thats checked.
+  const checked = [...document.querySelectorAll('[name="priority"]')].find(
+    (priority) => priority.checked
+  );
+  return checked.value;
+}
 
 function goToMainScreen() {
   removeChildrenOfContent();
@@ -59,18 +68,6 @@ function goToTaskScreen(ID) {
   backButtonLogic();
   displayDeleteButton();
   deleteButtonLogic(ID);
-}
-
-//! **`` Not being used anywhere
-//? **`` Displays all the form values
-function getToDoInfo() {
-  //? **`` Loops through the array and grabs each object and it's index position
-  todoArray.forEach((currentObject, index) => {
-    //? **`` Loops through each object in the array and displays each key/value pair
-    for (const [objectKey, objectValue] of Object.entries(currentObject)) {
-      displayToDoInfo(objectKey, objectValue);
-    }
-  });
 }
 
 function createID() {

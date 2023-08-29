@@ -6,6 +6,7 @@ import {
   createID,
   goToMainScreen,
   goToTaskScreen,
+  findPriorities,
 } from '../index';
 
 import {
@@ -22,7 +23,6 @@ export {
   deleteButtonLogic,
 };
 
-//todo **`` Add better array iterator function like reduce() and find()
 //todo **`` I want to be able to pick tasks by project titles or by priority
 //todo **`` I want to be able to pull up upcoming tasks based on due date
 //todo **`` I want to be able to show tasks due only on their date
@@ -30,11 +30,10 @@ export {
 //? **`` This is the 'delete task' warning screen's 'Delete' button logic. It removes the object from the array and returns you to the main screen
 function warningDeleteButtonLogic(ID) {
   document.querySelector('.warning-delete').addEventListener('click', (e) => {
-    //? **`` Loops through the array and grabs each object and it's index position
-    todoArray.forEach((currentObject, index) => {
-      //? **`` Compares the task ID number to the other object's unique IDs
-      if (ID == Object.values(currentObject)[5]) {
-        //? **`` This removes the object from the array
+    // //? **`` Loops through the array and grabs each object and it's index position
+    todoArray.map((object, index) => {
+      //? **`` If the task ID number to be deleted matches an ID in an object, that object is removed from the array and you're returned to the main screen
+      if (ID == object.idNumber) {
         todoArray.splice(index, 1);
         goToMainScreen();
       }
@@ -69,11 +68,11 @@ function backButtonLogic() {
 
 //? **`` Gets the ID assigned to the task button you clicked on
 function taskDisplayLogic() {
-  document.querySelectorAll('.task').forEach((task) => {
+  //? **`` Turns your query node list into an array, loops thru each 'task' class, adds a listener to each 'task' class
+  [...document.querySelectorAll('.task')].map((task) => {
     task.addEventListener('click', (e) => {
-      //? **`` Gets the ID from the html element
-      const ID = e.target.id;
-      goToTaskScreen(ID);
+      //? **`` Gets the ID from the html element and uses it as the argument
+      goToTaskScreen(e.target.id);
     });
   });
 }
@@ -98,12 +97,8 @@ function addToDoButtonLogic() {
     const task = document.querySelector('#task').value;
     const date = document.querySelector('#date').value;
     const notes = document.querySelector('#notes').value;
-    let priority;
-    document.querySelectorAll('[name="priority"]').forEach((radio) => {
-      if (radio.checked) {
-        priority = radio.value;
-      }
-    });
+
+    const priority = findPriorities();
     const idNumber = createID();
 
     //? **`` If the task field is empty, nothing happens.
