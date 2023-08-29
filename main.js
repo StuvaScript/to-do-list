@@ -14,6 +14,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "addOptions": () => (/* binding */ addOptions),
 /* harmony export */   "createID": () => (/* binding */ createID),
 /* harmony export */   "createObject": () => (/* binding */ createObject),
+/* harmony export */   "findPriorities": () => (/* binding */ findPriorities),
 /* harmony export */   "getTodaysDate": () => (/* binding */ getTodaysDate),
 /* harmony export */   "goToMainScreen": () => (/* binding */ goToMainScreen),
 /* harmony export */   "goToTaskScreen": () => (/* binding */ goToTaskScreen),
@@ -38,6 +39,14 @@ const todoArray = [];
 
 //* **`` FUNCTIONS ``**
 
+function findPriorities() {
+  //? **``This finds all the 'priority' attributes, spreads the node list into an array, and returns the one thats checked.
+  const checked = [...document.querySelectorAll('[name="priority"]')].find(
+    (priority) => priority.checked
+  );
+  return checked.value;
+}
+
 function goToMainScreen() {
   (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.removeChildrenOfContent)();
   (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayTask)();
@@ -59,18 +68,6 @@ function goToTaskScreen(ID) {
   (0,_modules_event_handler__WEBPACK_IMPORTED_MODULE_1__.backButtonLogic)();
   (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayDeleteButton)();
   (0,_modules_event_handler__WEBPACK_IMPORTED_MODULE_1__.deleteButtonLogic)(ID);
-}
-
-//! **`` Not being used anywhere
-//? **`` Displays all the form values
-function getToDoInfo() {
-  //? **`` Loops through the array and grabs each object and it's index position
-  todoArray.forEach((currentObject, index) => {
-    //? **`` Loops through each object in the array and displays each key/value pair
-    for (const [objectKey, objectValue] of Object.entries(currentObject)) {
-      (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayToDoInfo)(objectKey, objectValue);
-    }
-  });
 }
 
 function createID() {
@@ -178,20 +175,6 @@ function updateOptions(newProjectField) {
   makeOption.setAttribute('value', newProjectField.value);
   makeOption.innerText = newProjectField.value;
   getDropdownMenu.appendChild(makeOption);
-}
-
-//! **`` This function isn't being used
-//? **`` Gets the project name and displays it
-function getProjectName() {
-  //? **`` Loops through the array and grabs each value and it's index position
-  _index__WEBPACK_IMPORTED_MODULE_0__.todoArray.forEach((currentValue, index) => {
-    //? **`` Gets the value in the object (in this case, it's the project name)
-    const projectName = Object.values(currentValue)[0];
-    //! The function below is now unique to displaying only tasks.
-    //? **`` Displays the project name
-    displayTask(projectName);
-    //! ********************************************************
-  });
 }
 
 //? **`` Shows the date
@@ -445,7 +428,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-//todo **`` Add better array iterator function like reduce() and find()
 //todo **`` I want to be able to pick tasks by project titles or by priority
 //todo **`` I want to be able to pull up upcoming tasks based on due date
 //todo **`` I want to be able to show tasks due only on their date
@@ -453,11 +435,10 @@ __webpack_require__.r(__webpack_exports__);
 //? **`` This is the 'delete task' warning screen's 'Delete' button logic. It removes the object from the array and returns you to the main screen
 function warningDeleteButtonLogic(ID) {
   document.querySelector('.warning-delete').addEventListener('click', (e) => {
-    //? **`` Loops through the array and grabs each object and it's index position
-    _index__WEBPACK_IMPORTED_MODULE_0__.todoArray.forEach((currentObject, index) => {
-      //? **`` Compares the task ID number to the other object's unique IDs
-      if (ID == Object.values(currentObject)[5]) {
-        //? **`` This removes the object from the array
+    // //? **`` Loops through the array and grabs each object and it's index position
+    _index__WEBPACK_IMPORTED_MODULE_0__.todoArray.map((object, index) => {
+      //? **`` If the task ID number to be deleted matches an ID in an object, that object is removed from the array and you're returned to the main screen
+      if (ID == object.idNumber) {
         _index__WEBPACK_IMPORTED_MODULE_0__.todoArray.splice(index, 1);
         (0,_index__WEBPACK_IMPORTED_MODULE_0__.goToMainScreen)();
       }
@@ -492,11 +473,11 @@ function backButtonLogic() {
 
 //? **`` Gets the ID assigned to the task button you clicked on
 function taskDisplayLogic() {
-  document.querySelectorAll('.task').forEach((task) => {
+  //? **`` Turns your query node list into an array, loops thru each 'task' class, adds a listener to each 'task' class
+  [...document.querySelectorAll('.task')].map((task) => {
     task.addEventListener('click', (e) => {
-      //? **`` Gets the ID from the html element
-      const ID = e.target.id;
-      (0,_index__WEBPACK_IMPORTED_MODULE_0__.goToTaskScreen)(ID);
+      //? **`` Gets the ID from the html element and uses it as the argument
+      (0,_index__WEBPACK_IMPORTED_MODULE_0__.goToTaskScreen)(e.target.id);
     });
   });
 }
@@ -521,12 +502,8 @@ function addToDoButtonLogic() {
     const task = document.querySelector('#task').value;
     const date = document.querySelector('#date').value;
     const notes = document.querySelector('#notes').value;
-    let priority;
-    document.querySelectorAll('[name="priority"]').forEach((radio) => {
-      if (radio.checked) {
-        priority = radio.value;
-      }
-    });
+
+    const priority = (0,_index__WEBPACK_IMPORTED_MODULE_0__.findPriorities)();
     const idNumber = (0,_index__WEBPACK_IMPORTED_MODULE_0__.createID)();
 
     //? **`` If the task field is empty, nothing happens.
