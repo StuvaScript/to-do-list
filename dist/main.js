@@ -35,6 +35,7 @@ const todoArray = [];
 
 (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.createToDoItemButton)();
 (0,_modules_event_handler__WEBPACK_IMPORTED_MODULE_1__.createToDoItemButtonLogic)();
+(0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.createSortingDropdown)();
 (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayTodaysDate)();
 
 //* **`` FUNCTIONS ``**
@@ -94,7 +95,9 @@ function populateDropdownMenu() {
   //? **`` Loops through each object in the array
   todoArray.map((objs) => {
     //? **`` As it loops, it checks to make sure each objects project name doesn't already exist in the dropdown list
-    const optionNodeList = document.querySelectorAll('option');
+    const optionNodeList = document.querySelectorAll(
+      '#dropdownProjectMenu > option'
+    );
     const duplicateCheck = [...optionNodeList].some(
       (oppies) => oppies.innerText === objs.project
     );
@@ -110,7 +113,9 @@ function populateDropdownMenu() {
 
 //? **`` Updates the select dropdown options with the 'Create New Project' value
 function addOptions(newProjectField) {
-  const optionNodeList = document.querySelectorAll('option');
+  const optionNodeList = document.querySelectorAll(
+    '#dropdownProjectMenu > option'
+  );
   //? **`` Big "if statement" !!
   if (
     //? **`` Turns the node list into an array then checks for duplicate project names. Notice the "bang" mark at the beginning saying "if this is NOT true..."
@@ -147,6 +152,7 @@ function createObject(project, task, date, priority, notes, idNumber) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createSortingDropdown": () => (/* binding */ createSortingDropdown),
 /* harmony export */   "createToDoItemButton": () => (/* binding */ createToDoItemButton),
 /* harmony export */   "displayBackButton": () => (/* binding */ displayBackButton),
 /* harmony export */   "displayDeleteButton": () => (/* binding */ displayDeleteButton),
@@ -166,6 +172,52 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const content = document.querySelector('.content');
+
+//todo **`` I want to be able to pick tasks by project titles or by priority
+//todo **`` I want to be able to pull up upcoming tasks based on due date
+//todo **`` I want to be able to show tasks due only on their date
+
+//todo **`` Working on the logic to sort all the tasks.
+
+//? **`` Creates the sorting dropdown menu and all it's options
+function createSortingDropdown() {
+  const sortingDropdown = document.createElement('select');
+  sortingDropdown.setAttribute('id', 'sortingDropdown');
+  sortingDropdown.setAttribute('name', 'sortingDropdown');
+  const sortingDropdownLabel = document.createElement('label');
+  sortingDropdownLabel.innerText = 'Sort Tasks: ';
+  sortingDropdownLabel.setAttribute('for', 'sortingDropdown');
+
+  content.prepend(sortingDropdownLabel, sortingDropdown);
+
+  const priorityOption = document.createElement('option');
+  priorityOption.setAttribute('value', 'priority');
+  priorityOption.innerText = 'priority';
+
+  const alphaOption = document.createElement('option');
+  alphaOption.setAttribute('value', 'A-Z');
+  alphaOption.innerText = 'A-Z';
+
+  const reverseAlphaOption = document.createElement('option');
+  reverseAlphaOption.setAttribute('value', 'Z-A');
+  reverseAlphaOption.innerText = 'Z-A';
+
+  const projectOption = document.createElement('option');
+  projectOption.setAttribute('value', 'project');
+  projectOption.innerText = 'project';
+
+  const dueOption = document.createElement('option');
+  dueOption.setAttribute('value', 'due date');
+  dueOption.innerText = 'due date';
+
+  sortingDropdown.append(
+    priorityOption,
+    alphaOption,
+    reverseAlphaOption,
+    projectOption,
+    dueOption
+  );
+}
 
 //? **`` Creates a new <option> element and sets it as the new project value
 function updateOptions(newProjectField) {
@@ -201,13 +253,11 @@ function makeForm() {
   content.prepend(form);
 
   const dropdownProjectMenu = document.createElement('select');
-  form.appendChild(dropdownProjectMenu);
   dropdownProjectMenu.setAttribute('id', 'dropdownProjectMenu');
   dropdownProjectMenu.setAttribute('name', 'dropdownProjectMenu');
   const dropdownProjectMenuLabel = document.createElement('label');
   dropdownProjectMenuLabel.innerText = 'Assign To Project';
   dropdownProjectMenuLabel.setAttribute('for', 'dropdownProjectMenu');
-  form.appendChild(dropdownProjectMenuLabel);
 
   const defaultOption = document.createElement('option');
   dropdownProjectMenu.appendChild(defaultOption);
@@ -216,53 +266,35 @@ function makeForm() {
 
   (0,_index__WEBPACK_IMPORTED_MODULE_0__.populateDropdownMenu)();
 
-  createBreak(form);
-
   const newProjectTitle = document.createElement('input');
-  form.appendChild(newProjectTitle);
   newProjectTitle.setAttribute('type', 'text');
   newProjectTitle.setAttribute('id', 'newproject');
   newProjectTitle.setAttribute('name', 'newproject');
   const newProjectLabel = document.createElement('label');
   newProjectLabel.innerText = 'Or Create New Project';
   newProjectLabel.setAttribute('for', 'newproject');
-  form.appendChild(newProjectLabel);
-
-  createBreak(form);
 
   const projectButton = document.createElement('button');
   projectButton.innerText = 'Create New Project';
   projectButton.classList.add('project-button');
-  form.appendChild(projectButton);
-
-  createBreak(form);
 
   const todoTask = document.createElement('input');
-  form.appendChild(todoTask);
   todoTask.setAttribute('type', 'text');
   todoTask.setAttribute('id', 'task');
   todoTask.setAttribute('name', 'task');
   const taskLabel = document.createElement('label');
   taskLabel.innerText = 'ToDo Task';
   taskLabel.setAttribute('for', 'task');
-  form.appendChild(taskLabel);
-
-  createBreak(form);
 
   const todoDate = document.createElement('input');
-  form.appendChild(todoDate);
   todoDate.setAttribute('type', 'date');
   todoDate.setAttribute('id', 'date');
   todoDate.setAttribute('name', 'date');
   const dateLabel = document.createElement('label');
   dateLabel.innerText = 'Due Date';
   dateLabel.setAttribute('for', 'date');
-  form.appendChild(dateLabel);
-
-  createBreak(form);
 
   const radioPriority1 = document.createElement('input');
-  form.appendChild(radioPriority1);
   radioPriority1.setAttribute('type', 'radio');
   radioPriority1.setAttribute('id', 'P1');
   radioPriority1.setAttribute('name', 'priority');
@@ -270,10 +302,8 @@ function makeForm() {
   const labelPriority1 = document.createElement('label');
   labelPriority1.innerText = 'P1';
   labelPriority1.setAttribute('for', 'P1');
-  form.appendChild(labelPriority1);
 
   const radioPriority2 = document.createElement('input');
-  form.appendChild(radioPriority2);
   radioPriority2.setAttribute('type', 'radio');
   radioPriority2.setAttribute('id', 'P2');
   radioPriority2.setAttribute('name', 'priority');
@@ -281,10 +311,8 @@ function makeForm() {
   const labelPriority2 = document.createElement('label');
   labelPriority2.innerText = 'P2';
   labelPriority2.setAttribute('for', 'P2');
-  form.appendChild(labelPriority2);
 
   const radioPriority3 = document.createElement('input');
-  form.appendChild(radioPriority3);
   radioPriority3.setAttribute('type', 'radio');
   radioPriority3.setAttribute('id', 'P3');
   radioPriority3.setAttribute('name', 'priority');
@@ -292,10 +320,8 @@ function makeForm() {
   const labelPriority3 = document.createElement('label');
   labelPriority3.innerText = 'P3';
   labelPriority3.setAttribute('for', 'P3');
-  form.appendChild(labelPriority3);
 
   const radioPriority4 = document.createElement('input');
-  form.appendChild(radioPriority4);
   radioPriority4.setAttribute('type', 'radio');
   radioPriority4.setAttribute('id', 'P4');
   radioPriority4.setAttribute('name', 'priority');
@@ -304,38 +330,47 @@ function makeForm() {
   const labelPriority4 = document.createElement('label');
   labelPriority4.innerText = 'P4';
   labelPriority4.setAttribute('for', 'P4');
-  form.appendChild(labelPriority4);
-
-  createBreak(form);
 
   const notes = document.createElement('textarea');
-  form.appendChild(notes);
   notes.setAttribute('id', 'notes');
   notes.setAttribute('name', 'notes');
   const notesLabel = document.createElement('label');
   notesLabel.innerText = 'Notes';
   notesLabel.setAttribute('for', 'notes');
-  form.appendChild(notesLabel);
-
-  createBreak(form);
 
   const todoButton = document.createElement('button');
   todoButton.innerText = 'Add ToDo';
   todoButton.classList.add('todo-button');
-  form.appendChild(todoButton);
 
   const button = document.createElement('button');
   button.innerText = 'Go Back';
   button.classList.add('back');
-  form.appendChild(button);
+
+  form.append(
+    dropdownProjectMenu,
+    dropdownProjectMenuLabel,
+    newProjectTitle,
+    newProjectLabel,
+    projectButton,
+    todoTask,
+    taskLabel,
+    todoDate,
+    dateLabel,
+    radioPriority1,
+    labelPriority1,
+    radioPriority2,
+    labelPriority2,
+    radioPriority3,
+    labelPriority3,
+    radioPriority4,
+    labelPriority4,
+    notes,
+    notesLabel,
+    todoButton,
+    button
+  );
 
   (0,_event_handler__WEBPACK_IMPORTED_MODULE_1__.backButtonLogic)();
-}
-
-//? **`` Simply creates a <br> element to be used in the form
-function createBreak(element) {
-  const br = document.createElement('br');
-  element.appendChild(br);
 }
 
 //? **`` Loops through the array and for each object it creates a button, puts the task name on it, adds a class, sets the object's ID number to the element ID, and displays it
@@ -427,10 +462,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-//todo **`` I want to be able to pick tasks by project titles or by priority
-//todo **`` I want to be able to pull up upcoming tasks based on due date
-//todo **`` I want to be able to show tasks due only on their date
 
 //? **`` This is the 'delete task' warning screen's 'Delete' button logic. It removes the object from the array and returns you to the main screen
 function warningDeleteButtonLogic(ID) {

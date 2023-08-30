@@ -7,6 +7,7 @@ import {
   removeChildrenOfContent,
   displayBackButton,
   displayDeleteButton,
+  createSortingDropdown,
 } from './modules/dom-manipulation';
 
 import {
@@ -35,6 +36,7 @@ const todoArray = [];
 
 createToDoItemButton();
 createToDoItemButtonLogic();
+createSortingDropdown();
 displayTodaysDate();
 
 //* **`` FUNCTIONS ``**
@@ -94,7 +96,9 @@ function populateDropdownMenu() {
   //? **`` Loops through each object in the array
   todoArray.map((objs) => {
     //? **`` As it loops, it checks to make sure each objects project name doesn't already exist in the dropdown list
-    const optionNodeList = document.querySelectorAll('option');
+    const optionNodeList = document.querySelectorAll(
+      '#dropdownProjectMenu > option'
+    );
     const duplicateCheck = [...optionNodeList].some(
       (oppies) => oppies.innerText === objs.project
     );
@@ -110,7 +114,9 @@ function populateDropdownMenu() {
 
 //? **`` Updates the select dropdown options with the 'Create New Project' value
 function addOptions(newProjectField) {
-  const optionNodeList = document.querySelectorAll('option');
+  const optionNodeList = document.querySelectorAll(
+    '#dropdownProjectMenu > option'
+  );
   //? **`` Big "if statement" !!
   if (
     //? **`` Turns the node list into an array then checks for duplicate project names. Notice the "bang" mark at the beginning saying "if this is NOT true..."
