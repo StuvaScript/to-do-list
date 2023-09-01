@@ -7,12 +7,20 @@ import {
   goToMainScreen,
   goToTaskScreen,
   findPriorities,
+  priorityOrder,
+  clearTasks,
+  alphaOrder,
+  reverseAlphaOrder,
+  projectOrder,
+  dueDateOrder,
 } from '../index';
 
 import {
   makeForm,
   removeChildrenOfContent,
   displayWarning,
+  displayTask,
+  content,
 } from './dom-manipulation';
 
 export {
@@ -21,7 +29,42 @@ export {
   taskDisplayLogic,
   backButtonLogic,
   deleteButtonLogic,
+  sortingAndDisplayOfTasksLogic,
 };
+
+//? **`` Displays the tasks by the chosen order
+function sortingAndDisplayOfTasksLogic() {
+  //? **`` The initial task display
+  displayTask(todoArray);
+  //? **`` Listens for changes in the sorting dropdown menu
+  document.querySelector('#sortingDropdown').addEventListener('change', (e) => {
+    const sortValue = document.querySelector('#sortingDropdown').value;
+    //? **`` Removes the displayed tasks
+    clearTasks();
+    //? **`` Reorders the tasks based on the user selection and displays them again in the new order
+    switch (sortValue) {
+      case 'priority':
+        displayTask(priorityOrder());
+        break;
+
+      case 'A-Z':
+        displayTask(alphaOrder());
+        break;
+
+      case 'Z-A':
+        displayTask(reverseAlphaOrder());
+        break;
+
+      case 'project':
+        displayTask(projectOrder());
+        break;
+
+      case 'due-date':
+        displayTask(dueDateOrder());
+        break;
+    }
+  });
+}
 
 //? **`` This is the 'delete task' warning screen's 'Delete' button logic. It removes the object from the array and returns you to the main screen
 function warningDeleteButtonLogic(ID) {

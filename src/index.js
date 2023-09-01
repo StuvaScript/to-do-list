@@ -15,6 +15,7 @@ import {
   taskDisplayLogic,
   backButtonLogic,
   deleteButtonLogic,
+  sortingAndDisplayOfTasksLogic,
 } from './modules/event-handler';
 
 export {
@@ -28,18 +29,55 @@ export {
   goToMainScreen,
   goToTaskScreen,
   findPriorities,
+  priorityOrder,
+  clearTasks,
+  alphaOrder,
+  reverseAlphaOrder,
+  projectOrder,
+  dueDateOrder,
 };
-
-// ? I got a console.log shortcut. Put your cursor on a word and do ctr+alt+w then either W or up or down arrows. Also to make it a string, do shift+alt+W and either W or up or down arrows.
 
 const todoArray = [];
 
+//? **`` Initial functions to be ran
 createToDoItemButton();
 createToDoItemButtonLogic();
 createSortingDropdown();
+sortingAndDisplayOfTasksLogic();
 displayTodaysDate();
 
 //* **`` FUNCTIONS ``**
+
+//? **`` Sorts the array by priority
+function priorityOrder() {
+  return todoArray.sort((a, b) => (a.priority > b.priority ? 1 : -1));
+}
+
+//? **`` Sorts the array by alphabetical A-Z
+function alphaOrder() {
+  return todoArray.sort((a, b) => (a.task > b.task ? 1 : -1));
+}
+
+//? **`` Sorts the array by reverse alphabetical Z-A
+function reverseAlphaOrder() {
+  return todoArray.sort((a, b) => (a.task < b.task ? 1 : -1));
+}
+
+//? **`` Sorts the array by project
+function projectOrder() {
+  return todoArray.sort((a, b) => (a.project > b.project ? 1 : -1));
+}
+
+//? **`` Sorts the array by due date
+function dueDateOrder() {
+  return todoArray.sort((a, b) => (a.date > b.date ? 1 : -1));
+}
+
+//? **`` Removes only the tasks from display
+function clearTasks() {
+  const tasks = document.querySelectorAll('.task');
+  [...tasks].map((task) => task.remove());
+}
 
 function findPriorities() {
   //? **``This finds all the 'priority' attributes, spreads the node list into an array, and returns the one thats checked.
@@ -51,9 +89,10 @@ function findPriorities() {
 
 function goToMainScreen() {
   removeChildrenOfContent();
-  displayTask();
   createToDoItemButton();
   createToDoItemButtonLogic();
+  createSortingDropdown();
+  sortingAndDisplayOfTasksLogic();
   displayTodaysDate();
   taskDisplayLogic();
 }

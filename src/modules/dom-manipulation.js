@@ -13,6 +13,7 @@ export {
   displayDeleteButton,
   displayWarning,
   createSortingDropdown,
+  content,
 };
 
 const content = document.querySelector('.content');
@@ -21,7 +22,7 @@ const content = document.querySelector('.content');
 //todo **`` I want to be able to pull up upcoming tasks based on due date
 //todo **`` I want to be able to show tasks due only on their date
 
-//todo **`` Working on the logic to sort all the tasks.
+//todo **`` Working on the logic to sort all the tasks. Using displayTask() and sortingAndDisplayOfTasksLogic()
 
 //? **`` Creates the sorting dropdown menu and all it's options
 function createSortingDropdown() {
@@ -51,7 +52,7 @@ function createSortingDropdown() {
   projectOption.innerText = 'project';
 
   const dueOption = document.createElement('option');
-  dueOption.setAttribute('value', 'due date');
+  dueOption.setAttribute('value', 'due-date');
   dueOption.innerText = 'due date';
 
   sortingDropdown.append(
@@ -107,8 +108,6 @@ function makeForm() {
   dropdownProjectMenu.appendChild(defaultOption);
   defaultOption.setAttribute('value', 'Default Project');
   defaultOption.innerText = 'Default Project';
-
-  populateDropdownMenu();
 
   const newProjectTitle = document.createElement('input');
   newProjectTitle.setAttribute('type', 'text');
@@ -214,12 +213,13 @@ function makeForm() {
     button
   );
 
+  populateDropdownMenu();
   backButtonLogic();
 }
 
 //? **`` Loops through the array and for each object it creates a button, puts the task name on it, adds a class, sets the object's ID number to the element ID, and displays it
-function displayTask() {
-  todoArray.map((obj) => {
+function displayTask(array) {
+  array.map((obj) => {
     const button = document.createElement('button');
     button.innerText = `${obj.task}`;
     button.classList.add('task');
