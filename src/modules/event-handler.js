@@ -8,7 +8,6 @@ import {
   goToTaskScreen,
   findPriorities,
   priorityOrder,
-  clearTasks,
   alphaOrder,
   reverseAlphaOrder,
   projectOrder,
@@ -20,6 +19,7 @@ import {
   removeChildrenOfContent,
   displayWarning,
   displayTask,
+  clearTasks,
   content,
 } from './dom-manipulation';
 
@@ -63,6 +63,8 @@ function sortingAndDisplayOfTasksLogic() {
         displayTask(dueDateOrder());
         break;
     }
+    //? **`` Adds the logic back to the new task order to display each task's info
+    taskDisplayLogic();
   });
 }
 
@@ -105,7 +107,7 @@ function backButtonLogic() {
   });
 }
 
-//? **`` Gets the ID assigned to the task button you clicked on
+//? **`` The logic that allows you to display the info from the task you clicked on
 function taskDisplayLogic() {
   //? **`` Turns your query node list into an array, loops thru each 'task' class, adds a listener to each 'task' class
   [...document.querySelectorAll('.task')].map((task) => {

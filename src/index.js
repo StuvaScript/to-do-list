@@ -30,7 +30,6 @@ export {
   goToTaskScreen,
   findPriorities,
   priorityOrder,
-  clearTasks,
   alphaOrder,
   reverseAlphaOrder,
   projectOrder,
@@ -71,12 +70,6 @@ function projectOrder() {
 //? **`` Sorts the array by due date
 function dueDateOrder() {
   return todoArray.sort((a, b) => (a.date > b.date ? 1 : -1));
-}
-
-//? **`` Removes only the tasks from display
-function clearTasks() {
-  const tasks = document.querySelectorAll('.task');
-  [...tasks].map((task) => task.remove());
 }
 
 function findPriorities() {

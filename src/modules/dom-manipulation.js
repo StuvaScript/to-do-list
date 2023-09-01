@@ -14,15 +14,19 @@ export {
   displayWarning,
   createSortingDropdown,
   content,
+  clearTasks,
 };
 
 const content = document.querySelector('.content');
 
-//todo **`` I want to be able to pick tasks by project titles or by priority
 //todo **`` I want to be able to pull up upcoming tasks based on due date
 //todo **`` I want to be able to show tasks due only on their date
+//todo **`` the sorting dropdown menu resets back to 'priority' when you go back to the main screen. Also since it's initial value is 'priority', nothing reorders when you click 'priority' initially. Maybe change this whole thing to just buttons in a menu later? That would solve these things because it would be a 'click' event on the buttons and they would disappear after the click.
 
-//todo **`` Working on the logic to sort all the tasks. Using displayTask() and sortingAndDisplayOfTasksLogic()
+//? **`` Finds all the tasks, spreads them into an array, then cycles thru them and removes them from display
+function clearTasks() {
+  [...document.querySelectorAll('.task')].map((task) => task.remove());
+}
 
 //? **`` Creates the sorting dropdown menu and all it's options
 function createSortingDropdown() {
