@@ -13,7 +13,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "addObjectToArray": () => (/* binding */ addObjectToArray),
 /* harmony export */   "addOptions": () => (/* binding */ addOptions),
 /* harmony export */   "alphaOrder": () => (/* binding */ alphaOrder),
-/* harmony export */   "clearTasks": () => (/* binding */ clearTasks),
 /* harmony export */   "createID": () => (/* binding */ createID),
 /* harmony export */   "createObject": () => (/* binding */ createObject),
 /* harmony export */   "dueDateOrder": () => (/* binding */ dueDateOrder),
@@ -69,12 +68,6 @@ function projectOrder() {
 //? **`` Sorts the array by due date
 function dueDateOrder() {
   return todoArray.sort((a, b) => (a.date > b.date ? 1 : -1));
-}
-
-//? **`` Removes only the tasks from display
-function clearTasks() {
-  const tasks = document.querySelectorAll('.task');
-  [...tasks].map((task) => task.remove());
 }
 
 function findPriorities() {
@@ -190,6 +183,7 @@ function createObject(project, task, date, priority, notes, idNumber) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "clearTasks": () => (/* binding */ clearTasks),
 /* harmony export */   "content": () => (/* binding */ content),
 /* harmony export */   "createSortingDropdown": () => (/* binding */ createSortingDropdown),
 /* harmony export */   "createToDoItemButton": () => (/* binding */ createToDoItemButton),
@@ -212,11 +206,14 @@ __webpack_require__.r(__webpack_exports__);
 
 const content = document.querySelector('.content');
 
-//todo **`` I want to be able to pick tasks by project titles or by priority
 //todo **`` I want to be able to pull up upcoming tasks based on due date
 //todo **`` I want to be able to show tasks due only on their date
+//todo **`` the sorting dropdown menu resets back to 'priority' when you go back to the main screen. Also since it's initial value is 'priority', nothing reorders when you click 'priority' initially. Maybe change this whole thing to just buttons in a menu later? That would solve these things because it would be a 'click' event on the buttons and they would disappear after the click.
 
-//todo **`` Working on the logic to sort all the tasks. Using displayTask() and sortingAndDisplayOfTasksLogic()
+//? **`` Finds all the tasks, spreads them into an array, then cycles thru them and removes them from display
+function clearTasks() {
+  [...document.querySelectorAll('.task')].map((task) => task.remove());
+}
 
 //? **`` Creates the sorting dropdown menu and all it's options
 function createSortingDropdown() {
@@ -510,7 +507,7 @@ function sortingAndDisplayOfTasksLogic() {
   document.querySelector('#sortingDropdown').addEventListener('change', (e) => {
     const sortValue = document.querySelector('#sortingDropdown').value;
     //? **`` Removes the displayed tasks
-    (0,_index__WEBPACK_IMPORTED_MODULE_0__.clearTasks)();
+    (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.clearTasks)();
     //? **`` Reorders the tasks based on the user selection and displays them again in the new order
     switch (sortValue) {
       case 'priority':
@@ -533,6 +530,8 @@ function sortingAndDisplayOfTasksLogic() {
         (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayTask)((0,_index__WEBPACK_IMPORTED_MODULE_0__.dueDateOrder)());
         break;
     }
+    //? **`` Adds the logic back to the new task order to display each task's info
+    taskDisplayLogic();
   });
 }
 
@@ -575,7 +574,7 @@ function backButtonLogic() {
   });
 }
 
-//? **`` Gets the ID assigned to the task button you clicked on
+//? **`` The logic that allows you to display the info from the task you clicked on
 function taskDisplayLogic() {
   //? **`` Turns your query node list into an array, loops thru each 'task' class, adds a listener to each 'task' class
   [...document.querySelectorAll('.task')].map((task) => {
