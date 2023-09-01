@@ -12,13 +12,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "addObjectToArray": () => (/* binding */ addObjectToArray),
 /* harmony export */   "addOptions": () => (/* binding */ addOptions),
+/* harmony export */   "alphaOrder": () => (/* binding */ alphaOrder),
+/* harmony export */   "clearTasks": () => (/* binding */ clearTasks),
 /* harmony export */   "createID": () => (/* binding */ createID),
 /* harmony export */   "createObject": () => (/* binding */ createObject),
+/* harmony export */   "dueDateOrder": () => (/* binding */ dueDateOrder),
 /* harmony export */   "findPriorities": () => (/* binding */ findPriorities),
 /* harmony export */   "getTodaysDate": () => (/* binding */ getTodaysDate),
 /* harmony export */   "goToMainScreen": () => (/* binding */ goToMainScreen),
 /* harmony export */   "goToTaskScreen": () => (/* binding */ goToTaskScreen),
 /* harmony export */   "populateDropdownMenu": () => (/* binding */ populateDropdownMenu),
+/* harmony export */   "priorityOrder": () => (/* binding */ priorityOrder),
+/* harmony export */   "projectOrder": () => (/* binding */ projectOrder),
+/* harmony export */   "reverseAlphaOrder": () => (/* binding */ reverseAlphaOrder),
 /* harmony export */   "todoArray": () => (/* binding */ todoArray)
 /* harmony export */ });
 /* harmony import */ var _modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/dom-manipulation */ "./src/modules/dom-manipulation.js");
@@ -29,16 +35,47 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// ? I got a console.log shortcut. Put your cursor on a word and do ctr+alt+w then either W or up or down arrows. Also to make it a string, do shift+alt+W and either W or up or down arrows.
-
 const todoArray = [];
 
+//? **`` Initial functions to be ran
 (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.createToDoItemButton)();
 (0,_modules_event_handler__WEBPACK_IMPORTED_MODULE_1__.createToDoItemButtonLogic)();
 (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.createSortingDropdown)();
+(0,_modules_event_handler__WEBPACK_IMPORTED_MODULE_1__.sortingAndDisplayOfTasksLogic)();
 (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayTodaysDate)();
 
 //* **`` FUNCTIONS ``**
+
+//? **`` Sorts the array by priority
+function priorityOrder() {
+  return todoArray.sort((a, b) => (a.priority > b.priority ? 1 : -1));
+}
+
+//? **`` Sorts the array by alphabetical A-Z
+function alphaOrder() {
+  return todoArray.sort((a, b) => (a.task > b.task ? 1 : -1));
+}
+
+//? **`` Sorts the array by reverse alphabetical Z-A
+function reverseAlphaOrder() {
+  return todoArray.sort((a, b) => (a.task < b.task ? 1 : -1));
+}
+
+//? **`` Sorts the array by project
+function projectOrder() {
+  return todoArray.sort((a, b) => (a.project > b.project ? 1 : -1));
+}
+
+//? **`` Sorts the array by due date
+function dueDateOrder() {
+  return todoArray.sort((a, b) => (a.date > b.date ? 1 : -1));
+}
+
+//? **`` Removes only the tasks from display
+function clearTasks() {
+  const tasks = document.querySelectorAll('.task');
+  [...tasks].map((task) => task.remove());
+}
 
 function findPriorities() {
   //? **``This finds all the 'priority' attributes, spreads the node list into an array, and returns the one thats checked.
@@ -50,9 +87,10 @@ function findPriorities() {
 
 function goToMainScreen() {
   (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.removeChildrenOfContent)();
-  (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayTask)();
   (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.createToDoItemButton)();
   (0,_modules_event_handler__WEBPACK_IMPORTED_MODULE_1__.createToDoItemButtonLogic)();
+  (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.createSortingDropdown)();
+  (0,_modules_event_handler__WEBPACK_IMPORTED_MODULE_1__.sortingAndDisplayOfTasksLogic)();
   (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayTodaysDate)();
   (0,_modules_event_handler__WEBPACK_IMPORTED_MODULE_1__.taskDisplayLogic)();
 }
@@ -152,6 +190,7 @@ function createObject(project, task, date, priority, notes, idNumber) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "content": () => (/* binding */ content),
 /* harmony export */   "createSortingDropdown": () => (/* binding */ createSortingDropdown),
 /* harmony export */   "createToDoItemButton": () => (/* binding */ createToDoItemButton),
 /* harmony export */   "displayBackButton": () => (/* binding */ displayBackButton),
@@ -177,7 +216,7 @@ const content = document.querySelector('.content');
 //todo **`` I want to be able to pull up upcoming tasks based on due date
 //todo **`` I want to be able to show tasks due only on their date
 
-//todo **`` Working on the logic to sort all the tasks.
+//todo **`` Working on the logic to sort all the tasks. Using displayTask() and sortingAndDisplayOfTasksLogic()
 
 //? **`` Creates the sorting dropdown menu and all it's options
 function createSortingDropdown() {
@@ -207,7 +246,7 @@ function createSortingDropdown() {
   projectOption.innerText = 'project';
 
   const dueOption = document.createElement('option');
-  dueOption.setAttribute('value', 'due date');
+  dueOption.setAttribute('value', 'due-date');
   dueOption.innerText = 'due date';
 
   sortingDropdown.append(
@@ -263,8 +302,6 @@ function makeForm() {
   dropdownProjectMenu.appendChild(defaultOption);
   defaultOption.setAttribute('value', 'Default Project');
   defaultOption.innerText = 'Default Project';
-
-  (0,_index__WEBPACK_IMPORTED_MODULE_0__.populateDropdownMenu)();
 
   const newProjectTitle = document.createElement('input');
   newProjectTitle.setAttribute('type', 'text');
@@ -370,12 +407,13 @@ function makeForm() {
     button
   );
 
+  (0,_index__WEBPACK_IMPORTED_MODULE_0__.populateDropdownMenu)();
   (0,_event_handler__WEBPACK_IMPORTED_MODULE_1__.backButtonLogic)();
 }
 
 //? **`` Loops through the array and for each object it creates a button, puts the task name on it, adds a class, sets the object's ID number to the element ID, and displays it
-function displayTask() {
-  _index__WEBPACK_IMPORTED_MODULE_0__.todoArray.map((obj) => {
+function displayTask(array) {
+  array.map((obj) => {
     const button = document.createElement('button');
     button.innerText = `${obj.task}`;
     button.classList.add('task');
@@ -453,6 +491,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "backButtonLogic": () => (/* binding */ backButtonLogic),
 /* harmony export */   "createToDoItemButtonLogic": () => (/* binding */ createToDoItemButtonLogic),
 /* harmony export */   "deleteButtonLogic": () => (/* binding */ deleteButtonLogic),
+/* harmony export */   "sortingAndDisplayOfTasksLogic": () => (/* binding */ sortingAndDisplayOfTasksLogic),
 /* harmony export */   "taskDisplayLogic": () => (/* binding */ taskDisplayLogic)
 /* harmony export */ });
 /* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../index */ "./src/index.js");
@@ -462,6 +501,40 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+//? **`` Displays the tasks by the chosen order
+function sortingAndDisplayOfTasksLogic() {
+  //? **`` The initial task display
+  (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayTask)(_index__WEBPACK_IMPORTED_MODULE_0__.todoArray);
+  //? **`` Listens for changes in the sorting dropdown menu
+  document.querySelector('#sortingDropdown').addEventListener('change', (e) => {
+    const sortValue = document.querySelector('#sortingDropdown').value;
+    //? **`` Removes the displayed tasks
+    (0,_index__WEBPACK_IMPORTED_MODULE_0__.clearTasks)();
+    //? **`` Reorders the tasks based on the user selection and displays them again in the new order
+    switch (sortValue) {
+      case 'priority':
+        (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayTask)((0,_index__WEBPACK_IMPORTED_MODULE_0__.priorityOrder)());
+        break;
+
+      case 'A-Z':
+        (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayTask)((0,_index__WEBPACK_IMPORTED_MODULE_0__.alphaOrder)());
+        break;
+
+      case 'Z-A':
+        (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayTask)((0,_index__WEBPACK_IMPORTED_MODULE_0__.reverseAlphaOrder)());
+        break;
+
+      case 'project':
+        (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayTask)((0,_index__WEBPACK_IMPORTED_MODULE_0__.projectOrder)());
+        break;
+
+      case 'due-date':
+        (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayTask)((0,_index__WEBPACK_IMPORTED_MODULE_0__.dueDateOrder)());
+        break;
+    }
+  });
+}
 
 //? **`` This is the 'delete task' warning screen's 'Delete' button logic. It removes the object from the array and returns you to the main screen
 function warningDeleteButtonLogic(ID) {
