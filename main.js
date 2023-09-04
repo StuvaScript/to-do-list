@@ -20,6 +20,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "getTodaysDate": () => (/* binding */ getTodaysDate),
 /* harmony export */   "goToMainScreen": () => (/* binding */ goToMainScreen),
 /* harmony export */   "goToTaskScreen": () => (/* binding */ goToTaskScreen),
+/* harmony export */   "header": () => (/* binding */ header),
 /* harmony export */   "populateDropdownMenu": () => (/* binding */ populateDropdownMenu),
 /* harmony export */   "priorityOrder": () => (/* binding */ priorityOrder),
 /* harmony export */   "projectOrder": () => (/* binding */ projectOrder),
@@ -34,9 +35,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const todoArray = [];
-
 //? **`` Initial functions to be ran
+const todoArray = [];
+(0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.createHeader)();
+const header = document.querySelector('header');
 (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.createToDoItemButton)();
 (0,_modules_event_handler__WEBPACK_IMPORTED_MODULE_1__.createToDoItemButtonLogic)();
 (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.createSortingDropdown)();
@@ -78,8 +80,11 @@ function findPriorities() {
   return checked.value;
 }
 
+//! **`` It throws an error when you add a task. When createToDoItemButton() is initially called, everything is fine. But when goToMainScreen() is called, createToDoItemButton() fails to create the class name on the button. Then createToDoItemButtonLogic() fails to see the class to add it's event listener to it. The only thing that has changed in the codebase is I created a <header> tag dynamically, and added the date, sort dropdown, and 'Create ToDo' button to it. Theres also a new removeHeader() function
+
 function goToMainScreen() {
   (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.removeChildrenOfContent)();
+  (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.createHeader)();
   (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.createToDoItemButton)();
   (0,_modules_event_handler__WEBPACK_IMPORTED_MODULE_1__.createToDoItemButtonLogic)();
   (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.createSortingDropdown)();
@@ -184,7 +189,7 @@ function createObject(project, task, date, priority, notes, idNumber) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "clearTasks": () => (/* binding */ clearTasks),
-/* harmony export */   "content": () => (/* binding */ content),
+/* harmony export */   "createHeader": () => (/* binding */ createHeader),
 /* harmony export */   "createSortingDropdown": () => (/* binding */ createSortingDropdown),
 /* harmony export */   "createToDoItemButton": () => (/* binding */ createToDoItemButton),
 /* harmony export */   "displayBackButton": () => (/* binding */ displayBackButton),
@@ -195,6 +200,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "displayWarning": () => (/* binding */ displayWarning),
 /* harmony export */   "makeForm": () => (/* binding */ makeForm),
 /* harmony export */   "removeChildrenOfContent": () => (/* binding */ removeChildrenOfContent),
+/* harmony export */   "removeHeader": () => (/* binding */ removeHeader),
 /* harmony export */   "updateOptions": () => (/* binding */ updateOptions)
 /* harmony export */ });
 /* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../index */ "./src/index.js");
@@ -204,10 +210,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+const body = document.querySelector('body');
 const content = document.querySelector('.content');
 
-//todo **`` I want to be able to pull up upcoming tasks based on due date
-//todo **`` I want to be able to show tasks due only on their date
+function createHeader() {
+  const header = document.createElement('header');
+  body.prepend(header);
+}
 
 //? **`` Finds all the tasks, spreads them into an array, then cycles thru them and removes them from display
 function clearTasks() {
@@ -223,7 +232,7 @@ function createSortingDropdown() {
   sortingDropdownLabel.innerText = 'Sort Tasks: ';
   sortingDropdownLabel.setAttribute('for', 'sortingDropdown');
 
-  content.prepend(sortingDropdownLabel, sortingDropdown);
+  _index__WEBPACK_IMPORTED_MODULE_0__.header.prepend(sortingDropdownLabel, sortingDropdown);
 
   const initialOption = document.createElement('option');
   initialOption.setAttribute('value', '');
@@ -276,7 +285,7 @@ function displayTodaysDate() {
   const today = (0,_index__WEBPACK_IMPORTED_MODULE_0__.getTodaysDate)();
   const dateDiv = document.createElement('div');
   dateDiv.innerText = today + ' • today';
-  content.prepend(dateDiv);
+  _index__WEBPACK_IMPORTED_MODULE_0__.header.prepend(dateDiv);
 }
 
 //? **`` Creates the initial 'ToDo' button
@@ -284,7 +293,7 @@ function createToDoItemButton() {
   const newToDoButton = document.createElement('button');
   newToDoButton.innerText = 'Create ToDo Item';
   newToDoButton.classList.add('new-todo-button');
-  content.prepend(newToDoButton);
+  _index__WEBPACK_IMPORTED_MODULE_0__.header.prepend(newToDoButton);
 }
 
 //? **`` Creates the form that takes all the todo info
@@ -479,6 +488,10 @@ function removeChildrenOfContent() {
   }
 }
 
+function removeHeader() {
+  _index__WEBPACK_IMPORTED_MODULE_0__.header.remove();
+}
+
 
 /***/ }),
 
@@ -595,6 +608,7 @@ function taskDisplayLogic() {
 function createToDoItemButtonLogic() {
   document.querySelector('.new-todo-button').addEventListener('click', (e) => {
     e.preventDefault();
+    (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.removeHeader)();
     (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.removeChildrenOfContent)();
     (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.makeForm)();
     addToDoButtonLogic();
@@ -611,7 +625,6 @@ function addToDoButtonLogic() {
     const task = document.querySelector('#task').value;
     const date = document.querySelector('#date').value;
     const notes = document.querySelector('#notes').value;
-
     const priority = (0,_index__WEBPACK_IMPORTED_MODULE_0__.findPriorities)();
     const idNumber = (0,_index__WEBPACK_IMPORTED_MODULE_0__.createID)();
 
