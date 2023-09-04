@@ -208,7 +208,6 @@ const content = document.querySelector('.content');
 
 //todo **`` I want to be able to pull up upcoming tasks based on due date
 //todo **`` I want to be able to show tasks due only on their date
-//todo **`` the sorting dropdown menu resets back to 'priority' when you go back to the main screen. Also since it's initial value is 'priority', nothing reorders when you click 'priority' initially. Maybe change this whole thing to just buttons in a menu later? That would solve these things because it would be a 'click' event on the buttons and they would disappear after the click.
 
 //? **`` Finds all the tasks, spreads them into an array, then cycles thru them and removes them from display
 function clearTasks() {
@@ -225,6 +224,12 @@ function createSortingDropdown() {
   sortingDropdownLabel.setAttribute('for', 'sortingDropdown');
 
   content.prepend(sortingDropdownLabel, sortingDropdown);
+
+  const initialOption = document.createElement('option');
+  initialOption.setAttribute('value', '');
+  initialOption.setAttribute('disabled', '');
+  initialOption.setAttribute('selected', '');
+  initialOption.innerText = '--sort by--';
 
   const priorityOption = document.createElement('option');
   priorityOption.setAttribute('value', 'priority');
@@ -247,6 +252,7 @@ function createSortingDropdown() {
   dueOption.innerText = 'due date';
 
   sortingDropdown.append(
+    initialOption,
     priorityOption,
     alphaOption,
     reverseAlphaOption,
