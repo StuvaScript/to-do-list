@@ -20,7 +20,8 @@ import {
   displayWarning,
   displayTask,
   clearTasks,
-  content,
+  removeHeader,
+  createHeader,
 } from './dom-manipulation';
 
 export {
@@ -122,6 +123,7 @@ function taskDisplayLogic() {
 function createToDoItemButtonLogic() {
   document.querySelector('.new-todo-button').addEventListener('click', (e) => {
     e.preventDefault();
+    removeHeader();
     removeChildrenOfContent();
     makeForm();
     addToDoButtonLogic();
@@ -138,7 +140,6 @@ function addToDoButtonLogic() {
     const task = document.querySelector('#task').value;
     const date = document.querySelector('#date').value;
     const notes = document.querySelector('#notes').value;
-
     const priority = findPriorities();
     const idNumber = createID();
 

@@ -1,13 +1,13 @@
 import {
   createToDoItemButton,
   displayTodaysDate,
-  displayTask,
   displayToDoInfo,
   updateOptions,
   removeChildrenOfContent,
   displayBackButton,
   displayDeleteButton,
   createSortingDropdown,
+  createHeader,
 } from './modules/dom-manipulation';
 
 import {
@@ -34,11 +34,13 @@ export {
   reverseAlphaOrder,
   projectOrder,
   dueDateOrder,
+  header,
 };
 
-const todoArray = [];
-
 //? **`` Initial functions to be ran
+const todoArray = [];
+createHeader();
+const header = document.querySelector('header');
 createToDoItemButton();
 createToDoItemButtonLogic();
 createSortingDropdown();
@@ -80,8 +82,11 @@ function findPriorities() {
   return checked.value;
 }
 
+//! **`` It throws an error when you add a task. When createToDoItemButton() is initially called, everything is fine. But when goToMainScreen() is called, createToDoItemButton() fails to create the class name on the button. Then createToDoItemButtonLogic() fails to see the class to add it's event listener to it. The only thing that has changed in the codebase is I created a <header> tag dynamically, and added the date, sort dropdown, and 'Create ToDo' button to it. Theres also a new removeHeader() function
+
 function goToMainScreen() {
   removeChildrenOfContent();
+  createHeader();
   createToDoItemButton();
   createToDoItemButtonLogic();
   createSortingDropdown();

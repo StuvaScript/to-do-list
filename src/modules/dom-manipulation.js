@@ -1,4 +1,4 @@
-import { populateDropdownMenu, getTodaysDate, todoArray } from '../index';
+import { populateDropdownMenu, getTodaysDate, header } from '../index';
 import { backButtonLogic } from './event-handler';
 
 export {
@@ -6,6 +6,7 @@ export {
   makeForm,
   displayTodaysDate,
   removeChildrenOfContent,
+  removeHeader,
   displayTask,
   displayToDoInfo,
   updateOptions,
@@ -13,14 +14,17 @@ export {
   displayDeleteButton,
   displayWarning,
   createSortingDropdown,
-  content,
   clearTasks,
+  createHeader,
 };
 
+const body = document.querySelector('body');
 const content = document.querySelector('.content');
 
-//todo **`` I want to be able to pull up upcoming tasks based on due date
-//todo **`` I want to be able to show tasks due only on their date
+function createHeader() {
+  const header = document.createElement('header');
+  body.prepend(header);
+}
 
 //? **`` Finds all the tasks, spreads them into an array, then cycles thru them and removes them from display
 function clearTasks() {
@@ -36,7 +40,7 @@ function createSortingDropdown() {
   sortingDropdownLabel.innerText = 'Sort Tasks: ';
   sortingDropdownLabel.setAttribute('for', 'sortingDropdown');
 
-  content.prepend(sortingDropdownLabel, sortingDropdown);
+  header.prepend(sortingDropdownLabel, sortingDropdown);
 
   const initialOption = document.createElement('option');
   initialOption.setAttribute('value', '');
@@ -89,7 +93,7 @@ function displayTodaysDate() {
   const today = getTodaysDate();
   const dateDiv = document.createElement('div');
   dateDiv.innerText = today + ' • today';
-  content.prepend(dateDiv);
+  header.prepend(dateDiv);
 }
 
 //? **`` Creates the initial 'ToDo' button
@@ -97,7 +101,7 @@ function createToDoItemButton() {
   const newToDoButton = document.createElement('button');
   newToDoButton.innerText = 'Create ToDo Item';
   newToDoButton.classList.add('new-todo-button');
-  content.prepend(newToDoButton);
+  header.prepend(newToDoButton);
 }
 
 //? **`` Creates the form that takes all the todo info
@@ -290,4 +294,8 @@ function removeChildrenOfContent() {
   while (content.firstChild) {
     content.removeChild(content.firstChild);
   }
+}
+
+function removeHeader() {
+  header.remove();
 }
