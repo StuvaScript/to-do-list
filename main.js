@@ -80,11 +80,8 @@ function findPriorities() {
   return checked.value;
 }
 
-//! **`` It throws an error when you add a task. When createToDoItemButton() is initially called, everything is fine. But when goToMainScreen() is called, createToDoItemButton() fails to create the class name on the button. Then createToDoItemButtonLogic() fails to see the class to add it's event listener to it. The only thing that has changed in the codebase is I created a <header> tag dynamically, and added the date, sort dropdown, and 'Create ToDo' button to it. Theres also a new removeHeader() function
-
 function goToMainScreen() {
   (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.removeChildrenOfContent)();
-  (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.createHeader)();
   (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.createToDoItemButton)();
   (0,_modules_event_handler__WEBPACK_IMPORTED_MODULE_1__.createToDoItemButtonLogic)();
   (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.createSortingDropdown)();
@@ -188,6 +185,7 @@ function createObject(project, task, date, priority, notes, idNumber) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "body": () => (/* binding */ body),
 /* harmony export */   "clearTasks": () => (/* binding */ clearTasks),
 /* harmony export */   "createHeader": () => (/* binding */ createHeader),
 /* harmony export */   "createSortingDropdown": () => (/* binding */ createSortingDropdown),
@@ -214,8 +212,7 @@ const body = document.querySelector('body');
 const content = document.querySelector('.content');
 
 function createHeader() {
-  const header = document.createElement('header');
-  body.prepend(header);
+  body.prepend(document.createElement('header'));
 }
 
 //? **`` Finds all the tasks, spreads them into an array, then cycles thru them and removes them from display
@@ -489,7 +486,9 @@ function removeChildrenOfContent() {
 }
 
 function removeHeader() {
-  _index__WEBPACK_IMPORTED_MODULE_0__.header.remove();
+  while (_index__WEBPACK_IMPORTED_MODULE_0__.header.firstChild) {
+    _index__WEBPACK_IMPORTED_MODULE_0__.header.removeChild(_index__WEBPACK_IMPORTED_MODULE_0__.header.firstChild);
+  }
 }
 
 
