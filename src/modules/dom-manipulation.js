@@ -16,14 +16,14 @@ export {
   createSortingDropdown,
   clearTasks,
   createHeader,
+  body,
 };
 
 const body = document.querySelector('body');
 const content = document.querySelector('.content');
 
 function createHeader() {
-  const header = document.createElement('header');
-  body.prepend(header);
+  body.prepend(document.createElement('header'));
 }
 
 //? **`` Finds all the tasks, spreads them into an array, then cycles thru them and removes them from display
@@ -297,5 +297,7 @@ function removeChildrenOfContent() {
 }
 
 function removeHeader() {
-  header.remove();
+  while (header.firstChild) {
+    header.removeChild(header.firstChild);
+  }
 }
