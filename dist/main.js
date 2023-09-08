@@ -91,9 +91,10 @@ function goToMainScreen() {
 }
 
 function goToTaskScreen(ID) {
+  (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.removeChildrenOfContent)();
+  (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.removeHeader)();
   //? **`` Filters through all objects in the array and returns a new array with the object that matches the ID
   const currentObjArray = todoArray.filter((object) => ID == object.idNumber);
-  (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.removeChildrenOfContent)();
   //? **`` Loops through the object and passes the key/value pairs to the display function
   Object.entries(currentObjArray[0]).map(([key, value]) => {
     (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_0__.displayToDoInfo)(key, value);
@@ -203,6 +204,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../index */ "./src/index.js");
 /* harmony import */ var _event_handler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./event-handler */ "./src/modules/event-handler.js");
+/* harmony import */ var _icons_plus_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../icons/plus.png */ "./src/icons/plus.png");
+
 
 
 
@@ -222,6 +225,10 @@ function clearTasks() {
 
 //? **`` Creates the sorting dropdown menu and all it's options
 function createSortingDropdown() {
+  const sortingDiv = document.createElement('div');
+
+  _index__WEBPACK_IMPORTED_MODULE_0__.header.prepend(sortingDiv);
+
   const sortingDropdown = document.createElement('select');
   sortingDropdown.setAttribute('id', 'sortingDropdown');
   sortingDropdown.setAttribute('name', 'sortingDropdown');
@@ -229,7 +236,7 @@ function createSortingDropdown() {
   sortingDropdownLabel.innerText = 'Sort Tasks: ';
   sortingDropdownLabel.setAttribute('for', 'sortingDropdown');
 
-  _index__WEBPACK_IMPORTED_MODULE_0__.header.prepend(sortingDropdownLabel, sortingDropdown);
+  sortingDiv.prepend(sortingDropdownLabel, sortingDropdown);
 
   const initialOption = document.createElement('option');
   initialOption.setAttribute('value', '');
@@ -288,9 +295,14 @@ function displayTodaysDate() {
 //? **`` Creates the initial 'ToDo' button
 function createToDoItemButton() {
   const newToDoButton = document.createElement('button');
-  newToDoButton.innerText = 'Create ToDo Item';
+  // newToDoButton.innerText = 'Create ToDo Item';
   newToDoButton.classList.add('new-todo-button');
   _index__WEBPACK_IMPORTED_MODULE_0__.header.prepend(newToDoButton);
+
+  const newTaskIcon = document.createElement('img');
+  newTaskIcon.setAttribute('src', _icons_plus_png__WEBPACK_IMPORTED_MODULE_2__);
+  newTaskIcon.setAttribute('alt', 'Add Task');
+  newToDoButton.append(newTaskIcon);
 }
 
 //? **`` Creates the form that takes all the todo info
@@ -664,6 +676,16 @@ function addNewProjectButtonLogic() {
 }
 
 
+/***/ }),
+
+/***/ "./src/icons/plus.png":
+/*!****************************!*\
+  !*** ./src/icons/plus.png ***!
+  \****************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "7cbbd591e97090f7bb6c.png";
+
 /***/ })
 
 /******/ 	});
@@ -705,6 +727,18 @@ function addNewProjectButtonLogic() {
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/global */
+/******/ 	(() => {
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
+/******/ 			}
+/******/ 		})();
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
@@ -719,6 +753,26 @@ function addNewProjectButtonLogic() {
 /******/ 			}
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/publicPath */
+/******/ 	(() => {
+/******/ 		var scriptUrl;
+/******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
+/******/ 		var document = __webpack_require__.g.document;
+/******/ 		if (!scriptUrl && document) {
+/******/ 			if (document.currentScript)
+/******/ 				scriptUrl = document.currentScript.src
+/******/ 			if (!scriptUrl) {
+/******/ 				var scripts = document.getElementsByTagName("script");
+/******/ 				if(scripts.length) scriptUrl = scripts[scripts.length - 1].src
+/******/ 			}
+/******/ 		}
+/******/ 		// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
+/******/ 		// or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
+/******/ 		if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
+/******/ 		scriptUrl = scriptUrl.replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
+/******/ 		__webpack_require__.p = scriptUrl;
 /******/ 	})();
 /******/ 	
 /************************************************************************/

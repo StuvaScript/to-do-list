@@ -1,5 +1,6 @@
 import { populateDropdownMenu, getTodaysDate, header } from '../index';
 import { backButtonLogic } from './event-handler';
+import plus from '../icons/plus.png';
 
 export {
   createToDoItemButton,
@@ -33,6 +34,10 @@ function clearTasks() {
 
 //? **`` Creates the sorting dropdown menu and all it's options
 function createSortingDropdown() {
+  const sortingDiv = document.createElement('div');
+
+  header.prepend(sortingDiv);
+
   const sortingDropdown = document.createElement('select');
   sortingDropdown.setAttribute('id', 'sortingDropdown');
   sortingDropdown.setAttribute('name', 'sortingDropdown');
@@ -40,7 +45,7 @@ function createSortingDropdown() {
   sortingDropdownLabel.innerText = 'Sort Tasks: ';
   sortingDropdownLabel.setAttribute('for', 'sortingDropdown');
 
-  header.prepend(sortingDropdownLabel, sortingDropdown);
+  sortingDiv.prepend(sortingDropdownLabel, sortingDropdown);
 
   const initialOption = document.createElement('option');
   initialOption.setAttribute('value', '');
@@ -99,9 +104,14 @@ function displayTodaysDate() {
 //? **`` Creates the initial 'ToDo' button
 function createToDoItemButton() {
   const newToDoButton = document.createElement('button');
-  newToDoButton.innerText = 'Create ToDo Item';
+  // newToDoButton.innerText = 'Create ToDo Item';
   newToDoButton.classList.add('new-todo-button');
   header.prepend(newToDoButton);
+
+  const newTaskIcon = document.createElement('img');
+  newTaskIcon.setAttribute('src', plus);
+  newTaskIcon.setAttribute('alt', 'Add Task');
+  newToDoButton.append(newTaskIcon);
 }
 
 //? **`` Creates the form that takes all the todo info

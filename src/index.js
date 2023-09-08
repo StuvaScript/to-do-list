@@ -9,6 +9,7 @@ import {
   createSortingDropdown,
   createHeader,
   body,
+  removeHeader,
 } from './modules/dom-manipulation';
 
 import {
@@ -94,9 +95,10 @@ function goToMainScreen() {
 }
 
 function goToTaskScreen(ID) {
+  removeChildrenOfContent();
+  removeHeader();
   //? **`` Filters through all objects in the array and returns a new array with the object that matches the ID
   const currentObjArray = todoArray.filter((object) => ID == object.idNumber);
-  removeChildrenOfContent();
   //? **`` Loops through the object and passes the key/value pairs to the display function
   Object.entries(currentObjArray[0]).map(([key, value]) => {
     displayToDoInfo(key, value);

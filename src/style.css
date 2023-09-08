@@ -1,4 +1,11 @@
 :root {
+  --light: #ffffff;
+  --dark: #071e22;
+  /* --first-accent: #1d7874; */
+  --first-accent: linear-gradient(to right, #1d7874, #124d4a);
+
+  --second-accent: #dcc48e;
+
   --non-urgent: #cecaca;
   --mild-urgent: blue;
   --urgent: orange;
@@ -15,15 +22,55 @@
 
 body {
   font-family: sans-serif;
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-}
-
-.content {
+  background: var(--dark);
+  color: var(--light);
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+}
+
+header {
+  width: 100%;
+  padding: 40px;
+  font-size: 1.5rem;
+  background: var(--first-accent);
+  display: flex;
+  justify-content: space-around;
+}
+
+/* todo **`` Need to style the Add Task button. Maybe pick a white bordered plus sign? Also need to add a hover tooltip text to it.  */
+
+/* .new-todo-button {
+  background: var(--first-accent);
+  border: none;
+  color: var(--light);
+  border-radius: 50%; */
+/* } */
+
+/* .new-todo-button:hover:before {
+  content: 'Create New Task';
+} */
+
+.content {
+  width: 100%;
+  padding: 0px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+}
+
+.content > button {
+  color: var(--light);
+  background: var(--dark);
+  width: 100%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 30px;
+  text-align: left;
+  border: none;
+  border-bottom: solid 1px var(--second-accent);
 }
 
 form {
