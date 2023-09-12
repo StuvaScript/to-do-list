@@ -1,6 +1,6 @@
 import { populateDropdownMenu, getTodaysDate, header } from '../index';
 import { backButtonLogic } from './event-handler';
-import plus from '../icons/plus.png';
+// import plus from '../icons/add_circle.svg';
 
 export {
   createToDoItemButton,
@@ -100,19 +100,40 @@ function displayTodaysDate() {
   dateDiv.innerText = today + ' • today';
   header.prepend(dateDiv);
 }
+//! *********************************************************************************
+//! *********************************************************************************
+//! *********************************************************************************
+//! *********************************************************************************
+//! *********************************************************************************
 
 //? **`` Creates the initial 'ToDo' button
 function createToDoItemButton() {
-  const newToDoButton = document.createElement('button');
+  const newToDoButton = document.createElement('div');
   // newToDoButton.innerText = 'Create ToDo Item';
   newToDoButton.classList.add('new-todo-button');
   header.prepend(newToDoButton);
 
-  const newTaskIcon = document.createElement('img');
-  newTaskIcon.setAttribute('src', plus);
-  newTaskIcon.setAttribute('alt', 'Add Task');
+  // <span class="material-symbols-outlined"> add_circle </span>;
+
+  //* **`` This is the google font code below
+
+  const newTaskIcon = document.createElement('span');
+  newTaskIcon.classList.add('material-symbols-outlined');
+  newTaskIcon.innerText = ' add_circle ';
   newToDoButton.append(newTaskIcon);
+
+  //* **`` This is the import icon code below
+
+  // const newTaskIcon = document.createElement('img');
+  // newTaskIcon.setAttribute('src', plus);
+  // newTaskIcon.setAttribute('alt', 'Add Task');
+  // newToDoButton.append(newTaskIcon);
 }
+//! *********************************************************************************
+//! *********************************************************************************
+//! *********************************************************************************
+//! *********************************************************************************
+//! *********************************************************************************
 
 //? **`` Creates the form that takes all the todo info
 function makeForm() {

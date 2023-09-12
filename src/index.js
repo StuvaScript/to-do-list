@@ -41,12 +41,16 @@ export {
 
 //? **`` Initial functions to be ran
 const todoArray = [];
+
 createHeader();
 const header = document.querySelector('header');
-createToDoItemButton();
-createToDoItemButtonLogic();
+
 createSortingDropdown();
 sortingAndDisplayOfTasksLogic();
+
+createToDoItemButton();
+createToDoItemButtonLogic();
+
 displayTodaysDate();
 
 //* **`` FUNCTIONS ``**
@@ -86,11 +90,15 @@ function findPriorities() {
 
 function goToMainScreen() {
   removeChildrenOfContent();
-  createToDoItemButton();
-  createToDoItemButtonLogic();
+
   createSortingDropdown();
   sortingAndDisplayOfTasksLogic();
+
+  createToDoItemButton();
+  createToDoItemButtonLogic();
+
   displayTodaysDate();
+
   taskDisplayLogic();
 }
 
