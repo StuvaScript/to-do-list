@@ -39,25 +39,20 @@ header {
   justify-content: space-around;
 }
 
-/* todo **`` Need to style the Add Task button. Maybe pick a white bordered plus sign? Also need to add a hover tooltip text to it.  */
-
-.new-todo-button {
-  /* background: #000; */
-  /* width: 50px; */
-  /* opacity: 0.5; */
-  /* border: none; */
-  /* border-radius: 50%; */
-}
-
-/*! **`` This isn't letting me change the size of the icon. I'm going to try Font Awesome next. You may have to delete the link code in the html head. */
-
 .material-symbols-outlined {
+  transform: scale(3);
+  cursor: pointer;
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
-/* .new-todo-button:hover:before {
-  content: 'Create New Task';
-} */
+#sortingDropdown {
+  border-radius: 5px;
+  text-align: center;
+}
+
+#sortingDropdown:focus {
+  outline: none;
+}
 
 .content {
   width: 100%;
@@ -80,7 +75,19 @@ header {
   border-bottom: solid 1px var(--second-accent);
 }
 
+/*todo  ************************************************************************ */
+
+/*todo **`` Working on styling the form and it's wrapper.  */
+
+.form-wrapper {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 form {
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
 }

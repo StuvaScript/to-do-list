@@ -100,47 +100,30 @@ function displayTodaysDate() {
   dateDiv.innerText = today + ' • today';
   header.prepend(dateDiv);
 }
-//! *********************************************************************************
-//! *********************************************************************************
-//! *********************************************************************************
-//! *********************************************************************************
-//! *********************************************************************************
 
-//? **`` Creates the initial 'ToDo' button
+//? **`` Creates the 'Add ToDo' icon button
 function createToDoItemButton() {
   const newToDoButton = document.createElement('div');
-  // newToDoButton.innerText = 'Create ToDo Item';
   newToDoButton.classList.add('new-todo-button');
   header.prepend(newToDoButton);
 
-  // <span class="material-symbols-outlined"> add_circle </span>;
-
-  //* **`` This is the google font code below
-
+  //? **`` This icon is linked from Google in the HTML head
   const newTaskIcon = document.createElement('span');
   newTaskIcon.classList.add('material-symbols-outlined');
   newTaskIcon.innerText = ' add_circle ';
   newToDoButton.append(newTaskIcon);
-
-  //* **`` This is the import icon code below
-
-  // const newTaskIcon = document.createElement('img');
-  // newTaskIcon.setAttribute('src', plus);
-  // newTaskIcon.setAttribute('alt', 'Add Task');
-  // newToDoButton.append(newTaskIcon);
 }
-//! *********************************************************************************
-//! *********************************************************************************
-//! *********************************************************************************
-//! *********************************************************************************
-//! *********************************************************************************
 
 //? **`` Creates the form that takes all the todo info
 function makeForm() {
+  const formWrapper = document.createElement('div');
+  formWrapper.classList.add('form-wrapper');
+  content.prepend(formWrapper);
+
   const form = document.createElement('form');
   form.setAttribute('action', '');
   form.setAttribute('method', 'get');
-  content.prepend(form);
+  formWrapper.prepend(form);
 
   const dropdownProjectMenu = document.createElement('select');
   dropdownProjectMenu.setAttribute('id', 'dropdownProjectMenu');
