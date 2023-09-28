@@ -214,7 +214,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _event_handler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./event-handler */ "./src/modules/event-handler.js");
 
 
-// import plus from '../icons/add_circle.svg';
 
 
 
@@ -233,7 +232,7 @@ function clearTasks() {
 //? **`` Creates the sorting dropdown menu and all it's options
 function createSortingDropdown() {
   const sortingDiv = document.createElement('div');
-
+  sortingDiv.classList.add('sorting');
   _index__WEBPACK_IMPORTED_MODULE_0__.header.prepend(sortingDiv);
 
   const sortingDropdown = document.createElement('select');

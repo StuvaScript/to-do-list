@@ -1,6 +1,5 @@
 import { populateDropdownMenu, getTodaysDate, header } from '../index';
 import { backButtonLogic } from './event-handler';
-// import plus from '../icons/add_circle.svg';
 
 export {
   createToDoItemButton,
@@ -35,7 +34,7 @@ function clearTasks() {
 //? **`` Creates the sorting dropdown menu and all it's options
 function createSortingDropdown() {
   const sortingDiv = document.createElement('div');
-
+  sortingDiv.classList.add('sorting');
   header.prepend(sortingDiv);
 
   const sortingDropdown = document.createElement('select');
