@@ -1,3 +1,6 @@
+import './normalize.css';
+import './style.css';
+
 import {
   createToDoItemButton,
   displayTodaysDate,
