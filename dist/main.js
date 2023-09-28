@@ -323,17 +323,29 @@ function makeForm() {
   form.setAttribute('method', 'get');
   formWrapper.prepend(form);
 
+  //? **`` Dropdown select
+  const dropdownWrapper = document.createElement('div');
+  dropdownWrapper.classList.add('input-wrapper');
+  form.append(dropdownWrapper);
+
   const dropdownProjectMenu = document.createElement('select');
   dropdownProjectMenu.setAttribute('id', 'dropdownProjectMenu');
   dropdownProjectMenu.setAttribute('name', 'dropdownProjectMenu');
+
   const dropdownProjectMenuLabel = document.createElement('label');
   dropdownProjectMenuLabel.innerText = 'Assign To Project';
   dropdownProjectMenuLabel.setAttribute('for', 'dropdownProjectMenu');
+  dropdownWrapper.append(dropdownProjectMenuLabel, dropdownProjectMenu);
 
   const defaultOption = document.createElement('option');
-  dropdownProjectMenu.appendChild(defaultOption);
   defaultOption.setAttribute('value', 'Default Project');
   defaultOption.innerText = 'Default Project';
+  dropdownProjectMenu.appendChild(defaultOption);
+
+  //? **`` Create new project
+  const newProjectWrapper = document.createElement('div');
+  newProjectWrapper.classList.add('input-wrapper');
+  form.append(newProjectWrapper);
 
   const newProjectTitle = document.createElement('input');
   newProjectTitle.setAttribute('type', 'text');
@@ -342,10 +354,17 @@ function makeForm() {
   const newProjectLabel = document.createElement('label');
   newProjectLabel.innerText = 'Or Create New Project';
   newProjectLabel.setAttribute('for', 'newproject');
+  newProjectWrapper.append(newProjectLabel, newProjectTitle);
 
   const projectButton = document.createElement('button');
   projectButton.innerText = 'Create New Project';
   projectButton.classList.add('project-button');
+  form.append(projectButton);
+
+  //? **`` New todo title
+  const todoTaskWrapper = document.createElement('div');
+  todoTaskWrapper.classList.add('input-wrapper');
+  form.append(todoTaskWrapper);
 
   const todoTask = document.createElement('input');
   todoTask.setAttribute('type', 'text');
@@ -354,6 +373,12 @@ function makeForm() {
   const taskLabel = document.createElement('label');
   taskLabel.innerText = 'ToDo Task';
   taskLabel.setAttribute('for', 'task');
+  todoTaskWrapper.append(taskLabel, todoTask);
+
+  //? **`` Due date
+  const todoDateWrapper = document.createElement('div');
+  todoDateWrapper.classList.add('input-wrapper');
+  form.append(todoDateWrapper);
 
   const todoDate = document.createElement('input');
   todoDate.setAttribute('type', 'date');
@@ -362,6 +387,16 @@ function makeForm() {
   const dateLabel = document.createElement('label');
   dateLabel.innerText = 'Due Date';
   dateLabel.setAttribute('for', 'date');
+  todoDateWrapper.append(dateLabel, todoDate);
+
+  //? **`` Priority
+  const priorityWrapper = document.createElement('div');
+  priorityWrapper.classList.add('priority-wrapper');
+  form.append(priorityWrapper);
+
+  const p1Wrapper = document.createElement('div');
+  p1Wrapper.classList.add('p-wrapper');
+  priorityWrapper.append(p1Wrapper);
 
   const radioPriority1 = document.createElement('input');
   radioPriority1.setAttribute('type', 'radio');
@@ -371,6 +406,11 @@ function makeForm() {
   const labelPriority1 = document.createElement('label');
   labelPriority1.innerText = 'P1';
   labelPriority1.setAttribute('for', 'P1');
+  p1Wrapper.append(labelPriority1, radioPriority1);
+
+  const p2Wrapper = document.createElement('div');
+  p2Wrapper.classList.add('p-wrapper');
+  priorityWrapper.append(p2Wrapper);
 
   const radioPriority2 = document.createElement('input');
   radioPriority2.setAttribute('type', 'radio');
@@ -380,6 +420,11 @@ function makeForm() {
   const labelPriority2 = document.createElement('label');
   labelPriority2.innerText = 'P2';
   labelPriority2.setAttribute('for', 'P2');
+  p2Wrapper.append(labelPriority2, radioPriority2);
+
+  const p3Wrapper = document.createElement('div');
+  p3Wrapper.classList.add('p-wrapper');
+  priorityWrapper.append(p3Wrapper);
 
   const radioPriority3 = document.createElement('input');
   radioPriority3.setAttribute('type', 'radio');
@@ -389,6 +434,11 @@ function makeForm() {
   const labelPriority3 = document.createElement('label');
   labelPriority3.innerText = 'P3';
   labelPriority3.setAttribute('for', 'P3');
+  p3Wrapper.append(labelPriority3, radioPriority3);
+
+  const p4Wrapper = document.createElement('div');
+  p4Wrapper.classList.add('p-wrapper');
+  priorityWrapper.append(p4Wrapper);
 
   const radioPriority4 = document.createElement('input');
   radioPriority4.setAttribute('type', 'radio');
@@ -399,6 +449,12 @@ function makeForm() {
   const labelPriority4 = document.createElement('label');
   labelPriority4.innerText = 'P4';
   labelPriority4.setAttribute('for', 'P4');
+  p4Wrapper.append(labelPriority4, radioPriority4);
+
+  //? **`` Additional notes
+  const notesWrapper = document.createElement('div');
+  notesWrapper.classList.add('input-wrapper');
+  form.append(notesWrapper);
 
   const notes = document.createElement('textarea');
   notes.setAttribute('id', 'notes');
@@ -406,51 +462,32 @@ function makeForm() {
   const notesLabel = document.createElement('label');
   notesLabel.innerText = 'Notes';
   notesLabel.setAttribute('for', 'notes');
+  notesWrapper.append(notesLabel, notes);
 
+  //? **`` Create new todo button
   const todoButton = document.createElement('button');
   todoButton.innerText = 'Add ToDo';
   todoButton.classList.add('todo-button');
 
+  //? **`` Go back button
   const button = document.createElement('button');
   button.innerText = 'Go Back';
   button.classList.add('back');
 
-  form.append(
-    dropdownProjectMenu,
-    dropdownProjectMenuLabel,
-    newProjectTitle,
-    newProjectLabel,
-    projectButton,
-    todoTask,
-    taskLabel,
-    todoDate,
-    dateLabel,
-    radioPriority1,
-    labelPriority1,
-    radioPriority2,
-    labelPriority2,
-    radioPriority3,
-    labelPriority3,
-    radioPriority4,
-    labelPriority4,
-    notes,
-    notesLabel,
-    todoButton,
-    button
-  );
+  form.append(todoButton, button);
 
   (0,_index__WEBPACK_IMPORTED_MODULE_0__.populateDropdownMenu)();
   (0,_event_handler__WEBPACK_IMPORTED_MODULE_1__.backButtonLogic)();
 }
 
-//? **`` Loops through the array and for each object it creates a button, puts the task name on it, adds a class, sets the object's ID number to the element ID, and displays it
+//? **`` Loops through the array and for each object it creates a div, puts the task name on it, adds a class, sets the object's ID number to the element ID, and displays it
 function displayTask(array) {
   array.map((obj) => {
-    const button = document.createElement('button');
-    button.innerText = `${obj.task}`;
-    button.classList.add('task');
-    button.setAttribute('id', obj.idNumber);
-    content.appendChild(button);
+    const div = document.createElement('div');
+    div.innerText = `${obj.task}`;
+    div.classList.add('task');
+    div.setAttribute('id', obj.idNumber);
+    content.appendChild(div);
   });
 }
 

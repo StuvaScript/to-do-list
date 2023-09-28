@@ -6,10 +6,9 @@
 
   --second-accent: #dcc48e;
 
-  --non-urgent: #cecaca;
-  --mild-urgent: blue;
-  --urgent: orange;
-  --very-urgent: red;
+  --mild-urgent: rgb(23, 202, 242);
+  --urgent: rgb(236, 176, 13);
+  --very-urgent: rgb(216, 8, 8);
 }
 
 *,
@@ -46,7 +45,8 @@ header {
 }
 
 #sortingDropdown {
-  border-radius: 5px;
+  border-radius: 8px;
+  padding: 5px 15px;
   text-align: center;
 }
 
@@ -54,7 +54,8 @@ header {
   outline: none;
 }
 
-.content {
+.content,
+.warning {
   width: 100%;
   padding: 0px 10px;
   display: flex;
@@ -63,7 +64,23 @@ header {
   align-items: start;
 }
 
-.content > button {
+.content > button,
+.warning > button {
+  border-radius: 8px;
+  padding: 5px 15px;
+  font-size: 1rem;
+  width: auto;
+  margin: 10px 30px;
+  transition: transform ease 100ms;
+}
+
+.content > button:hover,
+.warning > button:hover {
+  background: var(--second-accent);
+  transform: translate(0, 2px);
+}
+
+.task {
   color: var(--light);
   background: var(--dark);
   width: 100%;
@@ -75,9 +92,11 @@ header {
   border-bottom: solid 1px var(--second-accent);
 }
 
-/*todo  ************************************************************************ */
-
-/*todo **`` Working on styling the form and it's wrapper.  */
+.content > p,
+.warning > p {
+  font-size: 1.5rem;
+  padding: 10px 30px;
+}
 
 .form-wrapper {
   height: 100vh;
@@ -88,6 +107,80 @@ header {
 }
 
 form {
+  color: var(--second-accent);
   display: flex;
   flex-direction: column;
+  gap: 15px;
+  font-size: 1.25rem;
+  outline: var(--second-accent) solid 1px;
+  padding: 50px 30px;
+  border-radius: 10px;
+}
+
+form input,
+form textarea,
+form button,
+form select {
+  border-radius: 8px;
+  padding: 5px 15px;
+}
+
+form *:focus:not(button, [type='radio']) {
+  outline: var(--second-accent) solid 4px;
+}
+
+.input-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.priority-wrapper {
+  display: flex;
+  gap: 15%;
+  justify-content: center;
+}
+
+.priority-wrapper * {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+[type='radio'] {
+  appearance: none;
+  border-radius: 50%;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid var(--second-accent);
+  transition: 0.2s all linear;
+}
+
+#P1:checked {
+  border: 6px solid var(--very-urgent);
+}
+
+#P2:checked {
+  border: 6px solid var(--urgent);
+}
+
+#P3:checked {
+  border: 6px solid var(--mild-urgent);
+}
+
+#P4:checked {
+  border: 6px solid var(--light);
+}
+
+form button {
+  font-size: 1rem;
+  width: auto;
+  align-self: center;
+  transition: transform ease 100ms;
+}
+
+form button:hover {
+  background: var(--second-accent);
+  transform: translate(0, 2px);
 }
