@@ -631,13 +631,7 @@ let todoArray = [];
 (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_2__.createHeader)();
 const header = document.querySelector('header');
 
-(0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_2__.createSortingDropdown)();
-(0,_modules_event_handler__WEBPACK_IMPORTED_MODULE_3__.sortingAndDisplayOfTasksLogic)();
-
-(0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_2__.createToDoItemButton)();
-(0,_modules_event_handler__WEBPACK_IMPORTED_MODULE_3__.createToDoItemButtonLogic)();
-
-(0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_2__.displayTodaysDate)();
+goToMainScreen();
 
 //* **`` FUNCTIONS ``**
 
