@@ -1,5 +1,5 @@
 import {
-  addObjectToArray,
+  resetAndPopulateArray,
   addOptions,
   createObject,
   todoArray,
@@ -21,7 +21,6 @@ import {
   displayTask,
   clearTasks,
   removeHeader,
-  createHeader,
 } from './dom-manipulation';
 
 export {
@@ -35,6 +34,7 @@ export {
 
 //? **`` Displays the tasks by the chosen order
 function sortingAndDisplayOfTasksLogic() {
+  resetAndPopulateArray();
   //? **`` The initial task display
   displayTask(todoArray);
   //? **`` Listens for changes in the sorting dropdown menu
@@ -74,8 +74,9 @@ function warningDeleteButtonLogic(ID) {
   document.querySelector('.warning-delete').addEventListener('click', (e) => {
     // //? **`` Loops through the array and grabs each object and it's index position
     todoArray.map((object, index) => {
-      //? **`` If the task ID number to be deleted matches an ID in an object, that object is removed from the array and you're returned to the main screen
+      //? **`` If the task ID number to be deleted matches an ID in an object, that object is removed from local storage and the array and you're returned to the main screen
       if (ID == object.idNumber) {
+        localStorage.removeItem(ID);
         todoArray.splice(index, 1);
         goToMainScreen();
       }
@@ -156,7 +157,11 @@ function addToDoButtonLogic() {
       idNumber
     );
 
-    addObjectToArray(newObject);
+    //? **`` This populates the local storage with the newly created object.
+    localStorage.setItem(newObject.idNumber, JSON.stringify(newObject));
+
+    resetAndPopulateArray();
+
     goToMainScreen();
   });
 }

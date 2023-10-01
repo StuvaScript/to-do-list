@@ -16,7 +16,6 @@ export {
   createSortingDropdown,
   clearTasks,
   createHeader,
-  body,
 };
 
 const body = document.querySelector('body');
