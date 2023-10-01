@@ -47,13 +47,7 @@ let todoArray = [];
 createHeader();
 const header = document.querySelector('header');
 
-createSortingDropdown();
-sortingAndDisplayOfTasksLogic();
-
-createToDoItemButton();
-createToDoItemButtonLogic();
-
-displayTodaysDate();
+goToMainScreen();
 
 //* **`` FUNCTIONS ``**
 
