@@ -11,7 +11,6 @@ import {
   displayDeleteButton,
   createSortingDropdown,
   createHeader,
-  body,
   removeHeader,
 } from './modules/dom-manipulation';
 
@@ -25,7 +24,7 @@ import {
 
 export {
   populateDropdownMenu,
-  addObjectToArray,
+  resetAndPopulateArray,
   addOptions,
   createObject,
   todoArray,
@@ -43,7 +42,7 @@ export {
 };
 
 //? **`` Initial functions to be ran
-const todoArray = [];
+let todoArray = [];
 
 createHeader();
 const header = document.querySelector('header');
@@ -180,9 +179,12 @@ function addOptions(newProjectField) {
   }
 }
 
-//? **`` Takes a new object as an argument and adds it to the front of the array
-function addObjectToArray(newObject) {
-  todoArray.unshift(newObject);
+//? **`` Takes the values from local storage, clears the ToDo Array, and adds them to the front of the array
+function resetAndPopulateArray() {
+  todoArray = [];
+  for (const [key, value] of Object.entries(localStorage)) {
+    todoArray.unshift(JSON.parse(value));
+  }
 }
 
 //? **`` Factory function that creates a new object of all the form values
