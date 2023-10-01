@@ -595,7 +595,6 @@ module.exports = styleTagTransform;
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "addObjectToArray": () => (/* binding */ addObjectToArray),
 /* harmony export */   "addOptions": () => (/* binding */ addOptions),
 /* harmony export */   "alphaOrder": () => (/* binding */ alphaOrder),
 /* harmony export */   "createID": () => (/* binding */ createID),
@@ -609,6 +608,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "populateDropdownMenu": () => (/* binding */ populateDropdownMenu),
 /* harmony export */   "priorityOrder": () => (/* binding */ priorityOrder),
 /* harmony export */   "projectOrder": () => (/* binding */ projectOrder),
+/* harmony export */   "resetAndPopulateArray": () => (/* binding */ resetAndPopulateArray),
 /* harmony export */   "reverseAlphaOrder": () => (/* binding */ reverseAlphaOrder),
 /* harmony export */   "todoArray": () => (/* binding */ todoArray)
 /* harmony export */ });
@@ -626,11 +626,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 //? **`` Initial functions to be ran
-const todoArray = [];
+let todoArray = [];
 
 (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_2__.createHeader)();
 const header = document.querySelector('header');
 
+<<<<<<< HEAD
 (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_2__.createSortingDropdown)();
 (0,_modules_event_handler__WEBPACK_IMPORTED_MODULE_3__.sortingAndDisplayOfTasksLogic)();
 
@@ -638,6 +639,9 @@ const header = document.querySelector('header');
 (0,_modules_event_handler__WEBPACK_IMPORTED_MODULE_3__.createToDoItemButtonLogic)();
 
 (0,_modules_dom_manipulation__WEBPACK_IMPORTED_MODULE_2__.displayTodaysDate)();
+=======
+goToMainScreen();
+>>>>>>> branch-1
 
 //* **`` FUNCTIONS ``**
 
@@ -763,9 +767,12 @@ function addOptions(newProjectField) {
   }
 }
 
-//? **`` Takes a new object as an argument and adds it to the front of the array
-function addObjectToArray(newObject) {
-  todoArray.unshift(newObject);
+//? **`` Takes the values from local storage, clears the ToDo Array, and adds them to the front of the array
+function resetAndPopulateArray() {
+  todoArray = [];
+  for (const [key, value] of Object.entries(localStorage)) {
+    todoArray.unshift(JSON.parse(value));
+  }
 }
 
 //? **`` Factory function that creates a new object of all the form values
@@ -784,7 +791,6 @@ function createObject(project, task, date, priority, notes, idNumber) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "body": () => (/* binding */ body),
 /* harmony export */   "clearTasks": () => (/* binding */ clearTasks),
 /* harmony export */   "createHeader": () => (/* binding */ createHeader),
 /* harmony export */   "createSortingDropdown": () => (/* binding */ createSortingDropdown),
@@ -1168,6 +1174,7 @@ __webpack_require__.r(__webpack_exports__);
 
 //? **`` Displays the tasks by the chosen order
 function sortingAndDisplayOfTasksLogic() {
+  (0,_index__WEBPACK_IMPORTED_MODULE_0__.resetAndPopulateArray)();
   //? **`` The initial task display
   (0,_dom_manipulation__WEBPACK_IMPORTED_MODULE_1__.displayTask)(_index__WEBPACK_IMPORTED_MODULE_0__.todoArray);
   //? **`` Listens for changes in the sorting dropdown menu
@@ -1207,8 +1214,9 @@ function warningDeleteButtonLogic(ID) {
   document.querySelector('.warning-delete').addEventListener('click', (e) => {
     // //? **`` Loops through the array and grabs each object and it's index position
     _index__WEBPACK_IMPORTED_MODULE_0__.todoArray.map((object, index) => {
-      //? **`` If the task ID number to be deleted matches an ID in an object, that object is removed from the array and you're returned to the main screen
+      //? **`` If the task ID number to be deleted matches an ID in an object, that object is removed from local storage and the array and you're returned to the main screen
       if (ID == object.idNumber) {
+        localStorage.removeItem(ID);
         _index__WEBPACK_IMPORTED_MODULE_0__.todoArray.splice(index, 1);
         (0,_index__WEBPACK_IMPORTED_MODULE_0__.goToMainScreen)();
       }
@@ -1289,7 +1297,11 @@ function addToDoButtonLogic() {
       idNumber
     );
 
-    (0,_index__WEBPACK_IMPORTED_MODULE_0__.addObjectToArray)(newObject);
+    //? **`` This populates the local storage with the newly created object.
+    localStorage.setItem(newObject.idNumber, JSON.stringify(newObject));
+
+    (0,_index__WEBPACK_IMPORTED_MODULE_0__.resetAndPopulateArray)();
+
     (0,_index__WEBPACK_IMPORTED_MODULE_0__.goToMainScreen)();
   });
 }
