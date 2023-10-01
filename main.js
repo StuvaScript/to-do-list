@@ -769,9 +769,11 @@ function addOptions(newProjectField) {
 
 //? **`` Takes the values from local storage, clears the ToDo Array, and adds them to the front of the array
 function resetAndPopulateArray() {
-  todoArray = [];
-  for (const [key, value] of Object.entries(localStorage)) {
-    todoArray.unshift(JSON.parse(value));
+  if (localStorage.length !== 0) {
+    todoArray = [];
+    for (const [key, value] of Object.entries(localStorage)) {
+      todoArray.unshift(JSON.parse(value));
+    }
   }
 }
 
