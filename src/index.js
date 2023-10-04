@@ -173,6 +173,8 @@ function addOptions(newProjectField) {
   }
 }
 
+//! **`` Trying to figure out why none of the app is displaying on Github Pages link. I was thinking it might have to do with the IF Statement below making sure there is any data in local storage before populating the array but it might not be. The console is reading there is an Uncaught Syntax Error of this "<<". In the main.js file, it says they injected "<<<<<< HEAD". Google says this is supposed to allow the code to get injected in the HTML head?? Idk man......
+
 //? **`` Takes the values from local storage, clears the ToDo Array, and adds them to the front of the array
 function resetAndPopulateArray() {
   if (localStorage.length !== 0) {
